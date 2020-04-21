@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhlk.basicmodule.service.dao.UserDao">
+
+    <resultMap type="com.dhlk.entity.basicmodule.User" id="DhlkBasicUserResult">
+        <result property="id" jdbcType="INTEGER"   column="id"    />
+        <result property="name"  jdbcType="VARCHAR"  column="name"    />
+        <result property="loginName" jdbcType="VARCHAR"   column="login_name"    />
+        <result property="password" jdbcType="VARCHAR"   column="password"    />
+        <result property="status" jdbcType="INTEGER"   column="status"    />
+        <result property="orgId" jdbcType="VARCHAR"   column="org_id"    />
+        <result property="createTime" jdbcType="TIMESTAMP"   column="create_time"    />
+        <result property="phone"  jdbcType="VARCHAR"  column="phone"    />
+        <result property="email"  jdbcType="VARCHAR"  column="email"    />
+        <result property="isAdmin"  jdbcType="INTEGER"  column="is_admin"    />
+        <collection property="factory" column="org_id" select="com.dhlk.basicmodule.service.dao.OrgDao.findFactoryByOrgId"/>
+    </resultMap>
+
+    <sql id="selectDhlkBasicUserVo">
+        select id, name, login_name, password, status, org_id, create_time,email,phone,is_admin from dhlk_basic_user
+    </sql>
+
+    <select id="findList" parameterType="String" resultMap="DhlkBasicUserResult">
+        select id, name, login_name, status, org_id, create_time,email,phone,is_admin
+         from dhlk_basic_user
+        where is_admin=1
+            <if test="name != null  and name != ''">
+             and name like concat('%', #{name}, '%')
+             </if>
+        ORDER BY NAME
+    </select>
+
+    <select id="loginCheck" resultMap="DhlkBasicUserResult">
+        <include refid="selectDhlkBasicUserVo"/>
+         where login_name = #{loginName} and password = #{password}
+    </select>
+
+    <select id="findPermissListByUserId" parameterType="String" resultType="com.dhlk.entity.basicmodule.UserRole">
+        select user_id, role_id from dhlk_basic_user_role
+        where user_id = #{userId}
+    </select>
+
+    <select id="isRepeatLoginName" parameterType="String" resultType="Integer">
+        select count(*) from dhlk_basic_user
+        where login_name = #{loginName}
+        <if test="id!= null and id != ''">
+            AND id!=#{id}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.dhlk.entity.basicmodule.User" useGeneratedKeys="true" keyProperty="id">
+        insert into dhlk_basic_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="loginName != null  and loginName != ''">login_name,</if>
+            <if test="password != null  and password != ''">password,</if>
+            <if test="status != null ">status,</if>
+            <if test="orgId != null ">org_id,</if>
+            <if test="isAdmin != null ">is_admin,</if>
+            <if test="phone != null ">phone,</if>
+            <if test="email != null ">email,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="loginName != null  and loginName != ''">#{loginName},</if>
+            <if test="password != null  and password != ''">#{password},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="orgId != null ">#{orgId},</if>
+            <if test="isAdmin != null ">1</if>
+            <if test="phone != null ">#{phone},</if>
+            <if test="email != null ">#{email},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.dhlk.entity.basicmodule.User">
+        update dhlk_basic_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="loginName != null  and loginName != ''">login_name = #{loginName},</if>
+            <if test="password != null  and password != ''">password = #{password},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="orgId != null ">org_id = #{orgId},</if>
+            <if test="isAdmin != null ">is_admin = #{isAdmin},</if>
+            <if test="phone != null ">phone = #{phone},</if>
+            <if test="email != null ">email = #{email},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="isEnable">
+        update dhlk_basic_user set status = #{status} where id = #{id} and is_admin = 1
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from dhlk_basic_user where is_admin =1 and id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </delete>
+
+    <select id="findUserByLoginName" parameterType="String" resultMap="DhlkBasicUserResult">
+        <include refid="selectDhlkBasicUserVo"/>
+        where login_name = #{loginName}
+    </select>
+
+    <select id="findUserByOrgId" parameterType="Integer" resultMap="DhlkBasicUserResult">
+        select id, name, login_name, status, org_id, create_time,email,phone,is_admin from dhlk_basic_user
+        where FIND_IN_SET(#{org_id},org_id)
+    </select>
+
+    <select id="findRolesByLoginName" parameterType="String" resultType="java.lang.String">
+         SELECT NAME FROM dhlk_basic_role
+        WHERE id in (SELECT role_id FROM dhlk_basic_user_role WHERE user_id in
+        (SELECT id FROM dhlk_basic_user WHERE login_name = #{loginName}))
+    </select>
+
+    <select id="findMenusByLoginName" parameterType="String" resultType="com.dhlk.entity.basicmodule.Menu">
+       SELECT * FROM dhlk_basic_menu WHERE id IN
+        (SELECT menu_id FROM dhlk_basic_permissions WHERE role_id IN
+        (SELECT role_id FROM dhlk_basic_user_role WHERE user_id =
+        (SELECT id FROM dhlk_basic_user WHERE login_name = #{loginName})))
+    </select>
+</mapper>

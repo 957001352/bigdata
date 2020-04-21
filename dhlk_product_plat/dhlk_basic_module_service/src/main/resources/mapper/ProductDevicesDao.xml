@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhlk.basicmodule.service.dao.ProductDevicesDao">
+    <insert id="insert" parameterType="com.dhlk.entity.basicmodule.ProductDevices">
+       insert into dhlk_basic_product_devices (id,name,org_id,create_time,note,factory_id,classify_id,tb_id,credentials)
+        values (#{id},#{name},#{orgId},#{createTime},#{note},#{factoryId},#{classifyId},#{tbId},#{credentials})
+    </insert>
+
+    <update id="update" parameterType="com.dhlk.entity.basicmodule.ProductDevices">
+        update dhlk_basic_product_devices set name=#{name},org_id=#{orgId},
+        create_time=#{createTime},note=#{note},factory_id=#{factoryId},classify_id=#{classifyId},tb_id=#{tbId},credentials=#{credentials}  where id=#{id}
+    </update>
+    <update id="delete"  parameterType="java.util.List">
+        update   dhlk_basic_product_devices set status=2 where id  in
+        <foreach collection="list" open="(" separator="," close=")" item="item">
+            #{item}
+        </foreach>
+    </update>
+    <update id="deleteById"  parameterType="Integer">
+        update   dhlk_basic_product_devices set status=2,tb_id=null  where id=#{id}
+    </update>
+    <resultMap type="com.dhlk.entity.basicmodule.ProductDevices" id="productDevicesResult">
+        <result property="id" jdbcType="INTEGER"    column="id"    />
+        <result property="classifyId"     column="classify_id"    />
+        <collection property="attrSet" column="classify_id" select="com.dhlk.basicmodule.service.dao.DevicesClassifyDao.findAttrSetByClassifyById" />
+        <collection property="classifySet" column="{classifyId=classify_id,attachPath=attachPath}" select="findClassifyByPruductId" />
+    </resultMap>
+    <resultMap type="java.util.LinkedHashMap" id="devicesClassifyResult">
+        <id column="id" property="id"/>
+        <collection property="imagePath" javaType="String"
+                    column="{id=id,attachPath=attachPath}" ofType="String"
+                    select="com.dhlk.basicmodule.service.dao.AttachmentDao.findWebPathByDataId"
+        ></collection>
+    </resultMap>
+    <select id="findClassifyByPruductId" resultMap="devicesClassifyResult">
+        select id, classify_name, `describe`, classify_id classifyId,#{attachPath} attachPath
+          from dhlk_basic_devices_classify
+         where id=#{classifyId}
+    </select>
+    <select id="findList" resultMap="productDevicesResult">
+        select t.*,#{attachPath} attachPath,d.classify_name
+          from dhlk_basic_product_devices t
+          left join dhlk_basic_devices_classify d on t.classify_id=d.id
+         where t.status!=2
+        <if test="name != null and name != ''">
+            and t.name like concat('%',#{name},'%')
+        </if>
+        <!--
+        <if test="factoryId != null and factoryId != ''">
+            and factory_id=#{factoryId}
+        </if>
+         -->
+
+    </select>
+    <select id="findProductDevicesById" parameterType="Integer" resultType="com.dhlk.entity.basicmodule.ProductDevices">
+         select * from dhlk_basic_product_devices where id = #{id}
+    </select>
+    <select id="findTbIdsListbyIds" parameterType="java.util.List" resultType="com.dhlk.entity.basicmodule.ProductDevices">
+        select * from dhlk_basic_product_devices where id in
+        <foreach collection="list" open="(" separator="," close=")" item="ids">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="isBoundClassify" parameterType="java.lang.String" resultType="Integer">
+        select count(*) from dhlk_basic_product_devices where classify_id = #{classifyId}
+    </select>
+</mapper>

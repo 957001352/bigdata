@@ -1,0 +1,51 @@
+debug: false
+server:
+  port: 8082
+  tomcat:
+    max-swallow-size: -1
+spring:
+  application:
+    name: dhlk-web
+  servlet:
+    multipart:
+      max-file-size: 100MB #  设置单个文件最大内存 -1为不限制  150MB
+      max-request-size: 1024MB # 设置所有文件最大内存 -1为不限制
+      resolve-lazily: true
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        register: true
+        hostname: 127.0.0.1
+        service-name: ${spring.application.name}
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+        tags: urlprefix-/${spring.application.name}
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: true
+
+#高版本的时间控制有两个地方ribbon，hystrix 先ribbon 后hystrix
+#请求处理的超时时间,超时则进行熔断降级处理
+ribbon:
+  ReadTimeout: 3000000
+  #请求连接的超时时间
+  ConnectTimeout: 3000000
+
+
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          #如果enabled设置为false，则请求超时交给ribbon控制
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 40000

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhlk.basicmodule.service.dao.NetDevicesDao">
+    <insert id="insert" parameterType="com.dhlk.entity.basicmodule.NetDevices">
+        insert into dhlk_basic_net_devices (id,name,ip,gateway,mask,create_time,license,type_id,note,factory_id,tb_id,credentials)
+        values (#{id},#{name},#{ip},#{gateway},#{mask},#{createTime},#{license},#{typeId},#{note},#{factoryId},#{tbId},#{credentials})
+    </insert>
+
+    <update id="update" parameterType="com.dhlk.entity.basicmodule.NetDevices">
+        update dhlk_basic_net_devices set name=#{name},ip=#{ip},gateway=#{gateway},mask=#{mask},
+        status=#{status},create_time=#{createTime},license=#{license},
+        type_id=#{typeId},note=#{note},note=#{factoryId},tb_id=#{tbId},credentials=#{credentials}    where id=#{id}
+    </update>
+
+    <update id="isEnable" parameterType="Integer">
+        update   dhlk_basic_net_devices set status=#{status} where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="java.util.List">
+        delete from  dhlk_basic_net_devices where id in
+        <foreach collection="list" open="(" separator="," close=")" item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+    <resultMap type="com.dhlk.entity.basicmodule.NetDevices" id="netDevicesListResult">
+        <result property="id" jdbcType="VARCHAR"    column="id"    />
+        <collection property="softList" column="id" select="com.dhlk.basicmodule.service.dao.NetDevicesSoftDao.findList" />
+        <collection property="productDevicesList" column="id" select="com.dhlk.basicmodule.service.dao.ProductNetDao.findProductList" />
+        <collection property="netDevicesList" column="id" select="com.dhlk.basicmodule.service.dao.ProductNetDao.findBiList" />
+    </resultMap>
+
+
+    <select id="findList" resultMap="netDevicesListResult">
+        select n.*,t.name type_name from dhlk_basic_net_devices n left join dhlk_dm_net_type t on n.type_id=t.id where 1=1
+        <if test="name != null and name != ''">
+            and n.name like concat('%',#{name},'%')
+        </if>
+        <!--
+        <if test="factoryId != null and factoryId != ''">
+            and factory_id=#{factoryId}
+        </if>
+         -->
+    </select>
+    <update id="deleteById"  parameterType="Integer">
+        update   dhlk_basic_product_net set status=2,tb_id=null  where id=#{id}
+    </update>
+    <select id="findPruductDevicesList" resultType="com.dhlk.entity.basicmodule.ProductDevices">
+        select p.* from dhlk_basic_product_net t,dhlk_basic_product_devices  p where t.product_id=p.id
+        <if test="netDevicesId != null and netDevicesId != ''">
+            and t.net_id=#{netDevicesId}
+        </if>
+    </select>
+    <select id="findProductNetDevicesById" parameterType="Integer" resultType="com.dhlk.entity.basicmodule.NetDevices">
+         select * from dhlk_basic_net_devices where id = #{id}
+    </select>
+    <select id="findTbIdsListbyIds" parameterType="java.util.List" resultType="com.dhlk.entity.basicmodule.NetDevices">
+        select * from dhlk_basic_net_devices where id in
+        <foreach collection="list" open="(" separator="," close=")" item="ids">
+            #{ids}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,6 @@
+debug: false
+server:
+  port: 8089
+hdfs:
+  path: hdfs://nameservice1:8020
+  username: linhaiy

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhlk.basicmodule.service.dao.RoleDao">
+
+    <resultMap type="Role" id="RoleResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="note"    column="note"    />
+    </resultMap>
+
+    <sql id="selectRoleVo">
+        select id, name, note from dhlk_basic_role
+    </sql>
+
+    <select id="findList" parameterType="Role" resultMap="RoleResult">
+        <include refid="selectRoleVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+        </where>
+    </select>
+
+    <select id="selectRoleById" parameterType="Integer" resultMap="RoleResult">
+        <include refid="selectRoleVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectRoleByName" parameterType="String" resultMap="RoleResult">
+        <include refid="selectRoleVo"/>
+        where name = #{name}
+    </select>
+
+    <insert id="insert" parameterType="Role" useGeneratedKeys="true" keyProperty="id">
+        insert into dhlk_basic_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="note != null  and note != ''">note,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="note != null  and note != ''">#{note},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="Role">
+        update dhlk_basic_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="note != null  and note != ''">note = #{note},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from dhlk_basic_role where id = #{id}
+    </delete>
+
+    <delete id="deleteRoleByIds" parameterType="java.util.List">
+        delete from dhlk_basic_role where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectRoleByUserId" parameterType="Integer" resultMap="RoleResult">
+        SELECT dbr.id,dbr.name FROM `dhlk_basic_user` dbu
+        LEFT JOIN `dhlk_basic_user_role` dbur ON dbu.id=dbur.`user_id`
+        LEFT JOIN `dhlk_basic_role` dbr ON dbur.`role_id`=dbr.`id`
+        WHERE dbu.id=#{userId}
+    </select>
+    <select id="selectableRoleByUserId" parameterType="Integer" resultMap="RoleResult">
+        SELECT dbr1.id,dbr1.name FROM `dhlk_basic_role` dbr1 WHERE dbr1.id NOT IN (
+        SELECT dbr.id FROM `dhlk_basic_user` dbu
+        LEFT JOIN `dhlk_basic_user_role` dbur ON dbu.id=dbur.`user_id`
+        LEFT JOIN `dhlk_basic_role` dbr ON dbur.`role_id`=dbr.`id`
+        WHERE dbu.id=#{userId})
+    </select>
+    <select id="selectUserByRoleId" parameterType="Integer" resultType="User">
+        SELECT dbu. id ,dbu. login_name ,dbu. name ,dbu. org_id ,dbu. phone ,dbu. email  FROM  dhlk_basic_role  dbr
+        LEFT JOIN  dhlk_basic_user_role  dbur ON dbr.id=dbur. role_id
+        LEFT JOIN  dhlk_basic_user  dbu ON dbu.id=dbur. user_id
+        WHERE dbr.id=#{roleId}
+    </select>
+
+</mapper>
