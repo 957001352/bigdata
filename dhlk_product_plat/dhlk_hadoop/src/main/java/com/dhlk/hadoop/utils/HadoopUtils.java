@@ -1,6 +1,11 @@
 package com.dhlk.hadoop.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dhlk.entity.basicmodule.FileInfo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.inject.internal.cglib.core.$MethodInfoTransformer;
+import domain.Result;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
@@ -8,15 +13,19 @@ import org.apache.hadoop.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import utils.CheckUtils;
+import utils.FileUpDownUtils;
+import utils.FileUtils;
+import utils.ResultUtils;
 
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @Description
@@ -36,6 +45,7 @@ public class HadoopUtils {
 
     /**
      * 获取HDFS配置信息
+     *
      * @return
      */
     private static Configuration getConfiguration() {
@@ -46,19 +56,26 @@ public class HadoopUtils {
 
     /**
      * 获取HDFS文件系统对象
+     *
      * @return
      * @throws Exception
      */
-    public static FileSystem getFileSystem() throws Exception {
+    public static FileSystem getFileSystem() {
         // 客户端去操作hdfs时是有一个用户身份的，默认情况下hdfs客户端api会从jvm中获取一个参数作为自己的用户身份
         // DHADOOP_USER_NAME=hadoop
         // 也可以在构造客户端fs对象时，通过参数传递进去
-        FileSystem fileSystem = FileSystem.get(new URI(hdfsPath), getConfiguration(), hdfsName);
+        FileSystem fileSystem = null;
+        try {
+            fileSystem = FileSystem.get(new URI(hdfsPath), getConfiguration(), hdfsName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return fileSystem;
     }
 
     /**
      * 在HDFS创建文件夹
+     *
      * @param path
      * @return
      * @throws Exception
@@ -80,6 +97,7 @@ public class HadoopUtils {
 
     /**
      * 判断HDFS文件是否存在
+     *
      * @param path
      * @return
      * @throws Exception
@@ -96,6 +114,7 @@ public class HadoopUtils {
 
     /**
      * 读取HDFS目录信息
+     *
      * @param path
      * @return
      * @throws Exception
@@ -127,6 +146,7 @@ public class HadoopUtils {
 
     /**
      * HDFS创建文件
+     *
      * @param path
      * @param file
      * @throws Exception
@@ -148,6 +168,7 @@ public class HadoopUtils {
 
     /**
      * 读取HDFS文件内容
+     *
      * @param path
      * @return
      * @throws Exception
@@ -181,6 +202,7 @@ public class HadoopUtils {
 
     /**
      * 读取HDFS文件列表
+     *
      * @param path
      * @return
      * @throws Exception
@@ -214,6 +236,7 @@ public class HadoopUtils {
 
     /**
      * HDFS重命名文件
+     *
      * @param oldName
      * @param newName
      * @return
@@ -235,6 +258,7 @@ public class HadoopUtils {
 
     /**
      * 删除HDFS文件
+     *
      * @param path
      * @return
      * @throws Exception
@@ -255,6 +279,7 @@ public class HadoopUtils {
 
     /**
      * 上传HDFS文件
+     *
      * @param path
      * @param uploadPath
      * @throws Exception
@@ -276,6 +301,7 @@ public class HadoopUtils {
 
     /**
      * 下载HDFS文件
+     *
      * @param path
      * @param downloadPath
      * @throws Exception
@@ -296,7 +322,121 @@ public class HadoopUtils {
     }
 
     /**
+     * @param filePath
+     * @param response
+     * @return domain.Result
+     * @date 2020/4/17 15:25
+     * @author jzhao
+     * @description 下载HDFS文件（zip文件）
+     */
+    public static Result downHdfsFile(String filePath, HttpServletResponse response) {
+        List<String> filePathList = Arrays.asList(filePath.split(","));
+        //初期化ZIP流
+        ZipOutputStream out = null;
+        try {
+            // 文件名转码
+            String name = new String("FDFS文件".getBytes("UTF-8"), "iso-8859-1");
+            // 设置response的Header
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/octet-stream");
+            response.addHeader("Content-Disposition", "attachment;filename=" + name + ".zip");
+            out = new ZipOutputStream(response.getOutputStream());
+            FileSystem fs = getFileSystem();
+            for (String path : filePathList) {
+                //zip压缩包下载
+                getFdfsFile(path, "", out, fs, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                //最后关闭ZIP流
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param filePath
+     * @param response
+     * @return domain.Result
+     * @date 2020/4/17 15:25
+     * @author jzhao
+     * @description 下载HDFS文件（zip文件）
+     */
+    public static void downFile(String filePath, HttpServletResponse response) {
+        List<String> filePathList = Arrays.asList(filePath.split(","));
+        //初期化ZIP流
+        ZipOutputStream out = null;
+        try {
+            // 文件名转码
+            String name = new String("FDFS文件".getBytes("UTF-8"), "iso-8859-1");
+            // 设置response的Header
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/zip");
+            response.addHeader("Content-Disposition", "attachment;filename=" + name + ".zip");
+            out = new ZipOutputStream(response.getOutputStream());
+            FileSystem fs = getFileSystem();
+            for (String path : filePathList) {
+                //zip压缩包下载
+                getFdfsFile(path, "", out, fs, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                //最后关闭ZIP流
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * @param filePath
+     * @param out
+     * @param fs
+     * @param response
+     * @return void
+     * @date 2020/4/17 18:51
+     * @author jzhao
+     * @description 下载压缩包
+     */
+    public static void getFdfsFile(String filePath, String name, ZipOutputStream out, FileSystem fs, HttpServletResponse response) {
+        try {
+            FileStatus[] fileStatulist = fs.listStatus(new Path(filePath));
+            for (int i = 0; i < fileStatulist.length; i++) {
+                String fileName = fileStatulist[i].getPath().getName();
+                if (fileStatulist[i].isFile()) {
+                    if (!fileName.contains(".csv")) {
+                        continue;
+                    }
+                    Path path = fileStatulist[i].getPath();
+                    FSDataInputStream inputStream = fs.open(path);
+                    if (CheckUtils.isNull(name)) {
+                        name = fileStatulist[i].getPath().toString().substring(25);
+                    } else {
+                        name = name + "/" + fileName;
+                    }
+                    out.putNextEntry(new ZipEntry(name));
+                    IOUtils.copyBytes(inputStream, out, 1024);
+                    inputStream.close();
+                } else {
+                    getFdfsFile(fileStatulist[i].getPath().toString(), fileStatulist[i].getPath().toString().substring(25), out, fs, response);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * HDFS文件复制
+     *
      * @param sourcePath
      * @param targetPath
      * @throws Exception
@@ -351,6 +491,7 @@ public class HadoopUtils {
 
     /**
      * 打开HDFS上的文件并返回java对象
+     *
      * @param path
      * @return
      * @throws Exception
@@ -366,8 +507,74 @@ public class HadoopUtils {
         return JSONObject.parseObject(jsonStr, clazz);
     }
 
+    public static Result fileList(String path, Integer pageNum, Integer pageSize) {
+        List<FileInfo> infoList = listFileInfo(path);
+        if (infoList == null || infoList.size() == 0) {
+            PageInfo<FileInfo> pageInfo = new PageInfo<>();
+            return ResultUtils.success(pageInfo);
+        }
+        List<FileInfo> sortFile = infoList.stream().sorted((u1, u2) -> u2.getFileName().compareTo(u1.getFileName())).collect(Collectors.toList());
+
+        int startNum = (pageNum - 1) * pageSize;
+
+        int endNum = 0;
+        if (startNum > infoList.size()) {
+            startNum = 0;
+        }
+        if (pageSize > infoList.size() || (pageNum * pageSize) > infoList.size()) {
+            endNum = infoList.size();
+        } else {
+            endNum = pageNum * pageSize;
+        }
+        List<FileInfo> subList = sortFile.subList(startNum, endNum);
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<FileInfo> pageInfo = new PageInfo<>(subList);
+        pageInfo.setTotal(infoList.size());
+        return ResultUtils.success(pageInfo);
+    }
+
+
+    /**
+     * @param path
+     * @return domain.Result
+     * @date 2020/4/17 15:36
+     * @author jzhao
+     * @description 查询文件列表
+     */
+    public static List<FileInfo> listFileInfo(String path) {
+        List<FileInfo> list = null;
+        try {
+            if (StringUtils.isEmpty(path)) {
+                path = hdfsPath + "/";
+            }
+            FileSystem fs = getFileSystem();
+            // 目标路径
+            Path srcPath = new Path(path);
+            // 递归找到所有文件
+            RemoteIterator<LocatedFileStatus> filesList = fs.listFiles(srcPath, true);
+            list = new ArrayList<>();
+            while (filesList.hasNext()) {
+                LocatedFileStatus next = filesList.next();
+                String fileName = next.getPath().getName();
+                Path filePath = next.getPath();
+                if (fileName.contains(".csv")) {
+                    FileInfo fileInfo = new FileInfo();
+                    fileInfo.setFileName(fileName);
+                    fileInfo.setFilePath(filePath.toString().substring(24));
+                    fileInfo.setFileSize(FileUtils.formatFileSize(next.getLen()));
+                    list.add(fileInfo);
+                }
+            }
+            fs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     /**
      * 获取某个文件在HDFS的集群位置
+     *
      * @param path
      * @return
      * @throws Exception
@@ -405,7 +612,7 @@ public class HadoopUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        HadoopUtils hadoopUtil=new HadoopUtils();
+        HadoopUtils hadoopUtil = new HadoopUtils();
         List<Map<String, String>> returnList = hadoopUtil.listFile("/data/2020-04-15");
     }
 }

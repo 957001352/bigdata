@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dhlk.basicmodule.service.dao.NetDevicesDao">
-    <insert id="insert" parameterType="com.dhlk.entity.basicmodule.NetDevices">
-        insert into dhlk_basic_net_devices (id,name,ip,gateway,mask,create_time,license,type_id,note,factory_id,tb_id,credentials)
-        values (#{id},#{name},#{ip},#{gateway},#{mask},#{createTime},#{license},#{typeId},#{note},#{factoryId},#{tbId},#{credentials})
+    <insert id="insert" parameterType="com.dhlk.entity.basicmodule.NetDevices" useGeneratedKeys="true" keyProperty="id">
+        insert into dhlk_basic_net_devices (id,name,ip,gateway,mask,license,type_id,note,factory_id,tb_id,credentials)
+        values (#{id},#{name},#{ip},#{gateway},#{mask},#{license},#{typeId},#{note},#{factoryId},#{tbId},#{credentials})
     </insert>
 
     <update id="update" parameterType="com.dhlk.entity.basicmodule.NetDevices">
         update dhlk_basic_net_devices set name=#{name},ip=#{ip},gateway=#{gateway},mask=#{mask},
-        status=#{status},create_time=#{createTime},license=#{license},
-        type_id=#{typeId},note=#{note},note=#{factoryId},tb_id=#{tbId},credentials=#{credentials}    where id=#{id}
+        status=#{status},license=#{license},
+        type_id=#{typeId},note=#{note},factory_id=#{factoryId},credentials=#{credentials}    where id=#{id}
     </update>
 
     <update id="isEnable" parameterType="Integer">
@@ -27,9 +27,25 @@
         <result property="id" jdbcType="VARCHAR"    column="id"    />
         <collection property="softList" column="id" select="com.dhlk.basicmodule.service.dao.NetDevicesSoftDao.findList" />
         <collection property="productDevicesList" column="id" select="com.dhlk.basicmodule.service.dao.ProductNetDao.findProductList" />
-        <collection property="netDevicesList" column="id" select="com.dhlk.basicmodule.service.dao.ProductNetDao.findBiList" />
+        <collection property="netDevicesList" column="{netId=id,typeId=type_id}" select="findBiList" />
     </resultMap>
 
+    <select id="findBiList" resultType="com.dhlk.entity.basicmodule.NetDevices">
+        <choose>
+            <!-- type=1 大数据一体机关联BI控制器-->
+            <when test="typeId ==1">
+                select t.* from dhlk_basic_net_devices t
+                left join  dhlk_basic_product_net n on t.id=n.product_id
+                where n.type=1 and n.net_id=#{netId}
+            </when>
+            <!-- type=2,3,4 Bi控制器查询关联的大数据一体机-->
+            <otherwise>
+                select t.* from dhlk_basic_net_devices t
+                left join  dhlk_basic_product_net n on t.id=n.net_id
+                where n.type=1 and n.product_id=#{netId}
+            </otherwise>
+        </choose>
+    </select>
 
     <select id="findList" resultMap="netDevicesListResult">
         select n.*,t.name type_name from dhlk_basic_net_devices n left join dhlk_dm_net_type t on n.type_id=t.id where 1=1
@@ -42,9 +58,9 @@
         </if>
          -->
     </select>
-    <update id="deleteById"  parameterType="Integer">
-        update   dhlk_basic_product_net set status=2,tb_id=null  where id=#{id}
-    </update>
+    <delete id="deleteById"  parameterType="Integer">
+        delete  from dhlk_basic_net_devices   where id=#{id}
+    </delete>
     <select id="findPruductDevicesList" resultType="com.dhlk.entity.basicmodule.ProductDevices">
         select p.* from dhlk_basic_product_net t,dhlk_basic_product_devices  p where t.product_id=p.id
         <if test="netDevicesId != null and netDevicesId != ''">

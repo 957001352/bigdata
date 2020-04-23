@@ -35,4 +35,11 @@ public interface OrgDao {
      * @return
      */
     List<Org> findOrgByUserId(Integer userId);
+
+    /*
+     * 判断同级机构名是否重复，重复返回1，不重复返回0
+     * @param loginName
+     * @return
+     */
+    Integer isRepeatName(Org org);
 }

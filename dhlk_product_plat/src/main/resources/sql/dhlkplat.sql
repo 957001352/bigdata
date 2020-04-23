@@ -28,7 +28,7 @@ drop table if exists dhlk_basic_net_devices;
 create table dhlk_basic_net_devices 
 (
    id                   integer                        NOT NULL AUTO_INCREMENT,
-   name                 varchar(20)                    DEFAULT NULL COMMENT '名称',
+   name                 varchar(50)                    DEFAULT NULL COMMENT '名称',
    ip                   varchar(50)                    DEFAULT NULL COMMENT 'ip地址',
    gateway              varchar(50)                    DEFAULT NULL COMMENT '默认网关',
    mask                 varchar(50)                    DEFAULT NULL COMMENT '子网掩码',
@@ -348,6 +348,13 @@ create table dhlk_dm_net_type
    status               integer                        DEFAULT '0' COMMENT '状态  0正常 2删除',
    PRIMARY KEY  (id)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1 COMMENT '网络设备类型';
+-- ----------------------------
+-- Records of dhlk_dm_net_type
+-- ----------------------------
+INSERT INTO `dhlk_dm_net_type` VALUES (1, '大数据一体机', 0);
+INSERT INTO `dhlk_dm_net_type` VALUES (2, 'node-BI', 0);
+INSERT INTO `dhlk_dm_net_type` VALUES (3, 'sensor-BI', 0);
+INSERT INTO `dhlk_dm_net_type` VALUES (4, 'HCI-BI', 0);
 /*==============================================================*/
 /* Table: 设备类型分类                                     */
 /*==============================================================*/

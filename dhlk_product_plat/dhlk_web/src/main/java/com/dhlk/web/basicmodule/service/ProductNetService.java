@@ -21,7 +21,7 @@ public interface ProductNetService {
      */
     @PostMapping(value = "/save")
     public Result save(@RequestParam(value = "netId") String netId,
-                       @RequestParam(value = "productIds") String productIds,
+                       @RequestParam(value = "productIds", required = false) String productIds,
                        @RequestParam(value = "type") Integer type);
     /**
      * 删除

@@ -235,7 +235,7 @@ public class CheckUtils {
         if (isNull(objStr)) {
             return false;
         }
-        String regEx1 = "^([\\u4e00-\\u9fa5]|[a-zA-Z]){2,20}$";
+        String regEx1 = "^[\\u4E00-\\u9FA5A-Za-z0-9]+$";
         Pattern p;
         Matcher m;
         p = Pattern.compile(regEx1);

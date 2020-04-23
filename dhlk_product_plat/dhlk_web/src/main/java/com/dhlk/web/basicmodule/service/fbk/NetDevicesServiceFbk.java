@@ -1,11 +1,16 @@
 package com.dhlk.web.basicmodule.service.fbk;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.dhlk.entity.basicmodule.NetDevices;
 import com.dhlk.web.basicmodule.service.NetDevicesService;
 import domain.Result;
 import enums.ResultEnum;
 import org.springframework.stereotype.Service;
 import utils.ResultUtils;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 生产设备管理
@@ -37,6 +42,11 @@ public class NetDevicesServiceFbk implements NetDevicesService {
 
     @Override
     public Result isEnable(Integer id, Integer status) {
+        return ResultUtils.error(ResultEnum.NETWORK_ERR);
+    }
+
+    @Override
+    public Result findOnLineNetDevices(List<JSONObject>  jsonParam) {
         return ResultUtils.error(ResultEnum.NETWORK_ERR);
     }
 }

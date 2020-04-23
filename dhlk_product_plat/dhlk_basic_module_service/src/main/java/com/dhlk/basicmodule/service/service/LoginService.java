@@ -36,5 +36,13 @@ public interface LoginService {
      * @date        2020/3/31 17:04
      */
     Result kaptcha() ;
+    /**
+     * 获取tb登录token
+     * @author  jlv
+     * @return  Result
+     * @date        2020/4/21 11:04
+     */
+
+    public Result getTbToken();
 
 }

@@ -25,4 +25,7 @@ public interface LoginService {
 
     @GetMapping("/kaptcha")
     public Result kaptcha() ;
+
+    @GetMapping("/getTbToken")
+    public Result getTbToken() ;
 }

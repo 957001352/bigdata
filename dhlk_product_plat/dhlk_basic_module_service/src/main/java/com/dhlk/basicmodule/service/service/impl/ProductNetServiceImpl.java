@@ -76,6 +76,8 @@ public class ProductNetServiceImpl implements ProductNetService {
                 //把dhlk网络设备关联的生产设备的名字保存到对应的tb网关设备的共享属性中
                 HttpClientResult responseEntityBack = HttpClientUtils.doPostStringParams(tbBaseUrl + Const.SAVEDEVICESHAREDATTRIBUTE + "/DEVICE/" + netDevices.getTbId() + "/SHARED_SCOPE", restTemplateUtil.getHeaders(true), jsonSharedArrribute.toJSONString());
             }
+        }else{
+            flag=productNetDao.deleteByNetId(Convert.stringToInteger(netId));
         }
         return flag > 0 ? ResultUtils.success() : ResultUtils.failure();
     }

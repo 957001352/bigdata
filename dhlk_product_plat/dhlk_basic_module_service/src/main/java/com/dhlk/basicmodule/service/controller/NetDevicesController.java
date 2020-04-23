@@ -1,11 +1,20 @@
 package com.dhlk.basicmodule.service.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.dhlk.basicmodule.service.service.NetDevicesService;
+import com.dhlk.basicmodule.service.service.TelemetryService;
 import com.dhlk.entity.basicmodule.NetDevices;
+import com.dhlk.entity.basicmodule.ProductDevices;
+import com.google.gson.JsonObject;
 import domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import utils.CheckUtils;
+import utils.ResultUtils;
+
+import java.util.*;
 
 
 /**
@@ -16,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class NetDevicesController {
     @Autowired
     private NetDevicesService netDevicesService;
+    @Autowired
+    private TelemetryService telemetryService;
 
     /**
      * 保存
@@ -62,9 +73,31 @@ public class NetDevicesController {
      * 状态修改启用禁用
      */
     @PostMapping(value = "/isEnable")
-    @RequiresPermissions("metaTable:isEnable")
+    @RequiresPermissions("netDevices:isEnable")
     public Result isEnable(@RequestParam(value = "id", required = true) Integer id,
                            @RequestParam(value = "status", required = true) Integer status) {
         return netDevicesService.isEnable(id,status);
+    }
+
+    @PostMapping("/findOnLineNetDevices")
+    @RequiresPermissions("netDevices:view")
+    public Result findOnLineNetDevices(@RequestBody List<JSONObject> jsonParam) throws Exception {
+        List<JSONObject> result = new ArrayList<>();
+        if (jsonParam != null && jsonParam.size() > 0) {
+            for (int i = 0; i < jsonParam.size(); i++) {
+                JSONObject res = (JSONObject) jsonParam.get(i);
+                Result data = telemetryService.getAttributesByScope(res.get("tbId").toString());
+                if (data.getCode() == 0) {
+                    JSONObject object = (JSONObject) data.getData();
+                    if (object.get("active").toString().equals("true")) {
+                        res.put("onLine", true);
+                    } else {
+                        res.put("onLine", false);
+                    }
+                }
+                result.add(res);
+            }
+        }
+        return ResultUtils.success(result);
     }
 }

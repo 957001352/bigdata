@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 @Api(value = "LoginController", description = "登录登出")
 @RestController
 public class LoginController {
-    @Autowired
-    private RestTemplateUtil restTemplateUtil;
 
     @Autowired
     private LoginService loginService;
@@ -49,7 +47,7 @@ public class LoginController {
     @ApiOperation(value = "获取tb登录token")
     @GetMapping("/getTbToken")
     public Result getTbToken() {
-        return ResultUtils.success(restTemplateUtil.getTbJwtToken());
+        return loginService.getTbToken();
     }
 }
 

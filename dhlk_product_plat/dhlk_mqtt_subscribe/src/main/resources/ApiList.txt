@@ -1,2 +1,1 @@
-url=http://192.168.2.226:8081/attachment/reviceMess1 topic=machine1
-url=http://192.168.2.226:8081/attachment/reviceMess2 topic=machine2
+url=http://192.168.2.226:8081/attachment/reviceMess topic=hive_meta_machine

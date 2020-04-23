@@ -24,7 +24,7 @@ public class ProductNetController {
     @PostMapping(value = "/save")
     @RequiresPermissions("productNet:save")
     public Result save(@RequestParam(value = "netId") String netId,
-                       @RequestParam(value = "productIds") String productIds,
+                       @RequestParam(value = "productIds", required = false) String productIds,
                        @RequestParam(value = "type") Integer type) throws Exception {
         return productNetService.save(netId,productIds,type);
     }

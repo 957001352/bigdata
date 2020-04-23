@@ -63,7 +63,7 @@
         </foreach>
     </delete>
     <select id="selectRoleByUserId" parameterType="Integer" resultMap="RoleResult">
-        SELECT dbr.id,dbr.name FROM `dhlk_basic_user` dbu
+        SELECT distinct dbr.id,dbr.name FROM `dhlk_basic_user` dbu
         LEFT JOIN `dhlk_basic_user_role` dbur ON dbu.id=dbur.`user_id`
         LEFT JOIN `dhlk_basic_role` dbr ON dbur.`role_id`=dbr.`id`
         WHERE dbu.id=#{userId}

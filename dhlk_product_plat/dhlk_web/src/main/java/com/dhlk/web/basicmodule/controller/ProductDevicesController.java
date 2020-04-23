@@ -40,4 +40,24 @@ public class ProductDevicesController {
     public Result delete(@RequestParam(value = "ids") String ids) throws Exception {
         return productDevicesService.delete(ids);
     }
+    /**
+     * 设备属性查询
+     */
+    @ApiOperation("设备属性查询")
+    @GetMapping("/findAttrByClassifyById")
+    public Result findAttrByClassifyById(@RequestParam(value = "classifyId", required = true)String classifyId){
+        return  productDevicesService.findAttrByClassifyById(classifyId);
+    }
+    /**
+     * 按机构查询设备
+     */
+    @GetMapping("/findTreeList")
+    public Result findTreeList() {
+        return  productDevicesService.findTreeList();
+    }
+
+    @GetMapping("/findOnLineDevicesCount")
+    public Result findOnLineDevicesCount(@RequestParam(value = "name", required = false) String name){
+        return  productDevicesService.findOnLineDevicesCount(name);
+    }
 }

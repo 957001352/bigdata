@@ -1,17 +1,22 @@
 package utils;
 
+import org.apache.hadoop.io.IOUtils;
 import domain.BaseFile;
 import domain.Result;
 import domain.UploadFileResult;
 import enums.SystemEnums;
 import exceptions.MyException;
+import org.apache.hadoop.fs.*;
 import org.springframework.web.multipart.MultipartFile;
 import systemconst.Const;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -341,6 +346,48 @@ public class FileUpDownUtils {
             return ResultUtils.error(-1, "下载失败!");
         }
         return ResultUtils.success();
+    }
+
+    /**
+     * @param logPath
+     * @param fileName
+     * @param response
+     * @return domain.Result
+     * @date 2020/4/13 12:01
+     * @author jzhao
+     * @description 多文件生成压缩包下载
+     */
+    public static Result downZipFile(String logPath, String fileName, String zipFileName, HttpServletResponse response) {
+        List<String> nameList = Arrays.asList(fileName.split(","));
+        //初期化ZIP流
+        ZipOutputStream out = null;
+        try {
+            // 文件名转码
+            zipFileName = new String(zipFileName.getBytes("UTF-8"), "iso-8859-1");
+            // 设置response的Header
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/octet-stream");
+            response.addHeader("Content-Disposition", "attachment;filename=" + zipFileName + ".zip");
+            out = new ZipOutputStream(response.getOutputStream());
+            //循环处理传过来的集合
+            for (String name : nameList) {
+                if (FileUtils.getInstance().isExistFile(logPath + name)) {
+                    FileUtils.getInstance().compressZip(new File(logPath + name), name, out);
+                    response.flushBuffer();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResultUtils.error(-1, "下载失败!");
+        } finally {
+            try {
+                //最后关闭ZIP流
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
 }

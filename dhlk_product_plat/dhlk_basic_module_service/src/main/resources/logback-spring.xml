@@ -17,7 +17,7 @@
         如果同时有<File>和<FileNamePattern>，那么当天日志是<File>，明天会自动把今天
         的日志改名为今天的日期。即，<File> 的日志都是当天的。
         -->
-        <file>${log.path}/info.log</file>
+        <file>${log.path}/basic_module_info.log</file>
 		<!--如果只记录info日志，则将此注释放开，如果想包含debug注释，请将此注释去掉-->
        <filter class="ch.qos.logback.classic.filter.LevelFilter">
            <level>INFO</level>
@@ -33,7 +33,7 @@
 		<!--滚动策略，按天输出日志-->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--设置文件保存路径，timeBasedFileNamingAndTriggeringPolicy标签时，这里的%i要加上，不然会导致运行报错-->
-			<fileNamePattern>${log.path}/info.%d-%i.log</fileNamePattern>
+			<fileNamePattern>${log.path}/basic_module_info.%d-%i.log</fileNamePattern>
 			<!-- 配置日志文件不能超过2M，若超过2M，日志文件会以索引0开始，命名日志文件，例如info.2018-12-21-0.log -->
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>100MB</maxFileSize>
@@ -45,7 +45,7 @@
 		</rollingPolicy>
 	</appender>
 	<appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/error.log</file>
+        <file>${log.path}/basic_module_error.log</file>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>ERROR</level>
 		</filter>
@@ -56,7 +56,7 @@
 		<!--滚动策略 按天生成日志-->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--路径-->
-			<fileNamePattern>${log.path}/error.%d.log</fileNamePattern>
+			<fileNamePattern>${log.path}/basic_module_error.%d.log</fileNamePattern>
             <!--日志文件保留天数-->
             <maxHistory>30</maxHistory>
 		</rollingPolicy>

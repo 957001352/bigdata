@@ -23,7 +23,7 @@ public class TelemetryServiceImplTest {
     }
     @Test
     public void getAttributesByScope() throws Exception {
-        Result result=telemetryService.getAttributesByScope(20);
+        Result result=telemetryService.getAttributesByScope("");
         System.out.println(result.getCode()+"---------------"+result.getData());
     }
 }

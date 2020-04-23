@@ -9,10 +9,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api(value = "TelemetryController", description = "遥测数据")
 @RequestMapping(value = "/telemetry")
@@ -24,14 +21,14 @@ public class TelemetryController {
     /**
      * 获取设备的服务端属性
      *
-     * @param deviceId
+     * @param tbId
      * @return
      */
     @ApiOperation("获取设备的服务端属性")
-    @PostMapping(value = "/getAttributesByScope")
+    @GetMapping(value = "/getAttributesByScope")
     //@RequiresPermissions("menu:save")
-    public Result getAttributesByScope(@RequestParam(value="deviceId") Integer deviceId) throws Exception {
-        return telemetryService.getAttributesByScope(deviceId);
+    public Result getAttributesByScope(@RequestParam(value="tbId") String tbId) throws Exception {
+        return telemetryService.getAttributesByScope(tbId);
     }
     /**
      * 获取设备的历史遥测数据
@@ -41,15 +38,15 @@ public class TelemetryController {
      * @return
      */
     @ApiOperation("获取设备的历史遥测数据")
-    @PostMapping(value = "/getTimeseries")
+    @GetMapping(value = "/getTimeseries")
     //@RequiresPermissions("menu:save")
     public Result getTimeseries(@RequestParam(value="deviceId")Integer deviceId,
                                 @RequestParam(name = "keys") String keys,
-                                @RequestParam(name = "startTs") Long startTs,
-                                @RequestParam(name = "endTs") Long endTs,
+                                @RequestParam(name = "startTs", defaultValue = "0") Long startTs,
+                                @RequestParam(name = "endTs", defaultValue = "0") Long endTs,
                                 @RequestParam(name = "interval", defaultValue = "0") Long interval,
                                 @RequestParam(name = "limit", defaultValue = "100") Integer limit,
-                                @RequestParam(name = "agg", defaultValue = "NONE") String aggStr) throws Exception {
-        return telemetryService.getTimeseries(deviceId,keys,startTs,endTs,interval,limit,aggStr);
+                                @RequestParam(name = "agg", defaultValue = "NONE") String agg) throws Exception {
+        return telemetryService.getTimeseries(deviceId,keys,startTs,endTs,interval,limit,agg);
     }
 }

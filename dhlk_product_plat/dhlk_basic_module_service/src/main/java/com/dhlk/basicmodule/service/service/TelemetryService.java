@@ -8,5 +8,5 @@ public interface TelemetryService {
 
     public Result getLatestTimeseries(Integer deviceId,String keys) throws Exception;
 
-    public Result getAttributesByScope(Integer deviceId) throws Exception;
+    public Result getAttributesByScope(String tbId) throws Exception;
 }

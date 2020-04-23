@@ -1,7 +1,23 @@
 package com.dhlk.web.basicmodule.service;
 
+import com.dhlk.web.basicmodule.service.fbk.EventServiceFbk;
+import com.dhlk.web.basicmodule.service.fbk.NetDevicesServiceFbk;
 import domain.Result;
-
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+@FeignClient(value = "basicmodule-service/event", fallback = EventServiceFbk.class)
 public interface EventService {
-    public Result getAlarms(Integer deviceId, String searchStatus, String status, int limit, Long startTime, Long endTime, boolean ascOrder, String offset, Boolean fetchOriginator) throws Exception;
-}
+    @GetMapping(value = "/getAlarms")
+    public Result getAlarms(@RequestParam(value="deviceId")Integer deviceId,
+                            @RequestParam(value="searchStatus",required = false) String searchStatus,
+                            @RequestParam(value="status",required = false) String status,
+                            @RequestParam(value="limit",required = true) int limit,
+                            @RequestParam(value="startTime",required = false) Long startTime,
+                            @RequestParam(value="endTime",required = false) Long endTime,
+                            @RequestParam(value="ascOrder",required = false, defaultValue = "false") boolean ascOrder,
+                            @RequestParam(value="offset",required = false) String offset,
+                            @RequestParam(value="fetchOriginator",required = false) Boolean fetchOriginator) throws Exception;
+
+    }

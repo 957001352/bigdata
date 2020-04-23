@@ -8,6 +8,7 @@ import com.dhlk.basicmodule.service.service.UserService;
 import com.dhlk.basicmodule.service.shiro.JWTUtil;
 import com.dhlk.basicmodule.service.util.HttpContextUtil;
 import com.dhlk.basicmodule.service.util.IPUtil;
+import com.dhlk.basicmodule.service.util.RestTemplateUtil;
 import com.dhlk.entity.basicmodule.LoginLog;
 import com.dhlk.entity.basicmodule.Menu;
 import com.dhlk.entity.basicmodule.User;
@@ -46,16 +47,19 @@ public class LoginServiceImpl implements LoginService {
     private UserDao userDao;
     @Autowired
     private RedisBasicService redisService;
+    @Autowired
+    private RestTemplateUtil restTemplateUtil;
 
     @Override
     public Result login(String loginName, String password,String kaptcha) {
-        if(CheckUtils.isNull(kaptcha) || CheckUtils.isNull(kaptcha) || CheckUtils.isNull(kaptcha)){
+        if(CheckUtils.isNull(loginName) || CheckUtils.isNull(password) || CheckUtils.isNull(kaptcha)){
           return ResultUtils.error(ResultEnum.PARAM_ERR);
         }
         Boolean flag = redisService.hasKeyAndItem("loginKaptcha", kaptcha.toLowerCase());
         if(CheckUtils.isNull(flag) || !flag){
             return ResultUtils.error(ResultEnum.KAPTCHA_ERR.getStateInfo());
         }
+
         password = EncryUtils.md5(password, loginName);
 
         User userBean = userService.getUserByLoginName(loginName);
@@ -123,11 +127,18 @@ public class LoginServiceImpl implements LoginService {
             String base64Str="data:image/jpeg;base64," + new String(base64Img).replaceAll("\n", "");
             map.put("base64Str", base64Str);
             map.put("code", code);
-            redisService.hset("loginKaptcha",code,base64Str,120);//5分钟验证码失效
+            redisService.hset("loginKaptcha",code,base64Str,60);//60秒验证码失效
             return ResultUtils.success(map);
         } catch (IOException e) {
             e.printStackTrace();
             return ResultUtils.failure();
         }
+    }
+
+    @Override
+    public Result getTbToken() {
+        String tbJwtToken = restTemplateUtil.getTbJwtToken();
+        String res = tbJwtToken.replace("Bearer ", "");
+        return ResultUtils.success(res);
     }
 }

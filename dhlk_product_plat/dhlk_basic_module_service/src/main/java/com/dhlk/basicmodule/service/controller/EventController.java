@@ -6,10 +6,7 @@ import domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api(value = "EventController", description = "事件")
 @RequestMapping(value = "/event")
@@ -17,9 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventController {
     @Autowired
     private EventService eventService;
-
+    /**
+     * 获取设备的警告信息
+     *
+     * @param deviceId
+     * @return
+     */
     @ApiOperation("获取设备的警告信息")
-    @PostMapping(value = "/getAttributesByScope")
+    @GetMapping(value = "/getAlarms")
     public Result getAlarms(@RequestParam(value="deviceId")Integer deviceId,
                             @RequestParam(value="searchStatus",required = false) String searchStatus,
                             @RequestParam(value="status",required = false) String status,

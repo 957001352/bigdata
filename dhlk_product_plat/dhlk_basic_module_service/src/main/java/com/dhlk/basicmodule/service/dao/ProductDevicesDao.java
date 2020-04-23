@@ -37,4 +37,9 @@ public interface ProductDevicesDao {
     Integer isBoundClassify(String classifyId);
 
 
+    List<ProductDevices> findProductDevicesByOrgId(@Param("orgId") String orgId, @Param("attachPath") String attachPath);
+
+
+
+    Integer findProductDevicesCountByOrgId(Integer orgId);
 }

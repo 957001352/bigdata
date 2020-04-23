@@ -27,7 +27,7 @@ public class NameCheckValidator implements ConstraintValidator<NameCheck, Object
     *
     * @param constraint
     */
-   public void initialize(AdminIDCheck constraint) {
+   public void initialize(NameCheck constraint) {
       this.message = constraint.message();
       this.minLength = constraint.minLength();
       this.maxLength = constraint.maxLength();

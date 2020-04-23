@@ -36,5 +36,5 @@ public class NetDevices implements Serializable {
     private List<ProductDevices> productDevicesList;//生产设备列表
 
     @ApiModelProperty(hidden = true)
-    private List<ProductDevices> netDevicesList;//网络设备列表
+    private List<NetDevices> netDevicesList;//网络设备列表
 }

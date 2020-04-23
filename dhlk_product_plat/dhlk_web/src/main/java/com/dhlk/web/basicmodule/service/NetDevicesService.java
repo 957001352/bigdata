@@ -1,5 +1,7 @@
 package com.dhlk.web.basicmodule.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.dhlk.entity.basicmodule.NetDevices;
 import com.dhlk.web.basicmodule.service.fbk.NetDevicesServiceFbk;
 import domain.Result;
@@ -8,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 生产设备管理
@@ -44,4 +49,7 @@ public interface NetDevicesService {
     @PostMapping(value = "/isEnable")
     Result isEnable(@RequestParam(value = "id", required = true) Integer id,
                     @RequestParam(value = "status", required = true) Integer status);
+
+    @PostMapping("/findOnLineNetDevices")
+    Result findOnLineNetDevices(@RequestBody List<JSONObject>  jsonParam);
 }

@@ -26,7 +26,7 @@ public class ProductNetController {
     @ApiOperation("新增/修改")
     @PostMapping(value = "/save")
     public Result save(@RequestParam(value = "netId") String netId,
-                       @RequestParam(value = "productIds") String productIds,
+                       @RequestParam(value = "productIds", required = false) String productIds,
                        @RequestParam(value = "type") Integer type) {
         return productNetService.save(netId,productIds,type);
     }

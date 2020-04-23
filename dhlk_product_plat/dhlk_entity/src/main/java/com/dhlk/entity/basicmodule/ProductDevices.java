@@ -30,4 +30,6 @@ public class ProductDevices implements Serializable {
     private List<LinkedHashMap<String,String>> attrSet;
     @ApiModelProperty(hidden = true)
     private LinkedHashMap<String,String> classifySet;
+    @ApiModelProperty(hidden = true)
+    private List<NetDevices> netDevicesList;//网络设备列表
 }

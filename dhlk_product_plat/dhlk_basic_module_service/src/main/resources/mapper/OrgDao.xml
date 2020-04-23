@@ -48,7 +48,7 @@
 
     <select id="findList" parameterType="Integer" resultMap="DhlkBasicOrgResult">
         <include refid="selectDhlkBasicOrgVo"/>
-        where parent_id = #{parentId}
+        where parent_id = #{parentId} and status = 0
     </select>
 
     <select id="findById" parameterType="Integer" resultMap="DhlkBasicOrgResult">
@@ -65,6 +65,14 @@
         <include refid="selectDhlkBasicOrgVo"/>
         where
         status = #{status}
+    </select>
+
+    <select id="isRepeatName" resultType="java.lang.Integer">
+        select count(*) from dhlk_basic_org
+        where name = #{name} and parent_id = #{parentId}
+        <if test="id!= null and id != ''">
+            AND id!=#{id}
+        </if>
     </select>
 
     <insert id="insert" parameterType="com.dhlk.entity.basicmodule.Org" useGeneratedKeys="true" keyProperty="id">

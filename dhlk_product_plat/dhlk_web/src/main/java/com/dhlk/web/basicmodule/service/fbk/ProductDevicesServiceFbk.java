@@ -29,4 +29,18 @@ public class ProductDevicesServiceFbk implements ProductDevicesService {
         return ResultUtils.error(ResultEnum.NETWORK_ERR);
     }
 
+    @Override
+    public Result findAttrByClassifyById(String classifyId) {
+        return ResultUtils.error(ResultEnum.NETWORK_ERR);
+    }
+
+    @Override
+    public Result findTreeList() {
+        return ResultUtils.error(ResultEnum.NETWORK_ERR);
+    }
+
+    @Override
+    public Result findOnLineDevicesCount(String name) {
+        return ResultUtils.error(ResultEnum.NETWORK_ERR);
+    }
 }

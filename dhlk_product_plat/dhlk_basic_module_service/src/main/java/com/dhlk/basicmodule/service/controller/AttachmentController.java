@@ -40,7 +40,7 @@ public class AttachmentController {
                          @RequestParam(value = "isAdd") boolean isAdd,
                          @RequestParam(value = "dataId",required = false) String dataId) throws Exception {
         // 上传附件
-        FileUpDownUtils fileUpload=new FileUpDownUtils(attachmentPath+DateUtils.getToday()+"\\",file);
+        FileUpDownUtils fileUpload=new FileUpDownUtils(attachmentPath+DateUtils.getToday(),file);
         Result result= fileUpload.execUploadFile(file,dataId);
         // 上传成功，保存附件记录
         if (0 == result.getCode()) {

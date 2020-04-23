@@ -7,12 +7,15 @@ import exceptions.MyException;
 import org.apache.poi.poifs.filesystem.DirectoryEntry;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.web.multipart.MultipartFile;
+import sun.rmi.log.ReliableLog;
 import systemconst.Const;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.channels.FileChannel;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -424,7 +427,7 @@ public class FileUtils {
      * @param out
      * @throws IOException
      */
-    public  void compressZip(File file, String name, ZipOutputStream out) throws IOException {
+    public void compressZip(File file, String name, ZipOutputStream out) throws IOException {
         ZipEntry entry = new ZipEntry(name);
         out.putNextEntry(entry);
         int len;
@@ -467,6 +470,62 @@ public class FileUtils {
     }
 
     /**
+     * 获取目录下所有文件
+     *
+     * @param path   文件路径
+     * @param suffix 是否需要后缀
+     * @return
+     */
+    public List<Map<String, String>> findFileByPath(String path, boolean suffix) {
+        File file = new File(path);
+        File[] fileList = file.listFiles();
+        List<File> newList = Arrays.asList(fileList);
+        // 按修改时间排序
+        Collections.sort(newList, Comparator.comparing(o -> o.lastModified()));
+        List<Map<String, String>> list = new ArrayList<>();
+        Map<String, String> fileMap = null;
+        if (newList != null) {
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i).isFile()) {
+                    fileMap = new HashMap<>();
+                    fileMap.put("filePath", newList.get(i).getPath());
+                    fileMap.put("fileSize", formatFileSize(newList.get(i).length()));
+                    fileMap.put("fileTime", Convert.formatDateTime(newList.get(i).lastModified(), "yyyy-MM-dd HH:mm:ss"));
+                    if (suffix) {
+                        fileMap.put("fileName", newList.get(i).getName());
+                    } else {
+                        fileMap.put("fileName", newList.get(i).getName().substring(0, newList.get(i).getName().lastIndexOf(".")));
+                    }
+                    list.add(fileMap);
+                }
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 转换文件大小
+     */
+    public static String formatFileSize(long fileS) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        String wrongSize = "0B";
+        if (fileS == 0) {
+            return wrongSize;
+        }
+        if (fileS < 1024) {
+            fileSizeString = df.format((double) fileS) + "B";
+        } else if (fileS < 1048576) {
+            fileSizeString = df.format((double) fileS / 1024) + "KB";
+        } else if (fileS < 1073741824) {
+            fileSizeString = df.format((double) fileS / 1048576) + "MB";
+        } else {
+            fileSizeString = df.format((double) fileS / 1073741824) + "GB";
+        }
+        return fileSizeString;
+    }
+
+    /**
      * 检测文件是否被占用
      *
      * @return
@@ -501,6 +560,7 @@ public class FileUtils {
             file.getParentFile().mkdirs();
         }
     }
+
     /**
      * 判断文件是否存在
      *
@@ -510,6 +570,7 @@ public class FileUtils {
     public static boolean exists(String path) {
         return new File(path).exists();
     }
+
     /**
      * 拷贝文件
      *

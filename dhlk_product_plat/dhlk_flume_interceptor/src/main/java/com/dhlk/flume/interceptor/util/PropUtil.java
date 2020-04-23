@@ -1,7 +1,7 @@
 package com.dhlk.flume.interceptor.util;
 
-import java.io.File;
-import java.io.FileInputStream;
+import org.apache.velocity.texen.util.PropertiesUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -19,7 +19,7 @@ public class PropUtil {
     */
     public static String getValue(String key){
         Properties prop = new Properties();
-        InputStream in = new org.apache.velocity.texen.util.PropertiesUtil().getClass().getResourceAsStream("/application.yml");
+        InputStream in = new PropertiesUtil().getClass().getResourceAsStream("/application.yml");
         try {
             prop.load(in);
         } catch (IOException e) {

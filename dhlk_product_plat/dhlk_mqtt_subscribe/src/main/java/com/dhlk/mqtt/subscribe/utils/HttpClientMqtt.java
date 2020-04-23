@@ -10,7 +10,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.SocketUtils;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -25,14 +27,15 @@ import java.util.Map;
 public class HttpClientMqtt {
 
     //config
-    public static final String HOST = "tcp://192.168.2.161:1883";
-    public static final String TOPIC = "machine";
-    private static final String clientid = "dhlk_plat_client";
-    private Map<String,String> apiList=null;
+    public  String HOST = PropUtil.getValue("host");//hdfs 访问地址
+    public  String TOPIC = PropUtil.getValue("topic");//默认主题
+    private String clientid = PropUtil.getValue("clientid");//客户端id
+    private Map<String,String> apiList=null;//请求接口集合
     private MqttClient client;
     private MqttConnectOptions options;
     private String userName = "admin";
     private String passWord = "password";
+    private CloseableHttpClient httpClient;//httpClint客户端
 
     public void start() {
         try {
@@ -51,7 +54,7 @@ public class HttpClientMqtt {
             // 设置会话心跳时间 单位为秒 服务器会每隔1.5*20秒的时间向客户端发送个消息判断客户端是否在线，但这个方法并没有重连的机制
             options.setKeepAliveInterval(20);
 
-            CloseableHttpClient httpClient = HttpClients.createDefault();
+            httpClient = HttpClients.createDefault();
             //读取转发请求接口
             apiList=this.readApiList();
             // 设置回调
@@ -72,13 +75,15 @@ public class HttpClientMqtt {
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     try {
                         for(Map.Entry<String, String> entry : apiList.entrySet()){
-                            String url = entry.getKey();
-                            String top = entry.getValue();
+                            String url = entry.getKey().trim();
+                            System.out.println(url);
+                            String table = entry.getValue();
                             JSONObject object=JSONObject.parseObject(message.toString());
-                            doPost(httpClient,url,message.toString());
+                            System.out.println(JSONObject.toJSONString(object.get("after")));
+                            if(object.get("table").toString().equals(table)){
+                                doPost(httpClient,url,JSONObject.toJSONString(object.get("after")));
+                            }
                         }
-
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

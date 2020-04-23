@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import utils.ResultUtils;
 
 /**
 * 登录
@@ -38,6 +39,12 @@ public class LoginController {
     @GetMapping("/kaptcha")
     public Result kaptcha() {
         return loginService.kaptcha();
+    }
+
+    @ApiOperation(value = "获取tb登录token")
+    @GetMapping("/getTbToken")
+    public Result getTbToken() {
+        return loginService.getTbToken();
     }
 
 }

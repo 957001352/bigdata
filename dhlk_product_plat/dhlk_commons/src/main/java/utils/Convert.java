@@ -75,18 +75,24 @@ public class Convert {
     }
 
     /**
-     * 字符转成时间戳
+     * 格式化日期
      *
-     * @param str String
-     * @return long
+     * @param str       待格式化的日期类字符
+     * @param formatStr 格式 yyyy-MM-dd, yyyy-MM-dd hh:mm:ss ...
+     * @return String
      */
-    public static long stringToLongTimeStamp(String str) {
-        if (str == null || !CheckUtils.isDate(str)) {
-            return 0;
+    public static String formatDateTime(Long str, String formatStr) {
+        if (CheckUtils.isNull(formatStr)) {
+            formatStr = "yyyy-MM-dd";
         }
-        Date date = strToDate(str, "yyyy-MM-dd hh:mm:ss");
-        long time = date.getTime();
-        return time;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(formatStr);
+            String re = format.format(str);
+            return re;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     /**

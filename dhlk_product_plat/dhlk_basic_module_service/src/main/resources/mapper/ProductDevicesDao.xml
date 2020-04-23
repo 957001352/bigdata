@@ -24,7 +24,17 @@
         <result property="classifyId"     column="classify_id"    />
         <collection property="attrSet" column="classify_id" select="com.dhlk.basicmodule.service.dao.DevicesClassifyDao.findAttrSetByClassifyById" />
         <collection property="classifySet" column="{classifyId=classify_id,attachPath=attachPath}" select="findClassifyByPruductId" />
+        <collection property="netDevicesList" column="id" select="findBiList" />
     </resultMap>
+
+    <select id="findBiList" resultType="com.dhlk.entity.basicmodule.NetDevices">
+                select t.* from dhlk_basic_net_devices t
+                left join  dhlk_basic_product_net n on t.id=n.net_id
+                where n.type in(2,3,4) and n.product_id=#{netId}
+    </select>
+
+
+
     <resultMap type="java.util.LinkedHashMap" id="devicesClassifyResult">
         <id column="id" property="id"/>
         <collection property="imagePath" javaType="String"
@@ -64,5 +74,26 @@
 
     <select id="isBoundClassify" parameterType="java.lang.String" resultType="Integer">
         select count(*) from dhlk_basic_product_devices where classify_id = #{classifyId}
+    </select>
+
+
+    <select id="findProductDevicesByOrgId"  resultMap="productDevicesResult">
+        select t.*,#{attachPath} attachPath,d.classify_name
+        from dhlk_basic_product_devices t
+        left join dhlk_basic_devices_classify d on t.classify_id=d.id
+        where t.status!=2
+        <if test="orgId != null and orgId != ''">
+            and t.org_id = #{orgId}
+        </if>
+    </select>
+    <select id="findProductDevicesCountByOrgId"  resultType="java.lang.Integer">
+       	select   count(1) from dhlk_basic_product_devices where org_id in(
+            select t3.id from (
+                  select t1.id,IF(FIND_IN_SET(parent_id, @pids) > 0, @pids := CONCAT(@pids, ',', id), 0) AS ischild
+                  from (select id,parent_id from dhlk_basic_org t order by parent_id, id) t1,
+                       (select @pids := #{orgId}) t2
+             ) t3 where ischild != 0
+            union all select id from dhlk_basic_org where id =#{orgId}
+		)
     </select>
 </mapper>

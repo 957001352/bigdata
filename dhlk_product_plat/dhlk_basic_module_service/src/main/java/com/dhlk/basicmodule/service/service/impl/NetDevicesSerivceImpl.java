@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import service.RedisBasicService;
 import systemconst.Const;
 import utils.CheckUtils;
@@ -51,6 +52,7 @@ public class NetDevicesSerivceImpl implements NetDevicesService {
     private RestTemplateUtil restTemplateUtil;
     @Value("${tb.baseUrl}")
     private String tbBaseUrl;
+
 
     @Override
     @Transactional
@@ -99,6 +101,7 @@ public class NetDevicesSerivceImpl implements NetDevicesService {
                     //成功
                     return ResultUtils.success();
                 } catch (RuntimeException e) {
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     e.printStackTrace();
                     //失败 删除保存到tb中的数据
                     HttpClientUtils.doDeleteHeaders(tbBaseUrl+Const.TBDELETEDEVICEBYID + "/" + netDevices.getTbId(),restTemplateUtil.getHeaders(true));
@@ -150,6 +153,7 @@ public class NetDevicesSerivceImpl implements NetDevicesService {
                         //成功
                         return ResultUtils.success();
                     } catch (RuntimeException e) {
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                         Map device = HttpClientUtils.resultToMap(resTbBack);
                         //Map<String,Object> device=resTbBack.getBody();
                         String name=device.get("name").toString();

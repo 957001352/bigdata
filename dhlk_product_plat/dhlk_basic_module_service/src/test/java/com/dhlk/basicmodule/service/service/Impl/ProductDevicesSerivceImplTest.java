@@ -117,13 +117,13 @@ public class ProductDevicesSerivceImplTest {
     }
     @Test
     public void test5(){
-        Result result = productDevicesService.testDevice("3");
-        List<String> list=(List<String>)result.getData();
+       /* Result result = productDevicesService.testDevice("3");
+        List<String> list=(List<String>)result.getData();*/
        /* for(){
 
         }*/
-        System.out.println(JSON.toJSONString(list));
-        System.out.println(result.getData());
+        /*System.out.println(JSON.toJSONString(list));
+        System.out.println(result.getData());*/
     }
     @Test
     public void test6(){

@@ -60,7 +60,7 @@ public class RestTemplateUtil {
         ResponseEntity<Map> responseEntity =restTemplateExchange(Const.TBUSERLOGIN, HttpMethod.POST, user, Map.class,false);
         //在登录tb成功之后，把返回的token存到redis中
         redisService.set("tbJwtToken","Bearer "+responseEntity.getBody().get("token"),3600);
-        return  responseEntity.getBody().get("token").toString();
+        return  "Bearer "+responseEntity.getBody().get("token");
     }
 
     /*Get请求

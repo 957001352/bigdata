@@ -1,6 +1,7 @@
 package com.dhlk.entity.basicmodule;
 
 import annotation.AdminIDCheck;
+import annotation.NameCheck;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -19,7 +20,7 @@ public class Org implements Serializable {
     private String code;
 
     /** 机构名称 */
-    @NotBlank(message = "机构名称不能为空")
+    @NameCheck(message = "请填写正确的机构名称，2-50位的汉字、数字和字母",maxLength = 50)
     private String name;
 
     /** 父机构 */

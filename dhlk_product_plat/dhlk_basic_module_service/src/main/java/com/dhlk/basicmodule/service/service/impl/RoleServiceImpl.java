@@ -156,7 +156,11 @@ public class RoleServiceImpl implements RoleService {
         boolean flag=true;
         for (String roleId : roleIdList) {
             List<User> users = roleDao.selectUserByRoleId(Integer.parseInt(roleId));
-            if (users != null) { //用户拥有该角色
+            System.out.println("users--------"+users.toString());
+            if(users!=null && users.get(0)==null){
+                users.clear();
+            }
+            if (users != null &&  users.size()>0) { //用户拥有该角色
                flag=false;
                break;
             }

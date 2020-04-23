@@ -1,6 +1,5 @@
 package annotation.validators;
 
-import annotation.AdminIDCheck;
 import annotation.LoginNameCheck;
 import utils.CheckUtils;
 
@@ -26,7 +25,7 @@ public class LoginNameCheckValidator implements ConstraintValidator<LoginNameChe
     *
     * @param constraint
     */
-   public void initialize(AdminIDCheck constraint) {
+   public void initialize(LoginNameCheck constraint) {
       this.message = constraint.message();
       this.minLength = constraint.minLength();
       this.maxLength = constraint.maxLength();

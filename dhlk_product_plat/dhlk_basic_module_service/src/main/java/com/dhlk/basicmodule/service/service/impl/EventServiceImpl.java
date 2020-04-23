@@ -35,25 +35,15 @@ public class EventServiceImpl implements EventService {
         Map<String, String> params=new HashMap<String, String>();
         params.put("searchStatus",searchStatus);
         params.put("limit",""+limit);
-        params.put("startTime",startTime.toString());
-        params.put("endTime",endTime.toString());
+        if(startTime!=null && endTime!=null){
+            params.put("startTime",startTime.toString());
+            params.put("endTime",endTime.toString());
+        }
         params.put("ascOrder",""+ascOrder);
         params.put("offset",offset);
         params.put("fetchOriginator",fetchOriginator.toString());
         HttpClientResult httpClientResult = HttpClientUtils.doGet(api, restTemplateUtil.getHeaders(true), params);
-        /*JSONObject json=new JSONObject();
-
-        List list = JSON.parseObject(httpClientResult.getContent(), List.class);
-        System.out.println("list-----------"+list);
-        for(Object ll:list){
-            Map map = JSON.parseObject(ll.toString(), Map.class);
-            if(map.get("key").equals("active")){
-                json.put("active",map.get("value"));
-            }
-
-        }
-        System.out.println("json-----------"+json.toJSONString());*/
         System.out.println("httpClientResult-----------"+httpClientResult.getContent());
-        return ResultUtils.success();
+        return ResultUtils.success(JSON.parse(httpClientResult.getContent()));
     }
 }

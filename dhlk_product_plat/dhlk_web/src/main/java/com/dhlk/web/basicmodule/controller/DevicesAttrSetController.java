@@ -5,7 +5,11 @@ import com.dhlk.web.basicmodule.service.DevicesAttrSetService;
 import domain.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import utils.ResultUtils;
+
+import javax.validation.Valid;
 
 
 /**
@@ -24,8 +28,12 @@ public class DevicesAttrSetController {
      * 新增/修改
      */
     @PostMapping(value = "/save")
-    public Result save(@RequestBody DevicesAttrSet devicesAttrSet) {
-        return devicesAttrSetService.save(devicesAttrSet);
+    public Result save(@Valid @RequestBody DevicesAttrSet devicesAttrSet, BindingResult bindingResult) {
+        Result result = ResultUtils.loadResult(bindingResult);
+        if(result == null){
+            return devicesAttrSetService.save(devicesAttrSet);
+        }
+        return result;
     }
     /**
      * 删除

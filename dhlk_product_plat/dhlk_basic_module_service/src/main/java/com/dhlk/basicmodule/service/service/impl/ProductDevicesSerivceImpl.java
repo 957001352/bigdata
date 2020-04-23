@@ -3,31 +3,32 @@ package com.dhlk.basicmodule.service.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dhlk.basicmodule.service.dao.DevicesClassifyDao;
+import com.dhlk.basicmodule.service.dao.OrgDao;
 import com.dhlk.basicmodule.service.dao.ProductDevicesDao;
+import com.dhlk.basicmodule.service.dao.UserDao;
 import com.dhlk.basicmodule.service.service.ProductDevicesService;
 import com.dhlk.basicmodule.service.service.RedisService;
 import com.dhlk.basicmodule.service.util.RestTemplateUtil;
-import com.dhlk.entity.basicmodule.NetDevices;
-import com.dhlk.entity.basicmodule.ProductDevices;
+import com.dhlk.entity.api.ApiClassify;
+import com.dhlk.entity.basicmodule.*;
 import com.dhlk.entity.tb.AdditionalInfo;
 import com.dhlk.entity.tb.Id;
 import com.dhlk.entity.tb.TbProductDevices;
 import com.dhlk.entity.tb.credentials.DeviceCredentials;
 import com.dhlk.entity.tb.credentials.DeviceId;
 import domain.Result;
+import domain.Tree;
 import enums.ResultEnum;
 import exceptions.MyException;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import service.RedisBasicService;
 import systemconst.Const;
-import utils.CheckUtils;
-import utils.HttpClientResult;
-import utils.HttpClientUtils;
-import utils.ResultUtils;
+import utils.*;
 
 import java.util.*;
 
@@ -49,6 +50,12 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
 
     @Autowired
     private RedisService redisService;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private OrgDao orgDao;
 
     @Value("${tb.baseUrl}")
     private String tbBaseUrl;
@@ -272,12 +279,13 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
     }
 
     @Override
-    public Result testDevice(String classifyId){
-        //把dhlk设备属性保存到对应的tb设备的共享属性中
+    public Result findAttrByClassifyById(String classifyId){
+        //获取dhlk设备属性
         List<String> list= devicesClassifyDao.findAttrByClassifyById(classifyId);
-        //System.out.println(list);
         return ResultUtils.success(list);
     }
+
+
     private void saveAttrToTb(ProductDevices productDevices) throws Exception {
         //把dhlk设备属性保存到对应的tb设备的共享属性中
         List<String> list=devicesClassifyDao.findAttrByClassifyById(productDevices.getClassifyId());
@@ -310,4 +318,83 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
         //System.out.println(responseEntity.getBody());
         return ResultUtils.success(responseHttpClientResult.getContent());
     }
+
+
+
+    @Override
+    public Result findTreeList(){
+        List<Org> orgs=orgDao.treeList(0);
+        List<ProductDevicesTree> treeList = new ArrayList<>();
+        //遍历机构数，查询机构下人数和绑定的生产设备
+        for (Org org:orgs) {
+            //查询该机构下人数
+            List<User> userByOrgIds = userDao.findUserByOrgId(org.getId());
+            //查询该机构及下级机构是否有生产设备
+            Integer c = productDevicesDao.findProductDevicesCountByOrgId(org.getId());
+            org.setStaffNum(userByOrgIds.size());
+            ProductDevicesTree tree = new ProductDevicesTree();
+            tree.setId(org.getId().toString());
+            tree.setParentId(org.getParentId().toString());
+            tree.setTitle(org.getName());
+            tree.setStaffNum(org.getStaffNum());
+            //当c>0说明该机构或其下级机构绑定了生产设备
+            if(c>0){
+                tree.setComponent("isShow");
+            }
+            treeList.add(tree);
+            treeList=this.productDevicesToTree(treeList,tree.getId());
+        }
+        List<ProductDevicesTree> treeLi = new ArrayList<ProductDevicesTree>();
+        for (ProductDevicesTree tree : treeList) {
+            if (tree.getParentId().equals("0")) {
+                tree.initChildren();
+                treeBuilder(tree, treeList);
+                if(!CheckUtils.isNull(tree.getComponent())&&tree.getComponent().equals("isShow")) {
+                    treeLi.add(tree);
+                }
+            }
+        }
+        return ResultUtils.success(treeLi);
+    }
+    /**
+    *  查询该机构下生产设备
+     * @param trees
+     * @param orgId
+    * @return
+    */
+    private List<ProductDevicesTree> productDevicesToTree(List<ProductDevicesTree> trees,String orgId) {
+        List<ProductDevices> productDevices = productDevicesDao.findProductDevicesByOrgId(orgId,attachmentPath);
+        if(productDevices!=null&&productDevices.size()>0){
+            for (ProductDevices pd : productDevices) {
+                ProductDevicesTree tree = new ProductDevicesTree();
+                tree.setComponent("isShow");
+                tree.setId(pd.getTbId());
+                tree.setParentId(orgId);
+                tree.setTitle(pd.getName());
+                tree.setName(pd.getName());
+                tree.setClassifyName(pd.getClassifyName());
+                tree.setClassifySet(pd.getClassifySet());
+                tree.setNetDevicesList(pd.getNetDevicesList());
+                trees.add(tree);
+            }
+        }
+        return trees;
+    }
+    //递归组装树机构
+    private void treeBuilder(ProductDevicesTree tree, List<ProductDevicesTree> trees) {
+        for (ProductDevicesTree child : trees) {
+            if (child.getChildren() == null){
+                child.initChildren();
+            }
+            if (tree.getId().equals(child.getParentId())) {
+                tree.setHasChildren(true);
+                child.setHasParent(true);
+                if(!CheckUtils.isNull(child.getComponent())&&child.getComponent().equals("isShow")){
+                    treeBuilder(child, trees);
+                    tree.getChildren().add(child);
+                }
+            }
+        }
+    }
+
 }

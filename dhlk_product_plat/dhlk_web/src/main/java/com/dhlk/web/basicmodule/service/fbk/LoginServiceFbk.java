@@ -26,4 +26,9 @@ public class LoginServiceFbk implements LoginService {
     public Result kaptcha() {
         return ResultUtils.error(ResultEnum.NETWORK_ERR);
     }
+
+    @Override
+    public Result getTbToken() {
+        return ResultUtils.error(ResultEnum.NETWORK_ERR);
+    }
 }

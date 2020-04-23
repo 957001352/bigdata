@@ -29,7 +29,7 @@ public class TelemetryServiceImpl implements TelemetryService {
     private String tbBaseUrl;
 
     @Override
-    public Result getTimeseries(Integer deviceId, String keys, Long startTs,Long endTs,Long interval,Integer limit,String aggStr) throws Exception {
+    public Result getTimeseries(Integer deviceId, String keys, Long startTs,Long endTs,Long interval,Integer limit,String agg) throws Exception {
         ProductDevices pd = productDevicesDao.findProductDevicesById(deviceId);
         ///api/plugins/telemetry/{entityType}/{entityId}/values/timeseries
         String api = tbBaseUrl+ Const.GETTIMESERIES + "/DEVICE/" + pd.getTbId()+"/values/timeseries";
@@ -39,10 +39,11 @@ public class TelemetryServiceImpl implements TelemetryService {
         params.put("endTs",endTs.toString());
         params.put("interval",interval.toString());
         params.put("limit",limit.toString());
-        params.put("aggStr",aggStr);
+        params.put("agg",agg);
         HttpClientResult httpClientResult = HttpClientUtils.doGet(api, restTemplateUtil.getHeaders(true), params);
         System.out.println("2222"+httpClientResult.getContent());
-        return ResultUtils.success(httpClientResult.getContent());
+
+        return ResultUtils.success(JSONObject.parseObject(httpClientResult.getContent()));
     }
 
     @Override
@@ -52,25 +53,28 @@ public class TelemetryServiceImpl implements TelemetryService {
     }
 
     @Override
-    public Result getAttributesByScope(Integer deviceId) throws Exception {
-        ProductDevices pd = productDevicesDao.findProductDevicesById(deviceId);
+    public Result getAttributesByScope(String tbId) throws Exception {
+        //ProductDevices pd = productDevicesDao.findProductDevicesById(deviceId);
         //   /api/plugins/telemetry/{entityType}/{entityId}/values/attributes/{scope}{?keys}
-        String api = tbBaseUrl+ Const.GETTIMESERIES + "/DEVICE/" + pd.getTbId()+"/values/attributes/SERVER_SCOPE";
+        String api = tbBaseUrl+ Const.GETTIMESERIES + "/DEVICE/" + tbId+"/values/attributes/SERVER_SCOPE";
         Map<String, Object> params=new HashMap<String, Object>();
         //params.put("keys",keys);
         HttpClientResult httpClientResult = HttpClientUtils.doGet(api, restTemplateUtil.getHeaders(true), null);
+        System.out.println("httpClientResult-----------"+httpClientResult.getContent());
         JSONObject json=new JSONObject();
-
-        List list = JSON.parseObject(httpClientResult.getContent(), List.class);
-        System.out.println("list-----------"+list);
-        for(Object ll:list){
-          Map map = JSON.parseObject(ll.toString(), Map.class);
-          if(map.get("key").equals("active")){
-              json.put("active",map.get("value"));
-          }
-
+        if(httpClientResult.getCode()==200){
+           List list = JSON.parseObject(httpClientResult.getContent(), List.class);
+           System.out.println("list-----------"+list);
+           for(Object ll:list){
+               Map map = JSON.parseObject(ll.toString(), Map.class);
+               if(map.get("key").equals("active")){
+                   json.put("active",map.get("value"));
+               }
+           }
+           System.out.println("json-----------"+json.toJSONString());
+       }else {
+            json.put("active",false);
         }
-        System.out.println("json-----------"+json.toJSONString());
-        return ResultUtils.success(json.toJSONString());
+        return ResultUtils.success(json);
     }
 }

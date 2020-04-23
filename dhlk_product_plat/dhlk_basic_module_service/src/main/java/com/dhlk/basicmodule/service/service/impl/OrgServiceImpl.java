@@ -30,6 +30,9 @@ public class OrgServiceImpl implements OrgService {
     @Override
     public Result save(Org org) {
         Integer flag = -1;
+        if(orgDao.isRepeatName(org) > 0){
+            return ResultUtils.error("存在同级相同名称部门");
+        }
         if(CheckUtils.isNull(org.getId())){
             flag = orgDao.insert(org);
         }else{

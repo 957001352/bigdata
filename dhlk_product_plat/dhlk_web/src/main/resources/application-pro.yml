@@ -49,3 +49,8 @@ hystrix:
           strategy: SEMAPHORE
           thread:
             timeoutInMilliseconds: 40000
+#文件路径
+attachment:
+  path: /home/software/attachment/
+log:
+  path: /home/software/log/
