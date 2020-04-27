@@ -1,10 +1,8 @@
 package com.dhlk.entity.basicmodule;
 
-import annotation.AdminIDCheck;
-import annotation.NameCheck;
+import com.dhlk.annotation.NameCheck;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**

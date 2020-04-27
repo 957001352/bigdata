@@ -2,14 +2,14 @@ package com.dhlk.basicmodule.service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dhlk.basicmodule.service.service.AttachmentService;
-import domain.BaseFile;
-import domain.Result;
+import com.dhlk.domain.BaseFile;
+import com.dhlk.domain.Result;
+import com.dhlk.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import utils.*;
 
 import java.util.List;
 
@@ -37,10 +37,10 @@ public class AttachmentController {
      */
     @PostMapping(value = "/upload",  consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result upload(@RequestPart(value = "file") MultipartFile file,
-                         @RequestParam(value = "isAdd") boolean isAdd,
+                         @RequestParam(value = "isAdd",required = false,defaultValue= "false") boolean isAdd,
                          @RequestParam(value = "dataId",required = false) String dataId) throws Exception {
         // 上传附件
-        FileUpDownUtils fileUpload=new FileUpDownUtils(attachmentPath+DateUtils.getToday(),file);
+        FileUpDownUtils fileUpload=new FileUpDownUtils(attachmentPath+ DateUtils.getToday(),file);
         Result result= fileUpload.execUploadFile(file,dataId);
         // 上传成功，保存附件记录
         if (0 == result.getCode()) {

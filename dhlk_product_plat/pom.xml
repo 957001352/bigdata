@@ -83,6 +83,7 @@
         <module>dhlk_api_web</module>
         <!-- 大航联科对外服务API说明文档  -->
         <module>dhlk_api_doc</module>
+        <module>dhlk_shiro</module>
 
 
         <!--========暂时不涉及 end ======-->

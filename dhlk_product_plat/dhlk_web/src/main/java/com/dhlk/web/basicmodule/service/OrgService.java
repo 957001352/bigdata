@@ -1,9 +1,8 @@
 package com.dhlk.web.basicmodule.service;
 
 import com.dhlk.entity.basicmodule.Org;
-import com.dhlk.entity.basicmodule.OrgAuth;
 import com.dhlk.web.basicmodule.service.fbk.OrgServiceFbk;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

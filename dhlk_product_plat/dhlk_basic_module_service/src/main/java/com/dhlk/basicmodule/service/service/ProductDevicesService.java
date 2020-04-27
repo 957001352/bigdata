@@ -1,9 +1,7 @@
 package com.dhlk.basicmodule.service.service;
 
 import com.dhlk.entity.basicmodule.ProductDevices;
-import domain.Result;
-
-import java.util.List;
+import com.dhlk.domain.Result;
 
 /**
  * 生产设备管理

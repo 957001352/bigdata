@@ -2,10 +2,10 @@ package com.dhlk.web.hive.service.fbk;
 
 import com.dhlk.entity.hive.MetaTable;
 import com.dhlk.web.hive.service.HiveService;
-import domain.Result;
-import enums.ResultEnum;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.List;
 

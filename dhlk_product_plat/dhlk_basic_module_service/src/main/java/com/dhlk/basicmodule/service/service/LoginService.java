@@ -1,9 +1,6 @@
 package com.dhlk.basicmodule.service.service;
 
-import com.dhlk.entity.basicmodule.User;
-import domain.Result;
-
-import javax.servlet.http.HttpServletRequest;
+import com.dhlk.domain.Result;
 
 /**
  * @Description 用户登录

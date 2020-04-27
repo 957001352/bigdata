@@ -1,11 +1,9 @@
 package com.dhlk.basicmodule.service.service.Impl;
 
 import com.dhlk.basicmodule.service.dhlk_basic_module_service.DhlkBasicModuleServiceApplication;
-import com.dhlk.basicmodule.service.service.LoginLogService;
 import com.dhlk.basicmodule.service.service.OrgService;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
-import com.dhlk.entity.basicmodule.LoginLog;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.Org;
 import org.junit.Assert;
 import org.junit.Test;

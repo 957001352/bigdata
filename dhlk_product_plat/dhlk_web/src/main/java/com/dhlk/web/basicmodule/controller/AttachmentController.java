@@ -1,16 +1,16 @@
 package com.dhlk.web.basicmodule.controller;
 
 import com.dhlk.web.basicmodule.service.AttachmentService;
-import domain.BaseFile;
-import domain.Result;
+import com.dhlk.domain.BaseFile;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import utils.CheckUtils;
-import utils.FileUpDownUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.FileUpDownUtils;
+import com.dhlk.utils.ResultUtils;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +34,7 @@ public class AttachmentController {
      */
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result upload(@RequestPart(value = "file") MultipartFile file,
-                         @RequestParam(value = "isAdd") boolean isAdd,
+                         @RequestParam(value = "isAdd",required = false,defaultValue= "false") boolean isAdd,
                          @RequestParam(value = "dataId",required = false) String dataId) {
         return attachmentService.upload(file, isAdd, dataId);
     }

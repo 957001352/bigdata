@@ -1,18 +1,14 @@
 package com.dhlk.basicmodule.service.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dhlk.basicmodule.service.service.NetDevicesService;
 import com.dhlk.basicmodule.service.service.TelemetryService;
 import com.dhlk.entity.basicmodule.NetDevices;
-import com.dhlk.entity.basicmodule.ProductDevices;
-import com.google.gson.JsonObject;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.*;
 
@@ -55,7 +51,7 @@ public class NetDevicesController {
     * @return
     */
     @GetMapping("/findList")
-    @RequiresPermissions("netDevices:view")
+    @RequiresPermissions("dhlk:view")
     public Result findList(@RequestParam(value = "name", required = false) String name) {
         return  netDevicesService.findList(name);
     }
@@ -65,7 +61,7 @@ public class NetDevicesController {
     * @return
     */
     @GetMapping("/findPruductDevicesList")
-    @RequiresPermissions("netDevices:view")
+    @RequiresPermissions("dhlk:view")
     public Result findPruductDevicesList(@RequestParam(value = "netDevicesId", required = true) Integer netDevicesId) {
         return  netDevicesService.findPruductDevicesList(netDevicesId);
     }
@@ -80,7 +76,7 @@ public class NetDevicesController {
     }
 
     @PostMapping("/findOnLineNetDevices")
-    @RequiresPermissions("netDevices:view")
+    @RequiresPermissions("dhlk:view")
     public Result findOnLineNetDevices(@RequestBody List<JSONObject> jsonParam) throws Exception {
         List<JSONObject> result = new ArrayList<>();
         if (jsonParam != null && jsonParam.size() > 0) {

@@ -5,26 +5,26 @@ import com.dhlk.basicmodule.service.dao.LoginLogDao;
 import com.dhlk.basicmodule.service.dao.UserDao;
 import com.dhlk.basicmodule.service.service.LoginService;
 import com.dhlk.basicmodule.service.service.UserService;
-import com.dhlk.basicmodule.service.shiro.JWTUtil;
 import com.dhlk.basicmodule.service.util.HttpContextUtil;
 import com.dhlk.basicmodule.service.util.IPUtil;
 import com.dhlk.basicmodule.service.util.RestTemplateUtil;
 import com.dhlk.entity.basicmodule.LoginLog;
-import com.dhlk.entity.basicmodule.Menu;
 import com.dhlk.entity.basicmodule.User;
-import domain.Result;
-import enums.ResultEnum;
-import exceptions.MyException;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
+import com.dhlk.exceptions.MyException;
+import com.dhlk.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
-import service.RedisBasicService;
-import systemconst.Const;
-import utils.CheckUtils;
-import utils.EncryUtils;
-import utils.KaptchaUtil;
-import utils.ResultUtils;
+import com.dhlk.service.RedisService;
+import com.dhlk.systemconst.Const;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.EncryUtils;
+import com.dhlk.utils.KaptchaUtil;
+import com.dhlk.utils.ResultUtils;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
@@ -32,9 +32,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
-
-import static org.apache.shiro.web.filter.mgt.DefaultFilter.perms;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -46,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private RedisBasicService redisService;
+    private RedisService redisService;
     @Autowired
     private RestTemplateUtil restTemplateUtil;
 

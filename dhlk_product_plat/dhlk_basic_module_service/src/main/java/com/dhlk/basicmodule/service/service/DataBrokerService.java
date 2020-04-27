@@ -1,6 +1,6 @@
 package com.dhlk.basicmodule.service.service;
 
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.DataBroker;
 
 /**

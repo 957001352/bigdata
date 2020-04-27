@@ -2,7 +2,7 @@ package com.dhlk.web.basicmodule.service;
 
 import com.dhlk.entity.api.ApiClassify;
 import com.dhlk.web.config.FeignMultipartConfig;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.ProductNetService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,32 +44,32 @@ public class ProductNetController {
     * @return
     */
     @GetMapping("/findList")
-    @RequiresPermissions("productNet:view")
+    @RequiresPermissions("dhlk:view")
     public Result findList(@RequestParam(value = "name", required = false) String name,
                            @RequestParam(value = "type", required = false) Integer type) {
         return  productNetService.findList(name,type);
     }
 
     @GetMapping("/findBiList")
-    @RequiresPermissions("productNet:view")
+    @RequiresPermissions("dhlk:view")
     public Result findBiList(@RequestParam(value = "netId", required = false) Integer netId) {
         return  productNetService.findBiList(netId);
     }
     @GetMapping("/findComputerList")
-    @RequiresPermissions("productNet:view")
+    @RequiresPermissions("dhlk:view")
     public Result findComputerList(@RequestParam(value = "netId", required = false) Integer netId) {
         return  productNetService.findComputerList(netId);
     }
 
 
     @GetMapping("/findNotBiList")
-    @RequiresPermissions("productNet:view")
+    @RequiresPermissions("dhlk:view")
     public Result findNotBiList() {
         return  productNetService.findNotBiList();
     }
 
     @GetMapping("/findNotComputerList")
-    @RequiresPermissions("productNet:view")
+    @RequiresPermissions("dhlk:view")
     public Result findNotComputerList() {
         return  productNetService.findNotComputerList();
     }

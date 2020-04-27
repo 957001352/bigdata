@@ -2,7 +2,7 @@ package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.NetDevicesSoftService;
 import com.dhlk.entity.basicmodule.NetDevicesSoft;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +45,7 @@ public class NetDevicesSoftController {
     * @return
     */
     @GetMapping("/findPageList")
-    @RequiresPermissions("netDevicesSoft:findPageList")
+    @RequiresPermissions("dhlk:view")
     public Result findPageList(@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         return  netDevicesSoftService.findPageList(pageNum, pageSize);

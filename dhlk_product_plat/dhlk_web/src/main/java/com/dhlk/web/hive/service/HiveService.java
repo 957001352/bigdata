@@ -1,14 +1,13 @@
 package com.dhlk.web.hive.service;
 
 import com.dhlk.entity.hive.MetaTable;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 生产设备管理

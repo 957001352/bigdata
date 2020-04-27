@@ -1,28 +1,17 @@
 package com.dhlk.basicmodule.service.dhlk_basic_module_service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dhlk.basicmodule.service.service.RoleService;
-import com.dhlk.basicmodule.service.util.RestTemplateUtil;
-import com.dhlk.entity.tb.TbProductDevices;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.Role;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import utils.CheckUtils;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DhlkBasicModuleServiceApplication.class)

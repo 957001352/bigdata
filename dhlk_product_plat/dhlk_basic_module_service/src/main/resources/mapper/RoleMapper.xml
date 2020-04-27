@@ -17,6 +17,7 @@
     <select id="findList" parameterType="Role" resultMap="RoleResult">
         <include refid="selectRoleVo"/>
         <where>
+            id &lt;&gt; 1
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="note != null  and note != ''"> and note = #{note}</if>
         </where>
@@ -24,7 +25,7 @@
 
     <select id="selectRoleById" parameterType="Integer" resultMap="RoleResult">
         <include refid="selectRoleVo"/>
-        where id = #{id}
+        where id = #{id} and id  &lt;&gt;1
     </select>
     <select id="selectRoleByName" parameterType="String" resultMap="RoleResult">
         <include refid="selectRoleVo"/>
@@ -66,20 +67,20 @@
         SELECT distinct dbr.id,dbr.name FROM `dhlk_basic_user` dbu
         LEFT JOIN `dhlk_basic_user_role` dbur ON dbu.id=dbur.`user_id`
         LEFT JOIN `dhlk_basic_role` dbr ON dbur.`role_id`=dbr.`id`
-        WHERE dbu.id=#{userId}
+        WHERE dbur.id  &lt;&gt;1 and dbu.id=#{userId}
     </select>
     <select id="selectableRoleByUserId" parameterType="Integer" resultMap="RoleResult">
         SELECT dbr1.id,dbr1.name FROM `dhlk_basic_role` dbr1 WHERE dbr1.id NOT IN (
         SELECT dbr.id FROM `dhlk_basic_user` dbu
         LEFT JOIN `dhlk_basic_user_role` dbur ON dbu.id=dbur.`user_id`
         LEFT JOIN `dhlk_basic_role` dbr ON dbur.`role_id`=dbr.`id`
-        WHERE dbu.id=#{userId})
+        WHERE dbur.id  &lt;&gt;1 and dbu.id=#{userId})
     </select>
     <select id="selectUserByRoleId" parameterType="Integer" resultType="User">
         SELECT dbu. id ,dbu. login_name ,dbu. name ,dbu. org_id ,dbu. phone ,dbu. email  FROM  dhlk_basic_role  dbr
         LEFT JOIN  dhlk_basic_user_role  dbur ON dbr.id=dbur. role_id
         LEFT JOIN  dhlk_basic_user  dbu ON dbu.id=dbur. user_id
-        WHERE dbr.id=#{roleId}
+        WHERE dbr.id  &lt;&gt;1 and dbr.id=#{roleId}
     </select>
 
 </mapper>

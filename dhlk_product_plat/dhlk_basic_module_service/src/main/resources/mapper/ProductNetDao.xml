@@ -68,4 +68,38 @@
         )
         and status!=2
     </select>
+
+
+
+
+    <select id="findBiIsBand" resultType="java.lang.Integer">
+     select count(1) from(
+        select id from dhlk_basic_product_net n
+         where n.type=1
+           and (net_id in
+                <foreach collection="list" open="(" separator="," close=")" item="ids">
+                    #{ids}
+                </foreach>
+               or product_id in
+                <foreach collection="list" open="(" separator="," close=")" item="ids">
+                    #{ids}
+                </foreach>
+                )
+        union all
+        select id from dhlk_basic_product_net n
+         where n.type in (2,3,4)
+           and net_id in
+           <foreach collection="list" open="(" separator="," close=")" item="ids">
+            #{ids}
+           </foreach>
+     ) t
+    </select>
+    <select id="findProductIsBand" resultType="java.lang.Integer">
+        select count(1) from dhlk_basic_product_net n
+        where n.type in (2,3,4)
+        and product_id in
+        <foreach collection="list" open="(" separator="," close=")" item="ids">
+            #{ids}
+        </foreach>
+    </select>
 </mapper>

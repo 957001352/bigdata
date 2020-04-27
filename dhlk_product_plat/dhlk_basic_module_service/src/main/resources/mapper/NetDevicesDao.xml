@@ -76,5 +76,10 @@
             #{ids}
         </foreach>
     </select>
-
+    <select id="isRepeatName" resultType="Integer">
+        SELECT count(*) FROM dhlk_basic_net_devices  WHERE name=#{name}
+        <if test="id!= null and id != ''">
+            AND id!=#{id}
+        </if>
+    </select>
 </mapper>

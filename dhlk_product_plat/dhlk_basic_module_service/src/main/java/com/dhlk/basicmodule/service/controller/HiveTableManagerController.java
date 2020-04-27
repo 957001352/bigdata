@@ -1,9 +1,7 @@
 package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.HiveTableManagerService;
-import com.dhlk.basicmodule.service.service.MetaTableService;
-import com.dhlk.entity.hive.MetaTable;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +37,7 @@ public class HiveTableManagerController {
     * 查询所有表
     */
     @GetMapping("/findTableList")
-    @RequiresPermissions("hiveTableManager:findTableList")
+    @RequiresPermissions("dhlk:view")
     public Result findTableList() {
         return  hiveTableManagerService.findTableList();
     }

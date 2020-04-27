@@ -1,6 +1,5 @@
 package com.dhlk.entity.api;
 
-import annotation.UrlCheck;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

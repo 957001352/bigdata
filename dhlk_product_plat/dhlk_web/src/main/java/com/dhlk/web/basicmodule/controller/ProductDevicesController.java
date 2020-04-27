@@ -1,7 +1,7 @@
 package com.dhlk.web.basicmodule.controller;
 
 import com.dhlk.web.basicmodule.service.ProductDevicesService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.ProductDevices;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -6,18 +6,17 @@ import com.dhlk.basicmodule.service.service.RoleService;
 import com.dhlk.entity.basicmodule.User;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.Permissions;
 import com.dhlk.entity.basicmodule.Role;
-import enums.ResultEnum;
-import enums.SystemEnums;
-import exceptions.MyException;
+import com.dhlk.enums.ResultEnum;
+import com.dhlk.enums.SystemEnums;
+import com.dhlk.exceptions.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 /*
@@ -36,7 +35,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Result save(Role role) {
         if(role==null){
-            return ResultUtils.error(ResultEnum.PARAM_ERR);
+            return ResultUtils.error(ResultEnum.PARAM_ERR.getStateInfo());
         }
         Integer res = null;
         Role tempRole = roleDao.selectRoleByName(role.getName());
@@ -113,9 +112,8 @@ public class RoleServiceImpl implements RoleService {
         }
         List<Role> roles =roleDao.selectRoleByUserId(userId);
         //当List中元素user对象为空时,清除List中的元素
-        if(roles.get(0)==null){
+        if(roles!=null && roles.size()>0 && roles.get(0)==null){
             roles.clear();
-
         }
         return ResultUtils.success(roles);
     }
@@ -142,7 +140,7 @@ public class RoleServiceImpl implements RoleService {
         PageHelper.startPage(pageNum, pageSize);
         List<User> users = roleDao.selectUserByRoleId(roleId);
         //当List中元素user对象为空时,清除List中的元素
-        if(users.get(0)==null){
+        if(users!=null && users.size()>0 && users.get(0)==null){
             users.clear();
         }
         PageInfo<User> usersInfo = new PageInfo<>(users);

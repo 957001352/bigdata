@@ -1,6 +1,6 @@
 package com.dhlk.basicmodule.service.service;
 
-import domain.Result;
+import com.dhlk.domain.Result;
 
 /**
  * 生产和网络设备关系配置

@@ -1,9 +1,8 @@
 package com.dhlk.web.basicmodule.service;
 
 import com.dhlk.entity.basicmodule.NetFault;
-import com.dhlk.web.basicmodule.service.fbk.NetDevicesSoftServiceFbk;
 import com.dhlk.web.basicmodule.service.fbk.NetFaultServiceFbk;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

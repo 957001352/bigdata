@@ -73,10 +73,10 @@ mybatis:
 logging:
   config: classpath:logback-spring.xml
 tb:
-  baseUrl: http://192.168.2.59:9050
+  baseUrl: http://192.168.2.159:9050
   login:
-    username: ykzhang@leansite.cn
-    password: ykzhang@leansite.cn13814000-1dd2-11b2-8080-808080808080
+    username: dhlk@leansite.cn
+    password: dhlk@leansite.cn13814000-1dd2-11b2-8080-808080808080
 #文件路径
 attachment:
   path: /home/software/attachment/

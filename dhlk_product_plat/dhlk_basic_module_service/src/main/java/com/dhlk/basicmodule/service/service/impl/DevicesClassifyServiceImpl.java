@@ -4,19 +4,20 @@ import com.dhlk.basicmodule.service.dao.DevicesClassifyDao;
 import com.dhlk.basicmodule.service.dao.DevicesClassifyDetailDao;
 import com.dhlk.basicmodule.service.dao.ProductDevicesDao;
 import com.dhlk.basicmodule.service.service.DevicesClassifyService;
-import com.dhlk.basicmodule.service.service.RedisService;
+import com.dhlk.basicmodule.service.util.AuthUserUtil;
 import com.dhlk.entity.basicmodule.DevicesClassify;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.DevicesClassifyDetail;
-import com.dhlk.entity.basicmodule.ProductDevices;
-import domain.Result;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import service.RedisBasicService;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class DevicesClassifyServiceImpl implements DevicesClassifyService {
     @Autowired
     private ProductDevicesDao productDevicesDao;
     @Autowired
-    private RedisService redisService;
+    private AuthUserUtil authUserUtil;
     @Value("${attachment.path}")
     private String attachmentPath;
     @Override
@@ -51,15 +52,20 @@ public class DevicesClassifyServiceImpl implements DevicesClassifyService {
         }
         if(devicesClassifyDao.findDevicesClassifyById(devicesClassify.getId()) == null){ //如果分类id为空的话就存储，不为空就修改
             //设置工厂ID
-            devicesClassify.setFactoryId(redisService.findFactoryId());
-            if(devicesClassify.getClassifyDetails() != null && devicesClassify.getClassifyDetails().size() > 0){ //判断分类中分类属性明细是否为空
-                flag = devicesClassifyDetailDao.insertDevicesClassifyDetails(devicesClassify.getClassifyDetails(),devicesClassify.getId());
+            devicesClassify.setFactoryId(authUserUtil.findFactoryId());
+            List<LinkedHashMap<String, Object>> attrSet = devicesClassify.getAttrSet();
+            List<DevicesClassifyDetail> devicesClassifyDetails = getDevicesClassifyDetailsByAttrSet(attrSet, devicesClassify.getId());
+            if(devicesClassifyDetails != null && devicesClassifyDetails.size() > 0){
+                flag = devicesClassifyDetailDao.insertDevicesClassifyDetails(devicesClassifyDetails);
             }
             flag = devicesClassifyDao.insert(devicesClassify);
         }else{
-            if(devicesClassify.getClassifyDetails() != null && devicesClassify.getClassifyDetails().size() > 0){ //判断分类中分类属性明细是否为空
-                flag = devicesClassifyDetailDao.deleteByDevicesClassifyId(devicesClassify.getId());
-                flag = devicesClassifyDetailDao.insertDevicesClassifyDetails(devicesClassify.getClassifyDetails(),devicesClassify.getId());
+            String devicesClassifyId = devicesClassify.getId();
+            flag = devicesClassifyDetailDao.deleteByDevicesClassifyId(devicesClassifyId);
+            List<LinkedHashMap<String, Object>> attrSet = devicesClassify.getAttrSet();
+            List<DevicesClassifyDetail> devicesClassifyDetails = getDevicesClassifyDetailsByAttrSet(attrSet, devicesClassifyId);
+            if(devicesClassifyDetails != null && devicesClassifyDetails.size() > 0){
+                    flag = devicesClassifyDetailDao.insertDevicesClassifyDetails(devicesClassifyDetails);
             }
             flag = devicesClassifyDao.update(devicesClassify);
         }
@@ -70,7 +76,7 @@ public class DevicesClassifyServiceImpl implements DevicesClassifyService {
     public Result delete(String id) {
         Integer flag = -1;
         if(productDevicesDao.isBoundClassify(id) > 0){//检查设备类型是否与设备绑定
-            return ResultUtils.error("请解除设备类型绑定");
+            return ResultUtils.error("该类型已被绑定，无法删除");
         }
         flag = devicesClassifyDetailDao.deleteByDevicesClassifyId(id);//删除属性集合下所有的属性明细
         flag = devicesClassifyDao.delete(id);//删除设备分类
@@ -79,8 +85,32 @@ public class DevicesClassifyServiceImpl implements DevicesClassifyService {
 
     @Override
     public Result findList(String classifyName) {
-        List<DevicesClassify> list = devicesClassifyDao.findList(classifyName,redisService.findFactoryId(),attachmentPath);
+        List<DevicesClassify> list = devicesClassifyDao.findList(classifyName,authUserUtil.findFactoryId(),attachmentPath);
         list.stream().forEach(devicesClassify -> devicesClassify.setNameCount(devicesClassify.getAttrSet().size()));
         return ResultUtils.success(list);
+    }
+
+
+    //根据attrSet添加编辑设备分类属性集合
+    public List<DevicesClassifyDetail> getDevicesClassifyDetailsByAttrSet(List<LinkedHashMap<String, Object>> attrSet,String devicesClassifyId){
+        if(attrSet != null && attrSet.size() > 0){
+            List<DevicesClassifyDetail> devicesClassifyDetails = new ArrayList<>();
+            for (LinkedHashMap<String, Object> lhm:attrSet) {
+                Integer setId = (Integer) lhm.get("setId");
+                String detailIds = (String) lhm.get("detailIds");
+                if(!CheckUtils.isNull(detailIds)){
+                    String[] detailId = detailIds.split(",");
+                    for (String id:detailId) {
+                        DevicesClassifyDetail devicesClassifyDetail = new DevicesClassifyDetail();
+                        devicesClassifyDetail.setAttrSetId(setId);
+                        devicesClassifyDetail.setAttrDetailId(Integer.parseInt(id));
+                        devicesClassifyDetail.setDevicesClassifyId(devicesClassifyId);
+                        devicesClassifyDetails.add(devicesClassifyDetail);
+                    }
+                }
+            }
+            return devicesClassifyDetails;
+        }
+        return null;
     }
 }

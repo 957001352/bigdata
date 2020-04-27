@@ -4,23 +4,23 @@ package com.dhlk.basicmodule.service.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.dhlk.basicmodule.service.dao.PermissionsDao;
 import com.dhlk.basicmodule.service.dao.RoleDao;
-import com.dhlk.basicmodule.service.dao.UserDao;
 import com.dhlk.basicmodule.service.service.PermissionsService;
-import com.dhlk.basicmodule.service.service.RedisService;
 import com.dhlk.basicmodule.service.service.UserService;
 import com.dhlk.entity.basicmodule.User;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.Permissions;
-import enums.ResultEnum;
-import enums.SystemEnums;
-import exceptions.MyException;
+import com.dhlk.enums.ResultEnum;
+import com.dhlk.enums.SystemEnums;
+import com.dhlk.exceptions.MyException;
+import com.dhlk.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import systemconst.Const;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.systemconst.Const;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /*
@@ -42,7 +42,7 @@ public class PermissionsServiceImpl implements PermissionsService {
 
     @Override
     public Result insert(Integer roleId, String menuIds) {
-        if (CheckUtils.isNull(roleId) || CheckUtils.isNull(menuIds)) {
+        if (CheckUtils.isNull(roleId)) {
             return ResultUtils.error(ResultEnum.PARAM_ERR);
         }
         //默认超级管理员的角色id为1
@@ -50,10 +50,9 @@ public class PermissionsServiceImpl implements PermissionsService {
             return ResultUtils.error("超级管理员权限禁止修改!");
         } else {
             //先根据角色id删除对应的权限
-            List<String> list = Arrays.asList(roleId.toString());
-            Integer res = permissionsDao.deleteByRoleIds(list);
+            Integer res = permissionsDao.deleteByRoleId(roleId);
             //保存角色拥有的权限
-            if (res >= 0) {
+            if (res >= 0 && !CheckUtils.isNull(menuIds)) {
                 List<Permissions> permissionsList = new ArrayList<>();
                 Arrays.asList(menuIds.split(",")).stream().forEach(s -> permissionsList.add(new Permissions(roleId, Integer.parseInt(s))));
                 Integer res1 = permissionsDao.insert(permissionsList);
@@ -66,11 +65,10 @@ public class PermissionsServiceImpl implements PermissionsService {
                             redisService.set(Const.PERMISSIONS_CACHE_PREFIX+user.getLoginName(), JSON.toJSONString(permissions.get("perms")),Const.TOKEN_LOSE_TIME);
                         }
                     }
-                    return ResultUtils.success();
                 }
             }
+            return ResultUtils.success();
         }
-        return ResultUtils.failure();
     }
 
     @Override

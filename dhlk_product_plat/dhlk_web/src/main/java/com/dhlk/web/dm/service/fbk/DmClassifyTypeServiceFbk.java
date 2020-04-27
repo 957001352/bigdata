@@ -2,10 +2,10 @@ package com.dhlk.web.dm.service.fbk;
 
 import com.dhlk.entity.dm.DmClassifyType;
 import com.dhlk.web.dm.service.DmClassifyTypeService;
-import domain.Result;
-import enums.ResultEnum;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 /**
  * 生产设备管理

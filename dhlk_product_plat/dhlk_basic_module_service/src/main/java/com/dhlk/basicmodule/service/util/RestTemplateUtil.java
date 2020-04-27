@@ -1,7 +1,6 @@
 package com.dhlk.basicmodule.service.util;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.dhlk.entity.tb.TbUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,12 +10,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import reactor.core.publisher.Mono;
-import service.RedisBasicService;
-import systemconst.Const;
-import utils.HttpClientResult;
-import utils.HttpClientUtils;
+import com.dhlk.service.RedisService;
+import com.dhlk.systemconst.Const;
+import com.dhlk.utils.HttpClientResult;
+import com.dhlk.utils.HttpClientUtils;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class RestTemplateUtil {
     private RestTemplate restTemplate;
 
     @Autowired
-    private RedisBasicService redisService;
+    private RedisService redisService;
 
     @Value("${tb.baseUrl}")
     private String tbBaseUrl;

@@ -2,7 +2,7 @@ package com.dhlk.web.dm.service;
 
 import com.dhlk.entity.dm.DmNetType;
 import com.dhlk.web.dm.service.fbk.DmNetTypeServiceFbk;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,8 +1,7 @@
 package com.dhlk.basicmodule.service.service;
 
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.OrgAuth;
-import com.dhlk.entity.basicmodule.Role;
 
 /**
  * 厂区访问秘钥

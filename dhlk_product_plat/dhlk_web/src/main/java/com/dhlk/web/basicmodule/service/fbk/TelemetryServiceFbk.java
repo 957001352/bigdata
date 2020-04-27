@@ -1,22 +1,10 @@
 package com.dhlk.web.basicmodule.service.fbk;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.dhlk.entity.basicmodule.ProductDevices;
 import com.dhlk.web.basicmodule.service.TelemetryService;
-import domain.Result;
-import enums.ResultEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import systemconst.Const;
-import utils.HttpClientResult;
-import utils.HttpClientUtils;
-import utils.ResultUtils;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.dhlk.utils.ResultUtils;
 
 @Service
 public class TelemetryServiceFbk implements TelemetryService {

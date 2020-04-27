@@ -4,12 +4,12 @@ import com.dhlk.basicmodule.service.dao.MetaTableDao;
 import com.dhlk.basicmodule.service.service.HiveTableManagerService;
 import com.dhlk.entity.hive.MetaTable;
 import com.dhlk.entity.hive.MetaTableColumn;
-import domain.Result;
-import exceptions.MyException;
+import com.dhlk.domain.Result;
+import com.dhlk.exceptions.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.List;
 

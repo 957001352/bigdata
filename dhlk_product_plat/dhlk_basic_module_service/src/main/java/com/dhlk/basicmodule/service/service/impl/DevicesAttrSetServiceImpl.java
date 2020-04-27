@@ -4,18 +4,18 @@ import com.dhlk.basicmodule.service.dao.DevicesAttrDetailDao;
 import com.dhlk.basicmodule.service.dao.DevicesAttrSetDao;
 import com.dhlk.basicmodule.service.dao.DevicesClassifyDetailDao;
 import com.dhlk.basicmodule.service.service.DevicesAttrSetService;
-import com.dhlk.basicmodule.service.service.RedisService;
+import com.dhlk.basicmodule.service.util.AuthUserUtil;
 import com.dhlk.entity.basicmodule.DevicesAttrDetail;
 import com.dhlk.entity.basicmodule.DevicesAttrSet;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import service.RedisBasicService;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -33,7 +33,7 @@ public class DevicesAttrSetServiceImpl implements DevicesAttrSetService {
     @Autowired
     private DevicesClassifyDetailDao devicesClassifyDetailDao;
     @Autowired
-    private RedisService redisService;
+    private AuthUserUtil authUserUtil;
     @Override
     public Result save(DevicesAttrSet devicesAttrSet) {
         Integer flag = -1;
@@ -42,7 +42,7 @@ public class DevicesAttrSetServiceImpl implements DevicesAttrSetService {
         }
         if(CheckUtils.isNull(devicesAttrSet.getId())){ //如果集合id为空的话就存储，不为空就修改
             //设置工厂ID
-            devicesAttrSet.setFactoryId(redisService.findFactoryId());
+            devicesAttrSet.setFactoryId(authUserUtil.findFactoryId());
             flag = devicesAttrSetDao.insert(devicesAttrSet);
             if(!CheckUtils.isNull(devicesAttrSet.getAttrDetails())){ //判断属性集合中明细是否为空
                 flag = devicesAttrDetailDao.insertDevicesAttrDetails(devicesAttrSet.getAttrDetails(),devicesAttrSet.getId());
@@ -57,7 +57,7 @@ public class DevicesAttrSetServiceImpl implements DevicesAttrSetService {
                 //判断属性明细是否与分类绑定
                 if(subtractDelete != null && subtractDelete.size() > 0){
                     if(devicesClassifyDetailDao.findDevicesClassifyDetailByDetail(subtractDelete) > 0){
-                        return ResultUtils.error("属性明细已绑定");
+                        return ResultUtils.error("修改的变量已被绑定");
                     }
                     flag = devicesAttrDetailDao.delete(subtractDelete);
                 }
@@ -82,7 +82,7 @@ public class DevicesAttrSetServiceImpl implements DevicesAttrSetService {
     public Result delete(Integer id) {
         Integer flag = -1;
         if(devicesClassifyDetailDao.findDevicesClassifyDetailByAttrSetId(id) > 0){//检查属性集合是否与分类绑定
-            return ResultUtils.error("请解除属性集合与分类绑定");
+            return ResultUtils.error("该参数已被绑定，无法删除");
         }
         flag = devicesAttrDetailDao.deleteByAttrSetId(id);//删除属性集合下所有的属性明细
         flag = devicesAttrSetDao.delete(id);//删除属性集合
@@ -91,7 +91,7 @@ public class DevicesAttrSetServiceImpl implements DevicesAttrSetService {
 
     @Override
     public Result findList(String name) {
-        List<DevicesAttrSet> devicesAttrSets = devicesAttrSetDao.findList(name,redisService.findFactoryId());
+        List<DevicesAttrSet> devicesAttrSets = devicesAttrSetDao.findList(name,authUserUtil.findFactoryId());
         return ResultUtils.success(devicesAttrSets);
     }
 

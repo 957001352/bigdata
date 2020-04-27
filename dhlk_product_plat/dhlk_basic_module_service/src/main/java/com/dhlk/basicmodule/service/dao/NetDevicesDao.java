@@ -38,4 +38,9 @@ public interface NetDevicesDao {
     List<NetDevices> findTbIdsListbyIds(List<String> ids);
 
     Integer deleteById(Integer id);
+    /*
+     * 判断网络设备名称是否重复
+     * @return
+     */
+    Integer isRepeatName(NetDevices NetDevices);
 }

@@ -1,9 +1,11 @@
 package com.dhlk.entity.basicmodule;
 
-import annotation.*;
+import com.dhlk.annotation.EmailCheck;
+import com.dhlk.annotation.LoginNameCheck;
+import com.dhlk.annotation.MobizeCheck;
+import com.dhlk.annotation.NameCheck;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 

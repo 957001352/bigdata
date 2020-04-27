@@ -1,7 +1,7 @@
 package com.dhlk.web.basicmodule.controller;
 
 import com.dhlk.web.basicmodule.service.ProductNetService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

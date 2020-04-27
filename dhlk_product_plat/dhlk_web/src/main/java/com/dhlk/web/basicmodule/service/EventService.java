@@ -1,11 +1,9 @@
 package com.dhlk.web.basicmodule.service;
 
 import com.dhlk.web.basicmodule.service.fbk.EventServiceFbk;
-import com.dhlk.web.basicmodule.service.fbk.NetDevicesServiceFbk;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "basicmodule-service/event", fallback = EventServiceFbk.class)
 public interface EventService {

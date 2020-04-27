@@ -1,13 +1,11 @@
 package com.dhlk.web.basicmodule.service.fbk;
 
 import com.dhlk.entity.basicmodule.DataBroker;
-import com.dhlk.entity.basicmodule.NetDevices;
 import com.dhlk.web.basicmodule.service.DataBrokerService;
-import com.dhlk.web.basicmodule.service.NetDevicesService;
-import domain.Result;
-import enums.ResultEnum;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 /**
  * 生产设备管理

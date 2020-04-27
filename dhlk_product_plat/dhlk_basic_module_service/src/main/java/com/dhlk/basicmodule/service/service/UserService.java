@@ -1,9 +1,8 @@
 package com.dhlk.basicmodule.service.service;
 
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.User;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

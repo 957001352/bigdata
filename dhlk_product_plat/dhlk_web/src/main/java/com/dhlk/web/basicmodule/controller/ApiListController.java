@@ -2,13 +2,13 @@ package com.dhlk.web.basicmodule.controller;
 
 import com.dhlk.entity.api.ApiList;
 import com.dhlk.web.basicmodule.service.ApiListService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 import javax.validation.Valid;
 

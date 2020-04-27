@@ -1,13 +1,11 @@
 package com.dhlk.web.basicmodule.service;
 
 import com.dhlk.web.basicmodule.service.fbk.LoginServiceFbk;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description 用户登录

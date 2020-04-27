@@ -5,12 +5,12 @@ import com.dhlk.basicmodule.service.service.MetaTableService;
 import com.dhlk.entity.hive.MetaTable;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
-import exceptions.MyException;
+import com.dhlk.domain.Result;
+import com.dhlk.exceptions.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.Arrays;
 

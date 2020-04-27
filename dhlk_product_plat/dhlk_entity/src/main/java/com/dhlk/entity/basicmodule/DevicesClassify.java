@@ -1,7 +1,6 @@
 package com.dhlk.entity.basicmodule;
 
 import com.dhlk.entity.dm.DmClassifyType;
-import domain.BaseFile;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -22,7 +21,7 @@ public class DevicesClassify {
     private Integer factoryId;//工厂
     private List<DevicesClassifyDetail> classifyDetails;//设备类型属性明细
     @ApiModelProperty(hidden = true)
-    private List<LinkedHashMap<String,String>> attrSet;
+    private List<LinkedHashMap<String,Object>> attrSet;
     private Integer nameCount;//参数数量
     private DmClassifyType dmClassifyType;//基础类型type
 

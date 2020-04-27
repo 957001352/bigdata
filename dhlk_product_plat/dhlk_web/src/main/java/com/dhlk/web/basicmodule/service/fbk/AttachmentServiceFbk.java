@@ -1,12 +1,12 @@
 package com.dhlk.web.basicmodule.service.fbk;
 
 import com.dhlk.web.basicmodule.service.AttachmentService;
-import domain.BaseFile;
-import domain.Result;
-import enums.ResultEnum;
+import com.dhlk.domain.BaseFile;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.List;
 

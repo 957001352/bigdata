@@ -1,7 +1,7 @@
 package com.dhlk.basicmodule.service.service;
 
 import com.dhlk.entity.dm.DmClassifyType;
-import domain.Result;
+import com.dhlk.domain.Result;
 
 /**
  * 设备类型分类

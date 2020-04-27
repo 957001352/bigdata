@@ -1,22 +1,20 @@
 package com.dhlk.basicmodule.service.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.dhlk.basicmodule.service.dao.ProductDevicesDao;
 import com.dhlk.basicmodule.service.service.EventService;
 import com.dhlk.basicmodule.service.util.RestTemplateUtil;
 import com.dhlk.entity.basicmodule.ProductDevices;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import systemconst.Const;
-import utils.HttpClientResult;
-import utils.HttpClientUtils;
-import utils.ResultUtils;
+import com.dhlk.systemconst.Const;
+import com.dhlk.utils.HttpClientResult;
+import com.dhlk.utils.HttpClientUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 @Service
 public class EventServiceImpl implements EventService {

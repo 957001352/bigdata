@@ -1,10 +1,8 @@
 package com.dhlk.basicmodule.service.controller;
 
-import com.dhlk.basicmodule.service.service.DataBrokerService;
 import com.dhlk.basicmodule.service.service.MetaTableService;
-import com.dhlk.entity.basicmodule.DataBroker;
 import com.dhlk.entity.hive.MetaTable;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +45,7 @@ public class MetaTableController {
     * @return
     */
     @GetMapping("/findPageList")
-    @RequiresPermissions("metaTable:findPageList")
+    @RequiresPermissions("dhlk:view")
     public Result findPageList(@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         return  metaTableService.findPageList(pageNum, pageSize);

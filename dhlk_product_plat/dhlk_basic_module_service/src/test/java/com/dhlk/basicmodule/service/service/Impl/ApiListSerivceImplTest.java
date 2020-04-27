@@ -3,7 +3,7 @@ package com.dhlk.basicmodule.service.service.Impl;
 import com.dhlk.basicmodule.service.dhlk_basic_module_service.DhlkBasicModuleServiceApplication;
 import com.dhlk.basicmodule.service.service.ApiListService;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.api.ApiList;
 import org.junit.Assert;
 import org.junit.Test;

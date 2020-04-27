@@ -1,14 +1,10 @@
 package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.TelemetryService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Api(value = "TelemetryController", description = "遥测数据")

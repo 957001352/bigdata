@@ -1,22 +1,14 @@
 package com.dhlk.hadoop.controller;
 
-import com.dhlk.entity.basicmodule.FileInfo;
 import com.dhlk.hadoop.utils.HadoopUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import utils.ResultUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @Description hadoop文件管理

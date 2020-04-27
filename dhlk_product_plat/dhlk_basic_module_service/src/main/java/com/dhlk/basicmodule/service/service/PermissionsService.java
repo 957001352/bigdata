@@ -1,9 +1,6 @@
 package com.dhlk.basicmodule.service.service;
 
-import domain.Result;
-import com.dhlk.entity.basicmodule.Permissions;
-
-import java.util.List;
+import com.dhlk.domain.Result;
 
 public interface PermissionsService {
     /**

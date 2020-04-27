@@ -29,9 +29,11 @@
             <if test="name != null and name != ''">
                 and name like concat('%',#{name},'%')
             </if>
+            <!--
             <if test="factoryId != null and factoryId != ''">
                 and factory_id=#{factoryId}
             </if>
+            -->
         </where>
     </select>
 

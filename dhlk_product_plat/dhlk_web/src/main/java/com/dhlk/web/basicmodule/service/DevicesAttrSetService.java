@@ -1,10 +1,8 @@
 package com.dhlk.web.basicmodule.service;
 
-import com.dhlk.entity.api.ApiClassify;
 import com.dhlk.entity.basicmodule.DevicesAttrSet;
-import com.dhlk.web.basicmodule.service.fbk.ApiClassifyServiceFbk;
 import com.dhlk.web.basicmodule.service.fbk.DevicesAttrSetServiceFbk;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,10 +1,9 @@
 package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.SysLogService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

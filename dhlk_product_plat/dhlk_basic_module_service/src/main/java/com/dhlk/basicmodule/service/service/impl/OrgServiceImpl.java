@@ -2,20 +2,19 @@ package com.dhlk.basicmodule.service.service.impl;
 
 import com.dhlk.basicmodule.service.dao.OrgDao;
 import com.dhlk.basicmodule.service.dao.UserDao;
-import com.dhlk.basicmodule.service.service.LoginService;
 import com.dhlk.basicmodule.service.service.OrgService;
-import domain.Tree;
-import utils.TreeUtil;
+import com.dhlk.domain.Tree;
+import com.dhlk.utils.TreeUtil;
 import com.dhlk.entity.basicmodule.User;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.Org;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class OrgServiceImpl implements OrgService {
         }else{
             flag = orgDao.update(org);
         }
-        return flag>0? ResultUtils.success():ResultUtils.failure();
+        return flag>0? ResultUtils.success(org):ResultUtils.failure();
     }
 
     @Override

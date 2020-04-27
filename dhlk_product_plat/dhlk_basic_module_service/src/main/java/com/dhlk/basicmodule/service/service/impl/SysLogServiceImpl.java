@@ -1,16 +1,14 @@
 package com.dhlk.basicmodule.service.service.impl;
 
 import com.dhlk.basicmodule.service.service.SysLogService;
-import com.dhlk.entity.basicmodule.LogFile;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import utils.FileUpDownUtils;
-import utils.FileUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.FileUpDownUtils;
+import com.dhlk.utils.FileUtils;
+import com.dhlk.utils.ResultUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

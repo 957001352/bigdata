@@ -1,18 +1,15 @@
 package com.dhlk.basicmodule.service.service.impl;
 
-import com.dhlk.basicmodule.service.dao.DataBrokerDao;
 import com.dhlk.basicmodule.service.dao.HiveMetaDao;
 import com.dhlk.basicmodule.service.service.HiveMetaService;
-import com.dhlk.entity.basicmodule.Menu;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * @Description

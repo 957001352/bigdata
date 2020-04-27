@@ -1,8 +1,8 @@
 package com.dhlk.basicmodule.service.service;
 
 
-import domain.BaseFile;
-import domain.Result;
+import com.dhlk.domain.BaseFile;
+import com.dhlk.domain.Result;
 import java.util.List;
 
 /**

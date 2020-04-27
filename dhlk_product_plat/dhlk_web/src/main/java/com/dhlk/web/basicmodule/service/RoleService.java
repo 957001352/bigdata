@@ -2,7 +2,7 @@ package com.dhlk.web.basicmodule.service;
 
 import com.dhlk.entity.basicmodule.Role;
 import com.dhlk.web.basicmodule.service.fbk.RoleServiceFbk;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

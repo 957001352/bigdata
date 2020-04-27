@@ -41,4 +41,10 @@ public interface ProductNetDao {
 
 
     List<ProductDevices> findNotProductList();
+
+
+   Integer findBiIsBand(List<String> ids);
+
+
+    Integer findProductIsBand(List<String> ids);
 }

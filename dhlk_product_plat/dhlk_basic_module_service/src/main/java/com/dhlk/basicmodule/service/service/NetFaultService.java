@@ -1,8 +1,7 @@
 package com.dhlk.basicmodule.service.service;
 
-import com.dhlk.entity.basicmodule.NetDevicesSoft;
 import com.dhlk.entity.basicmodule.NetFault;
-import domain.Result;
+import com.dhlk.domain.Result;
 
 /**
  * @Description 网络设备故障信息

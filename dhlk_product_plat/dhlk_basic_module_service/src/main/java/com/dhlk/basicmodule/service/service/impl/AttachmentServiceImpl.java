@@ -2,12 +2,12 @@ package com.dhlk.basicmodule.service.service.impl;
 
 import com.dhlk.basicmodule.service.dao.AttachmentDao;
 import com.dhlk.basicmodule.service.service.AttachmentService;
-import domain.BaseFile;
-import domain.Result;
+import com.dhlk.domain.BaseFile;
+import com.dhlk.domain.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.List;
 

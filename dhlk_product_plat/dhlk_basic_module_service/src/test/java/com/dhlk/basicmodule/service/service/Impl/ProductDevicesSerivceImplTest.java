@@ -1,17 +1,15 @@
 package com.dhlk.basicmodule.service.service.Impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.dhlk.basicmodule.service.dhlk_basic_module_service.DhlkBasicModuleServiceApplication;
 import com.dhlk.basicmodule.service.service.ProductDevicesService;
-import com.dhlk.basicmodule.service.service.RedisService;
 import com.dhlk.basicmodule.service.util.RestTemplateUtil;
 import com.dhlk.entity.basicmodule.ProductDevices;
-import com.dhlk.entity.tb.TbProductDevices;
 import com.dhlk.entity.tb.credentials.DeviceCredentials;
 import com.dhlk.entity.tb.credentials.DeviceId;
 import com.dhlk.entity.tb.credentials.Id;
-import domain.Result;
+import com.dhlk.domain.Result;
+import com.dhlk.service.RedisService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.util.*;
 
@@ -35,8 +31,6 @@ public class ProductDevicesSerivceImplTest {
     @Autowired
     private ProductDevicesService productDevicesService;
 
-    @Autowired
-    private RedisService redisService;
 
     @Autowired
     private RestTemplateUtil restTemplateUtil;
@@ -106,14 +100,6 @@ public class ProductDevicesSerivceImplTest {
     public void test3() throws Exception {
         String s = restTemplateUtil.getTbJwtToken();
         System.out.println(s);
-    }
-    /**
-     * findTbDeviceByDhlkId
-     */
-    @Test
-    public void test4(){
-        redisService.set("dhlk", "hello333",60);
-        System.out.println(redisService.get("dhlk").toString());
     }
     @Test
     public void test5(){

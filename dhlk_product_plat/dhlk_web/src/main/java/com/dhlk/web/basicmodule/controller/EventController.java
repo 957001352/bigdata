@@ -1,7 +1,9 @@
 package com.dhlk.web.basicmodule.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.dhlk.utils.ResultUtils;
 import com.dhlk.web.basicmodule.service.EventService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +34,19 @@ public class EventController {
                             @RequestParam(value="fetchOriginator",required = false) Boolean fetchOriginator) throws Exception{
         return eventService.getAlarms(deviceId,searchStatus,status,limit,startTime,endTime,ascOrder,offset,fetchOriginator);
     }
+    /**
+     * 获取设备的警告信息
+     *
+     //* @param deviceId
+     * @return
+     */
+    @ApiOperation("获取设备的警告信息")
+    @GetMapping(value = "/tbCallEvent")
+    public Result tbCallEvent() throws Exception{
+        System.out.println("hello................");
+        JSONObject json=new JSONObject();
+        json.put("hello","word");
+        return ResultUtils.success(json);
+    }
+
 }

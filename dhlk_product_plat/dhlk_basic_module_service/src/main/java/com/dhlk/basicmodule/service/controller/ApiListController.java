@@ -2,7 +2,7 @@ package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.ApiListService;
 import com.dhlk.entity.api.ApiList;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +45,7 @@ public class ApiListController {
     * @return
     */
     @GetMapping("/findPageList")
-    @RequiresPermissions("apiList:findPageList")
+    @RequiresPermissions("dhlk:view")
     public Result findPageList(@RequestParam(value = "classifyId", required = false) Integer classifyId,
                                @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {

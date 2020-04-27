@@ -2,7 +2,7 @@ package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.OrgService;
 import com.dhlk.entity.basicmodule.Org;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ public class OrgController {
      * @return
      */
     @GetMapping("/findPageList")
-    @RequiresPermissions("org:view")
+    @RequiresPermissions("dhlk:view")
     public Result findPageList(@RequestParam(value = "parentId",required = false,defaultValue = "0") Integer parentId,
                                @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
@@ -60,7 +60,7 @@ public class OrgController {
      * @return
      */
     @GetMapping("/findTreeList")
-    @RequiresPermissions("org:view")
+    @RequiresPermissions("dhlk:view")
     public Result findTreeList() {
         return  orgService.findTreeList();
     }
@@ -71,7 +71,7 @@ public class OrgController {
      * @return
      */
     @GetMapping("/findPageUsersByOrg")
-    @RequiresPermissions("org:view")
+    @RequiresPermissions("dhlk:view")
     public Result findPageUsersByOrg(@RequestParam(value = "orgId") Integer orgId,
                                      @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                      @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {

@@ -2,7 +2,7 @@ package com.dhlk.web.dm.controller;
 
 import com.dhlk.entity.dm.DmClassifyType;
 import com.dhlk.web.dm.service.DmClassifyTypeService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

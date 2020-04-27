@@ -1,10 +1,7 @@
 package com.dhlk.basicmodule.service.service;
 
 import com.dhlk.entity.basicmodule.DevicesClassify;
-import domain.Result;
-
-import java.util.LinkedHashMap;
-import java.util.List;
+import com.dhlk.domain.Result;
 
 /**
  * @Description 设备分类管理

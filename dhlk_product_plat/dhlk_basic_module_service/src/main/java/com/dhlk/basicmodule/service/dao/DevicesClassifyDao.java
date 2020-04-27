@@ -27,7 +27,7 @@ public interface DevicesClassifyDao {
     List<DevicesClassify> findList(@Param("classifyName") String classifyName,@Param("factoryId")Integer factoryId,@Param("attachPath") String attachmentPath);
 
 
-    List<LinkedHashMap<String,String>> findAttrSetByClassifyById(Integer devicesClassifyId);
+    List<LinkedHashMap<String,Object>> findAttrSetByClassifyById(Integer devicesClassifyId);
 
     List<String> findAttrByClassifyById(String devicesClassifyId);
 

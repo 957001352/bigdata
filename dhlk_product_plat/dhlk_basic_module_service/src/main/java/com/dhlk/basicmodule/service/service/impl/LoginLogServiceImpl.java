@@ -4,12 +4,12 @@ import com.dhlk.basicmodule.service.dao.LoginLogDao;
 import com.dhlk.basicmodule.service.service.LoginLogService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.LoginLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 @Service
 @Transactional

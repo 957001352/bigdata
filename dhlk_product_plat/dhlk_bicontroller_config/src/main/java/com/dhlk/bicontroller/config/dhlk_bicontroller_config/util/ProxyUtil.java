@@ -3,7 +3,7 @@ package com.dhlk.bicontroller.config.dhlk_bicontroller_config.util;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
-import systemconst.Const;
+import com.dhlk.systemconst.Const;
 
 
 public class ProxyUtil {

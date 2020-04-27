@@ -2,7 +2,7 @@ package com.dhlk.web.basicmodule.controller;
 
 import com.dhlk.entity.hive.MetaTable;
 import com.dhlk.web.basicmodule.service.MetaTableService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

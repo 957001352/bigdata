@@ -1,6 +1,6 @@
 debug: false
 server:
-  port: 8089
+  port: 9010
 spring:
   application:
     name: dhlk-hive

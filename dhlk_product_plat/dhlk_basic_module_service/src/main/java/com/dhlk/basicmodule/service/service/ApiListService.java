@@ -1,7 +1,6 @@
 package com.dhlk.basicmodule.service.service;
 
-import domain.Result;
-import com.dhlk.entity.api.ApiClassify;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.api.ApiList;
 
 /**

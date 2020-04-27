@@ -1,16 +1,14 @@
 package com.dhlk.web.handler;
 
-import domain.Result;
-import enums.ResultEnum;
-import exceptions.MyException;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
+import com.dhlk.exceptions.MyException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import utils.Convert;
-import utils.ResultUtils;
-
-import java.util.Map;
+import com.dhlk.utils.Convert;
+import com.dhlk.utils.ResultUtils;
 
 
 /**

@@ -1,16 +1,9 @@
 package com.dhlk.web.hdfs.service;
 
-import com.dhlk.web.basicmodule.service.fbk.SysLogServiceFbk;
-import com.dhlk.web.hdfs.service.fbk.HadoopServiceFbk;
-import domain.Result;
-import feign.Response;
+import com.dhlk.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: jzhao

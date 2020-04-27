@@ -1,13 +1,10 @@
 package com.dhlk.web.basicmodule.service.fbk;
 
 import com.dhlk.web.basicmodule.service.LoginService;
-import domain.Result;
-import enums.ResultEnum;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import utils.ResultUtils;
-
-import javax.servlet.http.HttpServletRequest;
+import com.dhlk.utils.ResultUtils;
 
 @Service
 public class LoginServiceFbk implements LoginService {

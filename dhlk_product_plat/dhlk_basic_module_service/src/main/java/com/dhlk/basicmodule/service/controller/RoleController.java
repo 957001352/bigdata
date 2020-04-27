@@ -1,7 +1,7 @@
 package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.RoleService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.Role;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,7 +51,7 @@ public class RoleController {
     */
     @ApiOperation("分页查询")
     @GetMapping("/findPageList")
-    @RequiresPermissions("role:view")
+    @RequiresPermissions("dhlk:view")
     public Result findPageList(@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         return  roleService.findPageList(pageNum,pageSize);
@@ -62,7 +62,7 @@ public class RoleController {
      */
     @ApiOperation("查询所有")
     @GetMapping("/findAllList")
-    @RequiresPermissions("role:view")
+    @RequiresPermissions("dhlk:view")
     public Result findAllList(){
         return  roleService.findAllList();
     }
@@ -74,7 +74,7 @@ public class RoleController {
      */
     @ApiOperation("查询用户下面的所有角色")
     @GetMapping("/selectRoleByUserId")
-    @RequiresPermissions("role:view")
+    @RequiresPermissions("dhlk:view")
     public Result selectRoleByUserId(@RequestParam(value = "userId", required = true)Integer userId){
         return  roleService.selectRoleByUserId(userId);
     }
@@ -85,7 +85,7 @@ public class RoleController {
      */
     @ApiOperation("查询角色下面的所有用户")
     @GetMapping("/selectUserByRoleId")
-    @RequiresPermissions("role:view")
+    @RequiresPermissions("dhlk:view")
     public Result selectUserByRoleId(@RequestParam(value = "roleId", required = true)Integer roleId,
                                      @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                      @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize){

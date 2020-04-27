@@ -1,12 +1,10 @@
 package com.dhlk.web.basicmodule.service;
 
-import com.dhlk.web.basicmodule.service.fbk.EventServiceFbk;
 import com.dhlk.web.basicmodule.service.fbk.TelemetryServiceFbk;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "basicmodule-service/telemetry", fallback = TelemetryServiceFbk.class)
 public interface TelemetryService {

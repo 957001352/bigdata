@@ -1,9 +1,8 @@
 package utils;
 
+import com.dhlk.utils.CheckUtils;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Content: 单元测试

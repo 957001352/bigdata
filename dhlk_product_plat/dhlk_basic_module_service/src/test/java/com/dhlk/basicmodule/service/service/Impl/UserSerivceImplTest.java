@@ -1,11 +1,9 @@
 package com.dhlk.basicmodule.service.service.Impl;
 
 import com.dhlk.basicmodule.service.dhlk_basic_module_service.DhlkBasicModuleServiceApplication;
-import com.dhlk.basicmodule.service.service.OrgService;
 import com.dhlk.basicmodule.service.service.UserService;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
-import com.dhlk.entity.basicmodule.Org;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 /**
  * @Description

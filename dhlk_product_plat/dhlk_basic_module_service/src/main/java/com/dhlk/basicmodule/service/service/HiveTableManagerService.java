@@ -1,7 +1,6 @@
 package com.dhlk.basicmodule.service.service;
 
-import com.dhlk.entity.hive.MetaTable;
-import domain.Result;
+import com.dhlk.domain.Result;
 
 /**
  * hive数据表管理

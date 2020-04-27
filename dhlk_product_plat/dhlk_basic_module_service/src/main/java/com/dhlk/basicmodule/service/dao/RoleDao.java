@@ -2,8 +2,6 @@ package com.dhlk.basicmodule.service.dao;
 
 import com.dhlk.entity.basicmodule.Role;
 import com.dhlk.entity.basicmodule.User;
-import domain.Result;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

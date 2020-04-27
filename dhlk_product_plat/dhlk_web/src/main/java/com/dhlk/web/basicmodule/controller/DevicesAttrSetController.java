@@ -2,12 +2,12 @@ package com.dhlk.web.basicmodule.controller;
 
 import com.dhlk.entity.basicmodule.DevicesAttrSet;
 import com.dhlk.web.basicmodule.service.DevicesAttrSetService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 import javax.validation.Valid;
 

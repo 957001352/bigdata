@@ -1,7 +1,7 @@
 package com.dhlk.basicmodule.service.service;
 
 import com.dhlk.entity.basicmodule.DevicesAttrSet;
-import domain.Result;
+import com.dhlk.domain.Result;
 
 /**
  * @Description设备属性管理

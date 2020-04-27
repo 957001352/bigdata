@@ -1,7 +1,7 @@
 package com.dhlk.basicmodule.service.dhlk_basic_module_service;
 
 import com.dhlk.basicmodule.service.service.SysLogService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

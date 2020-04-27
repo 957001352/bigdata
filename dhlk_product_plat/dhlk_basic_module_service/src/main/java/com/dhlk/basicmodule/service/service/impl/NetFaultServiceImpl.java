@@ -2,14 +2,16 @@ package com.dhlk.basicmodule.service.service.impl;
 
 import com.dhlk.basicmodule.service.dao.NetFaultDao;
 import com.dhlk.basicmodule.service.service.NetFaultService;
-import com.dhlk.basicmodule.service.service.RedisService;
+import com.dhlk.basicmodule.service.util.AuthUserUtil;
 import com.dhlk.entity.basicmodule.NetFault;
 import com.dhlk.entity.basicmodule.User;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
+
+import javax.annotation.Resource;
 
 /**
  * @Description
@@ -22,7 +24,7 @@ public class NetFaultServiceImpl implements NetFaultService {
     @Autowired
     private  NetFaultDao netFaultDao;
     @Autowired
-    private RedisService redisService;
+    private AuthUserUtil authUserUtil;
 
     @Override
     public Result save(NetFault netFault) {
@@ -42,7 +44,7 @@ public class NetFaultServiceImpl implements NetFaultService {
     @Override
     public Result dealFault(Integer id,Integer status) {
         Integer userId=null;
-        User user=redisService.currentUser();
+        User user=authUserUtil.currentUser();
         if(user!=null){
             userId=user.getId();
         }

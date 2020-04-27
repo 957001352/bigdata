@@ -1,6 +1,6 @@
 package com.dhlk.basicmodule.service.dao;
 
-import domain.BaseFile;
+import com.dhlk.domain.BaseFile;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

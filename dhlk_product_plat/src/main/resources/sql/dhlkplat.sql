@@ -10,6 +10,10 @@ create table  dhlk_basic_org (
   status integer DEFAULT '0' COMMENT '状态 0正常 2 删除',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工厂管理';
+-- ----------------------------
+-- Records of dhlk_basic_org
+-- ----------------------------
+INSERT INTO `dhlk_basic_org` VALUES (1, 'dhlk', '大航联科', 0, 2);
 /*==============================================================*/
 /* Table: 访问秘钥                                   */
 /*==============================================================*/
@@ -34,7 +38,7 @@ create table dhlk_basic_net_devices
    mask                 varchar(50)                    DEFAULT NULL COMMENT '子网掩码',
    create_time          timestamp                      DEFAULT NOW() COMMENT '创建时间',
    status               integer                        DEFAULT '0' COMMENT '状态 0正常 1停用',
-   license              varchar(20)                    DEFAULT NULL COMMENT '许可',
+   license              varchar(100)                   DEFAULT NULL COMMENT '许可',
    type_id              integer                        DEFAULT '1' COMMENT '设备类型  1大数据一体机 2 BI控制器',
    note                 varchar(200)                   DEFAULT NULL COMMENT '设备描述',
    factory_id           integer                        DEFAULT NULL COMMENT '集团id',
@@ -89,6 +93,7 @@ create table dhlk_basic_product_net
    id                   integer                        NOT NULL AUTO_INCREMENT,
    net_id               integer                        DEFAULT NULL COMMENT '设备分类',
    product_id           integer                        DEFAULT NULL COMMENT '设备分类',
+   type                 integer                        DEFAULT NULL COMMENT '设备类型',
    primary key  (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='生产设备和网络设备关系配置';
 
@@ -126,6 +131,10 @@ create table dhlk_basic_user
    primary key  (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';
 
+-- ----------------------------
+-- Records of dhlk_basic_user
+-- ----------------------------
+INSERT INTO `dhlk_basic_user` VALUES (1, 'admin', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '18293080304', '123@qq.com', 0, '1', '2020-04-09 18:05:10', 0);
 /*==============================================================*/
 /* Table: mosquito                                */
 /*==============================================================*/
@@ -163,7 +172,10 @@ create table dhlk_basic_user_role
    role_id              integer                        DEFAULT NULL COMMENT '角色id',
    primary key  (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关系';
-
+-- ----------------------------
+-- Records of dhlk_basic_user_role
+-- ----------------------------
+INSERT INTO `dhlk_basic_user_role` VALUES (1, 1, 1);
 /*==============================================================*/
 /* Table: 权限                               */
 /*==============================================================*/
@@ -175,12 +187,63 @@ create table dhlk_basic_permissions
    role_id              integer                        DEFAULT NULL COMMENT '角色id',
    primary key  (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
-
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (480, 1, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (479, 2, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (146, 3, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (147, 4, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (148, 5, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (149, 6, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (150, 7, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (151, 8, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (152, 9, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (153, 10, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (154, 11, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (155, 12, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (156, 13, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (157, 14, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (158, 15, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (159, 16, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (160, 17, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (161, 18, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (162, 19, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (163, 20, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (166, 23, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (168, 25, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (175, 32, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (209, 38, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (210, 39, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (211, 40, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (212, 41, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (213, 42, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (214, 43, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (215, 44, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (216, 45, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (217, 46, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (218, 47, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (219, 48, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (220, 49, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (221, 50, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (222, 51, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (223, 52, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (224, 53, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (225, 54, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (226, 55, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (227, 56, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (228, 57, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (581, 66, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (582, 67, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (583, 68, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (584, 69, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (585, 70, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (586, 72, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (587, 73, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (588, 74, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (589, 75, 1);
 /*==============================================================*/
 /* Table: API分类表                                   */
 /*==============================================================*/
 drop table if exists dhlk_api_classify;
-create table dhlk_api_classify 
+create table dhlk_api_classify
 (
    id                   integer                        NOT NULL AUTO_INCREMENT,
    class_name           varchar(50)                    DEFAULT NULL UNIQUE COMMENT '分类名称',
@@ -206,7 +269,7 @@ create table dhlk_basic_meta_table
 /* Table: 角色                                      */
 /*==============================================================*/
 drop table if exists dhlk_basic_role;
-create table dhlk_basic_role 
+create table dhlk_basic_role
 (
    id                   integer                        NOT NULL AUTO_INCREMENT,
    name                 varchar(20)                    DEFAULT NULL UNIQUE COMMENT '名称',
@@ -220,23 +283,79 @@ INSERT INTO `dhlk_basic_role` VALUES ('1', '超级管理员', '拥有最大权�
 /* Table: 系统菜单                                      */
 /*==============================================================*/
 drop table if exists dhlk_basic_menu;
-create table dhlk_basic_menu 
+create table dhlk_basic_menu
 (
    id                   integer                        NOT NULL AUTO_INCREMENT,
-   code                 varchar(10)                    DEFAULT NULL COMMENT '编码',
+   code                 varchar(50)                    DEFAULT NULL COMMENT '编码',
    name                 varchar(50)                    DEFAULT NULL COMMENT '名称',
    url                  varchar(100)                   DEFAULT NULL COMMENT '请求连接',
-   perms                varchar(500)                   DEFAULT NULL COMMENT '授权(多个用逗号分隔，如：user:list,user:create)',
-   parent_id             int(11)                        DEFAULT NULL COMMENT '父节点',
-   type                 integer                        DEFAULT '0'  COMMENT '类型   0菜单   1按钮',
    status               integer                        DEFAULT '0'  COMMENT '状态  0正常 1禁用 2删除',
+	 parent_id             int(11)                        DEFAULT NULL COMMENT '父节点',
+	 perms                varchar(500)                   DEFAULT NULL COMMENT '授权(多个用逗号分隔，如：user:list,user:create)',
+	 type                 integer                        DEFAULT '0'  COMMENT '类型   0菜单   1按钮',
    primary key  (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统菜单';
+-- ----------------------------
+-- Records of dhlk_basic_menu
+-- ----------------------------
+INSERT INTO `dhlk_basic_menu` VALUES (1, 'userCenter', '用户中心', '/system', 0, 0, 'user', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (2, 'deviceCenter', '设备中心', '/monitor', 0, 0, 'device', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (3, 'user/view', '用户管理', '/system/user', 0, 1, 'dhlk:view', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (4, 'role/view', '角色管理', '/system/role', 0, 1, 'dhlk:view', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (5, 'menu/view', '菜单管理', '/system/menu', 0, 1, 'dhlk:view', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (6, 'org/view', '机构管理', '/system/dept', 0, 1, 'dhlk:view', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (7, 'sysLog/view', '运行日志', 'sysLog/searchLogFile', 0, 1, 'dhlk:view', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (8, 'sysLog/downZipFile', '日志下载', 'sysLog/downZipFile', 0, 7, 'sysLog:downZipFile', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (9, 'user/insert', '新增用户', 'user/save', 0, 3, 'user:save', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (10, 'user/update', '修改用户', 'user/update', 0, 3, 'user:save', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (11, 'user/delete', '删除用户', 'user/delete', 0, 3, 'user:delete', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (12, 'role/insert', '新增角色', 'role/save', 0, 4, 'role:save', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (13, 'role/update', '修改角色', 'role/update', 0, 4, 'role:update', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (14, 'role/delete', '删除角色', 'role/delete', 0, 4, 'role:delete', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (15, 'menu/insert', '新增菜单', 'menu/insert', 0, 5, 'menu:save', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (16, 'menu/update', '修改菜单', 'menu/update', 0, 5, 'menu:update', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (17, 'menu/delete', '删除菜单', 'menu/delete', 0, 5, 'menu:delete', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (18, 'org/insert', '新增机构', 'org/save', 0, 6, 'org:save', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (19, 'org/update', '修改机构', 'org/update', 0, 6, 'org:save', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (20, 'org/delete', '删除机构', 'org/delete', 0, 6, 'org:delete', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (23, 'permissions/insert', '分配权限', 'permissions/save', 0, 4, 'permissions:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (25, 'user/updatePassword', '修改密码', 'user/updatePassword', 0, 3, 'user:updatePassword', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (32, 'user/disable', '禁用用户', 'user/isEnable', 0, 3, 'user:isEnable', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (38, 'productDevices/view', '资产管理', 'productDevices/findList', 0, 2, 'dhlk:view', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (39, 'productDevices/insert', '新增资产', 'productDevices/save', 0, 38, 'productDevices:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (40, 'productDevices/update', '编辑资产', 'productDevices/save', 0, 38, 'productDevices:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (41, 'productDevices/delete', '删除资产', 'productDevices/delete', 0, 38, 'productDevices:delete', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (42, 'netDevices/view', '网络设备', 'netDevices/findList', 0, 2, 'dhlk:view', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (43, 'netDevices/insert', '新增设备', 'netDevices/save', 0, 42, 'netDevices:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (44, 'netDevices/update', '编辑设备', 'netDevices/save', 0, 42, 'netDevices:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (45, 'netDevices/delete', '删除设备', 'netDevices/delete', 0, 42, 'netDevices:delete', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (46, 'devicesAttrSet/view', '参数管理', 'devicesAttrSet/findList', 0, 2, 'dhlk:view', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (47, 'devicesAttrSet/insert', '新增参数', 'devicesAttrSet/save', 0, 46, 'devicesAttrSet:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (48, 'devicesAttrSet/update', '编辑参数', 'devicesAttrSet/save', 0, 46, 'devicesAttrSet:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (49, 'devicesAttrSet/delete', '删除参数', 'devicesAttrSet/delete', 0, 46, 'devicesAttrSet:delete', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (50, 'devicesClassify/view', '类型管理', 'devicesClassify/findList', 0, 2, 'dhlk:view', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (51, 'devicesClassify/insert', '新增类型', 'devicesClassify/save', 0, 50, 'devicesClassify:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (52, 'devicesClassify/update', '编辑类型', 'devicesClassify/save', 0, 50, 'devicesClassify:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (53, 'devicesClassify/delete', '删除类型', 'devicesClassify/delete', 0, 50, 'devicesClassify:delete', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (54, 'productNet/view', '配置管理', 'productNet/findList', 0, 2, 'dhlk:view', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (55, 'productNet/insert', '新增配置', 'productNet/save', 0, 54, 'productNet:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (56, 'productNet/update', '新增配置', 'productNet/save', 0, 54, 'productNet:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (57, 'productNet/delete', '删除配置', 'productNet/delete', 0, 54, 'productNet:delete', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (66, 'user/distributionOrg', '分配归属机构', 'user/save', 0, 3, 'user:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (67, 'user/distributionRole', '分配角色', 'user/save', 0, 3, 'user:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (68, 'org/insertFactory', '添加集团', 'org/save', 0, 6, 'org:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (69, 'org/insertDept', '添加下级', 'org/save', 0, 6, 'org:save', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (70, 'user/startuse', '启用用户', 'user/isEnable', 0, 3, 'user:isEnable', 2);
+INSERT INTO `dhlk_basic_menu` VALUES (72, 'netFault/dealFault', '故障处理', 'netFault/dealFault', 0, 42, 'netFault:dealFault', 1);
+INSERT INTO `dhlk_basic_menu` VALUES (73, 'dataControl', '数据中台', NULL, 0, 0, 'dhlk:view', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (74, 'analysisControl', '商业智能', NULL, 0, 0, 'dhlk:view', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (75, 'monitorCenter', '监测中心', NULL, 0, 0, 'dhlk:view', 0);
+
 /*==============================================================*/
 /* Table: API接口                                         */
 /*==============================================================*/
 drop table if exists dhlk_api_list;
-create table dhlk_api_list 
+create table dhlk_api_list
 (
    id                   integer                        NOT NULL AUTO_INCREMENT,
    version              varchar(10)                    DEFAULT NULL COMMENT '版本',
@@ -286,6 +405,7 @@ CREATE TABLE dhlk_basic_devices_attr_detail
 (
    id                    INTEGER                    NOT NULL AUTO_INCREMENT,
    attr                  VARCHAR(100)               DEFAULT NULL COMMENT '属性名称',
+   `code`                  VARCHAR(100)               DEFAULT NULL COMMENT '编码',
    data_type             VARCHAR(20)                DEFAULT NULL COMMENT '数据类型',
    data_length           INTEGER                    DEFAULT NULL COMMENT '数据长度',
    unit                  VARCHAR(100)               DEFAULT NULL COMMENT '单位',
@@ -293,20 +413,7 @@ CREATE TABLE dhlk_basic_devices_attr_detail
    PRIMARY KEY  (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='设备属性明细';
 
-/*==============================================================*/
-/* Table: 设备分类                           */
-/*==============================================================*/
-DROP TABLE IF EXISTS dhlk_basic_devices_classify;
-CREATE TABLE dhlk_basic_devices_classify
-(
-   id                   VARCHAR(100)                  NOT NULL,
-   classify_name        VARCHAR(100)                  DEFAULT NULL COMMENT '分类名称',
-   describe             VARCHAR(200)                  DEFAULT NULL COMMENT '描述',
-   classify_id          VARCHAR(200)                  DEFAULT NULL COMMENT '类型',
-   factory_id           INTEGER                       DEFAULT NULL COMMENT '工厂id',
-   type_id              INTEGER                       DEFAULT NULL COMMENT '设备类型分类id',
-   PRIMARY KEY  (id)
-) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='设备类型管理';
+
 
 /*==============================================================*/
 /* Table: 设备类型属性明细                           */
@@ -366,6 +473,28 @@ create table dhlk_dm_classify_type
    status               integer                        DEFAULT '0' COMMENT '状态  0正常 2删除',
    PRIMARY KEY  (id)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1 COMMENT '设备类型分类';
+-- ----------------------------
+-- Records of dhlk_dm_classify_type
+-- ----------------------------
+INSERT INTO `dhlk_dm_classify_type` VALUES (1, '基础类型', 0);
+INSERT INTO `dhlk_dm_classify_type` VALUES (2, '其他类型', 0);
+
+
+/*==============================================================*/
+/* Table: 设备分类                           */
+/*==============================================================*/
+DROP TABLE IF EXISTS `dhlk_basic_devices_classify`;
+CREATE TABLE `dhlk_basic_devices_classify`
+(
+   `id`                   VARCHAR(100)                  NOT NULL,
+   `classify_name`        VARCHAR(100)                  DEFAULT NULL COMMENT '分类名称',
+   `describe`             VARCHAR(200)                  DEFAULT NULL COMMENT '描述',
+   `classify_id`          VARCHAR(200)                  DEFAULT NULL COMMENT '类型',
+   `factory_id`           INTEGER                       DEFAULT NULL COMMENT '工厂id',
+   `type_id`              INTEGER                       DEFAULT NULL COMMENT '设备类型分类id',
+   PRIMARY KEY  (id)
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='设备类型管理';
+
 /*==============================================================*/
 /* Function: 创建函数查出以逗号分开的字符串的第一个数                */
 /*==============================================================*/

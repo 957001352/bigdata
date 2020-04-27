@@ -1,7 +1,7 @@
 package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.MenuService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.Menu;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,7 +51,7 @@ public class MenuController {
     */
     @ApiOperation("分页查询")
     @GetMapping("/findPageList")
-    @RequiresPermissions("menu:view")
+    @RequiresPermissions("dhlk:view")
     public Result findPageList(@RequestParam(value = "parentId", required = false) Integer parentId,
                            @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
@@ -75,7 +75,7 @@ public class MenuController {
      */
     @ApiOperation("菜单树查询")
     @GetMapping("/findTreeList")
-    @RequiresPermissions("menu:view")
+    @RequiresPermissions("dhlk:view")
     public Result findTreeList() {
         return menuService.findTreeList();
     }
@@ -88,7 +88,7 @@ public class MenuController {
      */
     @ApiOperation("根据用户Id过滤菜单树")
     @GetMapping("/findTreeByUserId")
-    @RequiresPermissions("menu:view")
+    @RequiresPermissions("dhlk:view")
     public Result findTreeByUserId(@RequestParam(value="userId", required = true)Integer userId){
         return menuService.findTreeList();
     }
@@ -100,7 +100,7 @@ public class MenuController {
      */
     @ApiOperation("根据角色roleId获取资源列表")
     @GetMapping("/getMenuCheckedListByRoleId")
-    @RequiresPermissions("menu:view")
+    @RequiresPermissions("dhlk:view")
     public Result  getMenuCheckedListByRoleId(@RequestParam(value="roleId", required = true) Integer roleId){
         return menuService.getMenuCheckedListByRoleId(roleId);
     }

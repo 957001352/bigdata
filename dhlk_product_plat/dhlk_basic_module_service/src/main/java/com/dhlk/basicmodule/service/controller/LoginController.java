@@ -2,17 +2,12 @@ package com.dhlk.basicmodule.service.controller;
 
 
 import com.dhlk.basicmodule.service.service.LoginService;
-import com.dhlk.basicmodule.service.util.RestTemplateUtil;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import systemconst.Const;
-import utils.ResultUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 @Validated

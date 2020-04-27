@@ -1,11 +1,11 @@
 package com.dhlk.web.basicmodule.service.fbk;
 
 import com.dhlk.web.basicmodule.service.ProductDevicesService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.ProductDevices;
-import enums.ResultEnum;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 /**
  * 生产设备管理

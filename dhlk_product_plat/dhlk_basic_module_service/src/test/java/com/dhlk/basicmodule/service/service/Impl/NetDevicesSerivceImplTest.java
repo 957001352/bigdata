@@ -3,7 +3,7 @@ package com.dhlk.basicmodule.service.service.Impl;
 import com.dhlk.basicmodule.service.dhlk_basic_module_service.DhlkBasicModuleServiceApplication;
 import com.dhlk.basicmodule.service.service.NetDevicesService;
 import com.dhlk.entity.basicmodule.NetDevices;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

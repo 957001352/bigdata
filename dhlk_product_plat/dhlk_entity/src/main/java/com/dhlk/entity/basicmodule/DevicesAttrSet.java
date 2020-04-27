@@ -1,6 +1,6 @@
 package com.dhlk.entity.basicmodule;
 
-import annotation.NameCheck;
+import com.dhlk.annotation.NameCheck;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

@@ -2,7 +2,7 @@ package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.DevicesClassifyService;
 import com.dhlk.entity.basicmodule.DevicesClassify;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class DevicesClassifyController {
      * @param name 设备分配名称
      */
     @GetMapping("/findList")
-    @RequiresPermissions("devicesClassify:view")
+    @RequiresPermissions("dhlk:view")
     public Result findList(@RequestParam(value = "name", required = false) String name) {
         return  devicesClassifyService.findList(name);
     }

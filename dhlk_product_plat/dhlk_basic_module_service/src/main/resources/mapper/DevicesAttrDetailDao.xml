@@ -9,10 +9,11 @@
         <result property="dataLength" jdbcType="INTEGER"   column="data_length"    />
         <result property="unit"  jdbcType="VARCHAR"  column="unit"    />
         <result property="attrSetId"  jdbcType="INTEGER"  column="attr_set_id"    />
+        <result property="code" jdbcType="VARCHAR" column="code" />
     </resultMap>
 
     <sql id="selectDhlkBasicDevicesAttrDetailVo">
-        select id, attr, data_type, data_length, unit,attr_set_id from dhlk_basic_devices_attr_detail
+        select id, attr, code, data_type, data_length, unit,attr_set_id from dhlk_basic_devices_attr_detail
     </sql>
 
     <select id="findAttrDetailsByAttrSetId" parameterType="Integer" resultMap="DhlkBasicDevicesAttrDetailResult">
@@ -27,11 +28,12 @@
 
     <insert id="insertDevicesAttrDetails" parameterType="com.dhlk.entity.basicmodule.DevicesAttrDetail">
         insert into dhlk_basic_devices_attr_detail
-        (attr,data_type,data_length,unit,attr_set_id)
+        (attr,code,data_type,data_length,unit,attr_set_id)
         values
         <foreach collection="devicesAttrDetails" item="devicesAttrDetail" index="i" separator=",">
             (
             #{devicesAttrDetail.attr},
+            #{devicesAttrDetail.code},
             #{devicesAttrDetail.dataType},
             #{devicesAttrDetail.dataLength},
             #{devicesAttrDetail.unit},
@@ -44,6 +46,7 @@
         insert into dhlk_basic_devices_attr_detail
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="attr != null  and attr != ''">attr,</if>
+            <if test="code != null  and attr != ''">code,</if>
             <if test="dataType != null  and dataType != ''">data_type,</if>
             <if test="dataLength != null ">data_length,</if>
             <if test="unit != null ">unit,</if>
@@ -51,6 +54,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="attr != null  and attr != ''">#{attr},</if>
+            <if test="code != null  and code != ''">#{code},</if>
             <if test="dataType != null  and dataType != ''">#{dataType},</if>
             <if test="dataLength != null ">#{dataLength},</if>
             <if test="unit != null ">#{unit},</if>
@@ -62,6 +66,7 @@
         update dhlk_basic_devices_attr_detail
         <trim prefix="SET" suffixOverrides=",">
             <if test="attr != null  and attr != ''">attr = #{attr},</if>
+            <if test="code != null  and code != ''">code = #{code},</if>
             <if test="dataType != null  and dataType != ''">data_type = #{dataType},</if>
             <if test="dataLength != null ">data_length = #{dataLength},</if>
             <if test="attrSetId != null ">attr_set_id = #{attrSetId},</if>

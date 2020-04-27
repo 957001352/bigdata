@@ -2,7 +2,7 @@ package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.DmNetTypeService;
 import com.dhlk.entity.dm.DmNetType;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +43,7 @@ public class DmNetTypeController {
     * @return
     */
     @GetMapping("/findList")
-    @RequiresPermissions("dmNetType:findList")
+    @RequiresPermissions("dhlk:view")
     public Result findList(@RequestParam(value = "name", required = false) String name) {
         return  dmNetTypeService.findList(name);
     }

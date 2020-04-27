@@ -3,12 +3,12 @@ package com.dhlk.bicontroller.config.dhlk_bicontroller_config.controller;
 
 
 import com.dhlk.bicontroller.config.dhlk_bicontroller_config.service.ProxyService;
-import domain.Result;
-import enums.ResultEnum;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 @RestController
 @RequestMapping("/bi")

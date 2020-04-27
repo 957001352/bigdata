@@ -2,15 +2,13 @@ package com.dhlk.basicmodule.service.service.Impl;
 
 import com.dhlk.basicmodule.service.dhlk_basic_module_service.DhlkBasicModuleServiceApplication;
 import com.dhlk.basicmodule.service.service.EventService;
-import com.dhlk.basicmodule.service.service.TelemetryService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DhlkBasicModuleServiceApplication.class)
 public class EventServiceImplTest {

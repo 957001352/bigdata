@@ -96,4 +96,10 @@
             union all select id from dhlk_basic_org where id =#{orgId}
 		)
     </select>
+    <select id="isRepeatName" resultType="Integer">
+        SELECT count(*) FROM dhlk_basic_product_devices  WHERE name=#{name}
+        <if test="id!= null and id != ''">
+            AND id!=#{id}
+        </if>
+    </select>
 </mapper>

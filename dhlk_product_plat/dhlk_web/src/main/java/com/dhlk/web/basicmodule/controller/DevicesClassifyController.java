@@ -2,7 +2,7 @@ package com.dhlk.web.basicmodule.controller;
 
 import com.dhlk.entity.basicmodule.DevicesClassify;
 import com.dhlk.web.basicmodule.service.DevicesClassifyService;
-import domain.Result;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

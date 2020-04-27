@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 public class DevicesAttrDetail {
     private Integer id;
+    private String code;//编码
     private String attr;//属性名称
     private String dataType;//数据类型
     private Integer dataLength;//数据长度

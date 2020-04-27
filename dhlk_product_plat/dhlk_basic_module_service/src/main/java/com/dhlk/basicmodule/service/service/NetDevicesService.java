@@ -1,8 +1,7 @@
 package com.dhlk.basicmodule.service.service;
 
 import com.dhlk.entity.basicmodule.NetDevices;
-import domain.Result;
-import org.apache.ibatis.annotations.Param;
+import com.dhlk.domain.Result;
 
 /**
  * 网络设备管理

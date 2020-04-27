@@ -2,15 +2,16 @@ package com.dhlk.basicmodule.service.service.Impl;
 
 import com.dhlk.basicmodule.service.dhlk_basic_module_service.DhlkBasicModuleServiceApplication;
 import com.dhlk.basicmodule.service.service.TelemetryService;
-import com.dhlk.basicmodule.service.util.RestTemplateUtil;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DhlkBasicModuleServiceApplication.class)
 public class TelemetryServiceImplTest {
@@ -25,5 +26,6 @@ public class TelemetryServiceImplTest {
     public void getAttributesByScope() throws Exception {
         Result result=telemetryService.getAttributesByScope("");
         System.out.println(result.getCode()+"---------------"+result.getData());
+        List<String> list=new ArrayList<String>();
     }
 }

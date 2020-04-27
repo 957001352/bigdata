@@ -10,6 +10,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -20,11 +21,12 @@ import java.util.Properties;
 
 @RestController
 @EnableDiscoveryClient
-@ComponentScan("com.dhlk.basicmodule.service")
+@ComponentScan("com.dhlk")
 @MapperScan(basePackages="com.dhlk.basicmodule.service.dao")
 @SpringBootApplication
 @EnableCaching
 @EnableSwagger2
+@EnableAspectJAutoProxy(proxyTargetClass=true)
 public class DhlkBasicModuleServiceApplication {
 	@Autowired
 	private DiscoveryClient discoveryClient;

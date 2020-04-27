@@ -1,10 +1,8 @@
 package com.dhlk.basicmodule.service.controller;
 
-import com.dhlk.basicmodule.service.service.NetDevicesSoftService;
 import com.dhlk.basicmodule.service.service.NetFaultService;
-import com.dhlk.entity.basicmodule.NetDevicesSoft;
 import com.dhlk.entity.basicmodule.NetFault;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +39,7 @@ public class NetFaultController {
      * @return
      */
     @GetMapping("/findList")
-    @RequiresPermissions("netFault:view")
+    @RequiresPermissions("dhlk:view")
     public Result findList(@RequestParam(value = "tbId") String tbId,
                            @RequestParam(value = "status", required = false) Integer status) {
         return  netFaultService.findList(tbId,status);

@@ -33,7 +33,7 @@ public interface DevicesClassifyDetailDao {
     Integer findDevicesClassifyDetailByAttrSetId(Integer attrSetId);
 
     //插入类型属性明细集合
-    Integer insertDevicesClassifyDetails(@Param("classifyDetails") List<DevicesClassifyDetail> classifyDetails,@Param("id") String id);
+    Integer insertDevicesClassifyDetails(@Param("classifyDetails") List<DevicesClassifyDetail> classifyDetails);
 
     //删除设备分类下的所有设备属性明细
     Integer deleteByDevicesClassifyId(String devicesClassifyId);

@@ -4,13 +4,13 @@ import com.dhlk.basicmodule.service.dao.ApiClassifyDao;
 import com.dhlk.basicmodule.service.service.ApiClassifyService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.api.ApiClassify;
-import exceptions.MyException;
+import com.dhlk.exceptions.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

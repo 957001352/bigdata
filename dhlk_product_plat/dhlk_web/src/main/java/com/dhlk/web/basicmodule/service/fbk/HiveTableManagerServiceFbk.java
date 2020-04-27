@@ -1,14 +1,11 @@
 package com.dhlk.web.basicmodule.service.fbk;
 
 
-import com.dhlk.entity.hive.MetaTable;
 import com.dhlk.web.basicmodule.service.HiveTableManagerService;
-import com.dhlk.web.basicmodule.service.MetaTableService;
-import domain.Result;
-import enums.ResultEnum;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 /**
  * @Description

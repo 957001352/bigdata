@@ -50,7 +50,7 @@
             #{devicesClassifyDetail.attrSetId},
             #{devicesClassifyDetail.attrSubName},
             #{devicesClassifyDetail.attrDetailId},
-            #{id}
+            #{devicesClassifyDetail.devicesClassifyId}
             )
         </foreach>
     </insert>

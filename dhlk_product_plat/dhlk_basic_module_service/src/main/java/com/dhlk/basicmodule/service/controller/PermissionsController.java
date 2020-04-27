@@ -1,15 +1,12 @@
 package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.PermissionsService;
-import domain.Result;
-import com.dhlk.entity.basicmodule.Permissions;
+import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 /**
@@ -31,7 +28,7 @@ public class PermissionsController {
     @ApiOperation("新增/修改")
     @PostMapping(value = "/save")
     @RequiresPermissions("permissions:save")
-    public Result save(@RequestParam(value = "roleId")Integer roleId,@RequestParam(value = "menuIds")String menuIds) {
+    public Result save(@RequestParam(value = "roleId")Integer roleId,@RequestParam(value = "menuIds",required=false)String menuIds) {
         return permissionsService.insert(roleId,menuIds);
     }
     /**

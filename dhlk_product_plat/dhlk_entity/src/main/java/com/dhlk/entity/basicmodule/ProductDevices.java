@@ -27,7 +27,7 @@ public class ProductDevices implements Serializable {
     private String tbId;//tb设备表id
     private String credentials;//tb设备凭证
     @ApiModelProperty(hidden = true)
-    private List<LinkedHashMap<String,String>> attrSet;
+    private List<LinkedHashMap<String,Object>> attrSet;
     @ApiModelProperty(hidden = true)
     private LinkedHashMap<String,String> classifySet;
     @ApiModelProperty(hidden = true)

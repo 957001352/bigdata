@@ -5,11 +5,11 @@ import com.dhlk.basicmodule.service.service.ProductDevicesService;
 import com.dhlk.basicmodule.service.service.TelemetryService;
 import com.dhlk.entity.basicmodule.NetDevices;
 import com.dhlk.entity.basicmodule.ProductDevices;
-import domain.Result;
+import com.dhlk.domain.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +54,7 @@ public class ProductDevicesController {
     * 列表查询
     */
     @GetMapping("/findList")
-    @RequiresPermissions("productDevices:view")
+    @RequiresPermissions("dhlk:view")
     public Result findList(@RequestParam(value = "name", required = false) String name) {
         return  productDevicesService.findList(name);
     }
@@ -62,7 +62,7 @@ public class ProductDevicesController {
      * 设备属性查询
      */
     @GetMapping("/findAttrByClassifyById")
-    @RequiresPermissions("productDevices:view")
+    @RequiresPermissions("dhlk:view")
     public Result findAttrByClassifyById(@RequestParam(value = "classifyId", required = true)String classifyId){
         return  productDevicesService.findAttrByClassifyById(classifyId);
     }
@@ -70,7 +70,7 @@ public class ProductDevicesController {
      * 按机构查询设备
      */
     @GetMapping("/findTreeList")
-    @RequiresPermissions("productDevices:view")
+    @RequiresPermissions("dhlk:view")
     public Result findTreeList() {
         return  productDevicesService.findTreeList();
     }
@@ -80,7 +80,7 @@ public class ProductDevicesController {
      * 列表查询
      */
     @GetMapping("/findOnLineDevicesCount")
-    @RequiresPermissions("productDevices:view")
+    @RequiresPermissions("dhlk:view")
     public Result findOnLineDevicesCount(@RequestParam(value = "name", required = false) String name) throws Exception {
         List<ProductDevices> allList= (List<ProductDevices>) productDevicesService.findList(name).getData();
         Integer c=0;

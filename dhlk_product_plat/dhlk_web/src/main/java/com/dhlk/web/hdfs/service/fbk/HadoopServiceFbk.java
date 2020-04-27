@@ -1,15 +1,10 @@
 package com.dhlk.web.hdfs.service.fbk;
 
 import com.dhlk.web.hdfs.service.HadoopService;
-import domain.Result;
-import enums.ResultEnum;
-import feign.Response;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import utils.ResultUtils;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+import com.dhlk.utils.ResultUtils;
 
 /**
  * @Author: jzhao

@@ -1,8 +1,7 @@
 package com.dhlk.basicmodule.service.service;
 
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.LoginLog;
-import com.dhlk.entity.basicmodule.User;
 
 /**
  * 用户登录日志

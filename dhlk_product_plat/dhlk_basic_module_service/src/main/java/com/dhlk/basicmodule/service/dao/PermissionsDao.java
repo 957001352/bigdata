@@ -1,8 +1,6 @@
 package com.dhlk.basicmodule.service.dao;
 
 import com.dhlk.entity.basicmodule.Permissions;
-import com.dhlk.entity.basicmodule.User;
-import domain.Result;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +19,7 @@ public interface PermissionsDao {
     public Integer deleteByRoleIds(List<String> roleIds);
 
     List<Permissions> selectListByRoleIds(List<String> roleIds);
+
+    public Integer deleteByRoleId(Integer roleId);
 
 }

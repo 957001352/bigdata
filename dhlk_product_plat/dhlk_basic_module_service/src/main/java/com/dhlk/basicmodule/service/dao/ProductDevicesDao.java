@@ -1,5 +1,6 @@
 package com.dhlk.basicmodule.service.dao;
 
+import com.dhlk.entity.api.ApiClassify;
 import com.dhlk.entity.basicmodule.ProductDevices;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -39,7 +40,11 @@ public interface ProductDevicesDao {
 
     List<ProductDevices> findProductDevicesByOrgId(@Param("orgId") String orgId, @Param("attachPath") String attachPath);
 
-
+    /*
+     * 判断生产设备名称是否重复
+     * @return
+     */
+    Integer isRepeatName(ProductDevices productDevices);
 
     Integer findProductDevicesCountByOrgId(Integer orgId);
 }

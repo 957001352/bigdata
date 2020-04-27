@@ -4,17 +4,16 @@ import com.dhlk.basicmodule.service.dao.OrgAuthDao;
 import com.dhlk.basicmodule.service.service.OrgAuthService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import domain.Result;
+import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.OrgAuth;
-import exceptions.MyException;
+import com.dhlk.exceptions.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import systemconst.Const;
-import utils.CheckUtils;
-import utils.DES;
-import utils.ResultUtils;
+import com.dhlk.systemconst.Const;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.DES;
+import com.dhlk.utils.ResultUtils;
 
-import java.sql.SQLOutput;
 import java.util.Arrays;
 
 /**

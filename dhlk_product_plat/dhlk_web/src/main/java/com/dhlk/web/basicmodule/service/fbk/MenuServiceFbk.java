@@ -2,10 +2,10 @@ package com.dhlk.web.basicmodule.service.fbk;
 
 import com.dhlk.entity.basicmodule.Menu;
 import com.dhlk.web.basicmodule.service.MenuService;
-import domain.Result;
-import enums.ResultEnum;
+import com.dhlk.domain.Result;
+import com.dhlk.enums.ResultEnum;
 import org.springframework.stereotype.Service;
-import utils.ResultUtils;
+import com.dhlk.utils.ResultUtils;
 
 /**
  * 菜单管理

@@ -3,12 +3,12 @@ package com.dhlk.basicmodule.service.service.impl;
 import com.dhlk.basicmodule.service.dao.DmClassifyTypeDao;
 import com.dhlk.basicmodule.service.service.DmClassifyTypeService;
 import com.dhlk.entity.dm.DmClassifyType;
-import domain.Result;
-import exceptions.MyException;
+import com.dhlk.domain.Result;
+import com.dhlk.exceptions.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.CheckUtils;
-import utils.ResultUtils;
+import com.dhlk.utils.CheckUtils;
+import com.dhlk.utils.ResultUtils;
 
 import java.util.Arrays;
 
