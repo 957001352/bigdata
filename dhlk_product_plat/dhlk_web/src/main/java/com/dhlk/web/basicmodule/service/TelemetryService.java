@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface TelemetryService {
 
     @GetMapping(value = "/getAttributesByScope")
-    public Result getAttributesByScope(@RequestParam(value="tbId") String tbId) throws Exception;
+    public Result getAttributesByScope(@RequestParam(value="tbId",required = false) String tbId) throws Exception;
     /**
      * 获取设备的历史遥测数据
      *

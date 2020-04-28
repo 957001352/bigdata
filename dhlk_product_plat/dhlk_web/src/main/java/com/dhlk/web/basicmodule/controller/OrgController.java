@@ -4,6 +4,7 @@ import com.dhlk.entity.basicmodule.Org;
 import com.dhlk.web.basicmodule.service.OrgService;
 import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class OrgController {
      * @param org
      * @return
      */
+    @ApiOperation("新增/修改")
     @PostMapping(value = "/save")
     public Result save(@Valid @RequestBody Org org, BindingResult bindingResult) {
         Result result = ResultUtils.loadResult(bindingResult);
@@ -40,6 +42,7 @@ public class OrgController {
      * @param id
      * @return result
      */
+    @ApiOperation("删除")
     @GetMapping(value = "/delete")
     public Result delete(@RequestParam(value = "id") Integer id) {
         return orgService.delete(id);
@@ -51,6 +54,7 @@ public class OrgController {
      * @param pageSize
      * @return
      */
+    @ApiOperation("分页查询")
     @GetMapping("/findPageList")
     public Result findPageList(@RequestParam(value = "parentId",required = false,defaultValue = "0") Integer parentId,
                                @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
@@ -63,6 +67,7 @@ public class OrgController {
      * @param
      * @return
      */
+    @ApiOperation("机构树查询")
     @GetMapping("/findTreeList")
     public Result findTreeList() {
         return  orgService.findTreeList();
@@ -73,6 +78,7 @@ public class OrgController {
      * @param
      * @return
      */
+    @ApiOperation("根据机构查询用户")
     @GetMapping("/findPageUserByOrg")
     public Result findPageUserByOrg(@RequestParam(value = "orgId") Integer orgId,
                                 @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,

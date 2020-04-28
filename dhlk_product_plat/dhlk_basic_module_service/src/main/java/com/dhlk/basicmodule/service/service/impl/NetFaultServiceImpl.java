@@ -38,7 +38,11 @@ public class NetFaultServiceImpl implements NetFaultService {
 
     @Override
     public Result findList(String tbId,Integer status) {
-        return ResultUtils.success(netFaultDao.findList(tbId,status));
+        if(CheckUtils.isNull(tbId)){
+            return ResultUtils.success(netFaultDao.findList(tbId,status));
+        }else{
+            return ResultUtils.success();
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.dhlk.entity.hive.MetaTable;
 import com.dhlk.web.basicmodule.service.HiveTableManagerService;
 import com.dhlk.web.hive.service.HiveService;
 import com.dhlk.domain.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.util.List;
  * @Author lpsong
  * @Date 2020/3/19
  */
+@Api(description = "hive数据表管理")
 @RestController
 @RequestMapping("hiveManager")
 public class HiveController {
@@ -33,6 +35,7 @@ public class HiveController {
         return hiveService.findTableList();
     }
 
+    @ApiOperation("创建数据表")
     @GetMapping(value = "/createTable")
     public Result createTable(@RequestParam(value = "conver") Boolean conver){
             Result result=hiveTableManagerService.createTable(conver);
@@ -40,7 +43,7 @@ public class HiveController {
             hiveService.createTable(dataMap);
         return result;
     }
-
+    @ApiOperation("删除数据表")
     @GetMapping(value = "/dropTable")
     public Result dropTable(){
         Result result=hiveTableManagerService.dropTable();

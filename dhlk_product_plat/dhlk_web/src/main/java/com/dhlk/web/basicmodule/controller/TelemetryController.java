@@ -23,7 +23,7 @@ public class TelemetryController {
     @ApiOperation("获取设备的服务端属性")
     @GetMapping(value = "/getAttributesByScope")
     //@RequiresPermissions("menu:save")
-    public Result getAttributesByScope(@RequestParam(value="tbId") String tbId) throws Exception {
+    public Result getAttributesByScope(@RequestParam(value="tbId",required = false) String tbId) throws Exception {
         return telemetryService.getAttributesByScope(tbId);
     }
     /**

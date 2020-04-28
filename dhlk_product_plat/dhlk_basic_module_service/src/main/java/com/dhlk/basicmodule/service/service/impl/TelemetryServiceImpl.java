@@ -7,6 +7,7 @@ import com.dhlk.basicmodule.service.service.TelemetryService;
 import com.dhlk.basicmodule.service.util.RestTemplateUtil;
 import com.dhlk.entity.basicmodule.ProductDevices;
 import com.dhlk.domain.Result;
+import com.dhlk.utils.CheckUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -54,26 +55,27 @@ public class TelemetryServiceImpl implements TelemetryService {
 
     @Override
     public Result getAttributesByScope(String tbId) throws Exception {
-        //ProductDevices pd = productDevicesDao.findProductDevicesById(deviceId);
-        //   /api/plugins/telemetry/{entityType}/{entityId}/values/attributes/{scope}{?keys}
-        String api = tbBaseUrl+ Const.GETTIMESERIES + "/DEVICE/" + tbId+"/values/attributes/SERVER_SCOPE";
-        Map<String, Object> params=new HashMap<String, Object>();
-        //params.put("keys",keys);
-        HttpClientResult httpClientResult = HttpClientUtils.doGet(api, restTemplateUtil.getHeaders(true), null);
-        System.out.println("httpClientResult-----------"+httpClientResult.getContent());
-        JSONObject json=new JSONObject();
-        if(httpClientResult.getCode()==200){
-           List list = JSON.parseObject(httpClientResult.getContent(), List.class);
-           System.out.println("list-----------"+list);
-           for(Object ll:list){
-               Map map = JSON.parseObject(ll.toString(), Map.class);
-               if(map.get("key").equals("active")){
-                   json.put("active",map.get("value"));
-               }
-           }
-           System.out.println("json-----------"+json.toJSONString());
-       }else {
-            json.put("active",false);
+        JSONObject json = new JSONObject();
+        if(!CheckUtils.isNull(tbId)) {
+            //ProductDevices pd = productDevicesDao.findProductDevicesById(deviceId);
+            //   /api/plugins/telemetry/{entityType}/{entityId}/values/attributes/{scope}{?keys}
+            String api = tbBaseUrl + Const.GETTIMESERIES + "/DEVICE/" + tbId + "/values/attributes/SERVER_SCOPE";
+            Map<String, Object> params = new HashMap<String, Object>();
+            HttpClientResult httpClientResult = HttpClientUtils.doGet(api, restTemplateUtil.getHeaders(true), null);
+            if (httpClientResult.getCode() == 200) {
+                List list = JSON.parseObject(httpClientResult.getContent(), List.class);
+                for (Object ll : list) {
+                    Map map = JSON.parseObject(ll.toString(), Map.class);
+                    if (map.get("key").equals("active")) {
+                        json.put("active", map.get("value"));
+                    }
+                }
+                System.out.println("json-----------" + json.toJSONString());
+            } else {
+                json.put("active", false);
+            }
+        }else{
+            json.put("active", false);
         }
         return ResultUtils.success(json);
     }

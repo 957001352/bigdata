@@ -4,6 +4,7 @@ import com.dhlk.entity.basicmodule.DevicesClassify;
 import com.dhlk.web.basicmodule.service.DevicesClassifyService;
 import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class DevicesClassifyController {
     /**
      * 新增/修改
      */
+    @ApiOperation("新增/修改")
     @PostMapping(value = "/save")
     public Result save(@RequestBody DevicesClassify devicesClassify) {
         return devicesClassifyService.save(devicesClassify);
@@ -32,6 +34,7 @@ public class DevicesClassifyController {
      * @param id
      * @return result
      */
+    @ApiOperation("删除")
     @GetMapping(value = "/delete")
     public Result delete(@RequestParam(value = "id") String id) {
         return devicesClassifyService.delete(id);
@@ -41,6 +44,7 @@ public class DevicesClassifyController {
      * 查询
      * @param name 设备分配名称
      */
+    @ApiOperation("列表查询")
     @GetMapping("/findList")
     public Result findList(@RequestParam(value = "name", required = false) String name) {
         return  devicesClassifyService.findList(name);

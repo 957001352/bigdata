@@ -27,10 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description 生产设备管理
@@ -152,14 +149,17 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
     @Override
     public Result findAttrByClassifyById(String classifyId){
         //获取dhlk设备属性
-        List<String> list= devicesClassifyDao.findAttrByClassifyById(classifyId);
+        List<LinkedHashMap<String, String>> list = devicesClassifyDao.findAttrByClassifyById(classifyId);
         return ResultUtils.success(list);
     }
 
-
+    //把dhlk设备属性保存到对应的tb设备的共享属性中
     private void saveAttrToTb(ProductDevices productDevices) throws Exception {
-        //把dhlk设备属性保存到对应的tb设备的共享属性中
-        List<String> list=devicesClassifyDao.findAttrByClassifyById(productDevices.getClassifyId());
+        List<String> list=new ArrayList<String>();
+        List<LinkedHashMap<String, String>> listMap = devicesClassifyDao.findAttrByClassifyById(productDevices.getClassifyId());
+        for(LinkedHashMap<String, String> map:listMap) {
+            list.add(map.get("code"));
+        }
         JSONObject jsonSharedArrribute = new JSONObject();
         jsonSharedArrribute.put("attributeList", JSON.toJSONString(list));
         String url=tbBaseUrl+Const.SAVEDEVICESHAREDATTRIBUTE + "/DEVICE/" + productDevices.getTbId() + "/SHARED_SCOPE";
@@ -235,6 +235,7 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
                 tree.setParentId(orgId);
                 tree.setTitle(pd.getName());
                 tree.setName(pd.getName());
+                tree.setClassifyId(pd.getClassifyId());
                 tree.setClassifyName(pd.getClassifyName());
                 tree.setClassifySet(pd.getClassifySet());
                 tree.setNetDevicesList(pd.getNetDevicesList());
@@ -276,10 +277,7 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
             productDevices.setTbId(tbId);
 
             //把dhlk设备属性保存到对应的tb设备的共享属性中
-            List<String> list=devicesClassifyDao.findAttrByClassifyById(productDevices.getClassifyId());
-            JSONObject jsonSharedArrribute = new JSONObject();
-            jsonSharedArrribute.put("attributeList", JSON.toJSONString(list));
-            HttpClientResult attrClientResult = HttpClientUtils.doPostStringParams(tbBaseUrl + Const.SAVEDEVICESHAREDATTRIBUTE + "/DEVICE/" + tbId + "/SHARED_SCOPE", restTemplateUtil.getHeaders(true), jsonSharedArrribute.toJSONString());
+            saveAttrToTb(productDevices);
 
             try {
                 //设置工厂ID
@@ -331,7 +329,12 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
                 Map<String, Object> mapId = (Map<String, Object>) map.get("id");
                 String tbId = mapId.get("id").toString();
                 productDevices.setTbId(tbId);
-                saveAttrToTb(productDevices);
+
+                //把dhlk设备属性保存到对应的tb设备的共享属性中
+                if(CheckUtils.isNull(productDevices.getClassifyId())){
+                    saveAttrToTb(productDevices);
+                }
+
                 try {
                     //更新
                     Integer flag = productDevicesDao.update(productDevices);

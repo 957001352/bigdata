@@ -73,7 +73,7 @@
     </select>
 
     <select id="isBoundClassify" parameterType="java.lang.String" resultType="Integer">
-        select count(*) from dhlk_basic_product_devices where classify_id = #{classifyId}
+        select count(*) from dhlk_basic_product_devices where classify_id = #{classifyId} and status = 0
     </select>
 
 

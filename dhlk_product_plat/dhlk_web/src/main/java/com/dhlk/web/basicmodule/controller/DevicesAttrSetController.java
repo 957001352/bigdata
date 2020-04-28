@@ -4,6 +4,7 @@ import com.dhlk.entity.basicmodule.DevicesAttrSet;
 import com.dhlk.web.basicmodule.service.DevicesAttrSetService;
 import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class DevicesAttrSetController {
     /**
      * 新增/修改
      */
+    @ApiOperation("新增/编辑")
     @PostMapping(value = "/save")
     public Result save(@Valid @RequestBody DevicesAttrSet devicesAttrSet, BindingResult bindingResult) {
         Result result = ResultUtils.loadResult(bindingResult);
@@ -40,6 +42,7 @@ public class DevicesAttrSetController {
      * @param id
      * @return result
      */
+    @ApiOperation("删除")
     @GetMapping(value = "/delete")
     public Result delete(@RequestParam(value = "id") Integer id) {
         return devicesAttrSetService.delete(id);
@@ -49,6 +52,7 @@ public class DevicesAttrSetController {
      * 查询
      * @param name 属性集合名称
      */
+    @ApiOperation("列表查询")
     @GetMapping("/findList")
     public Result findList(@RequestParam(value = "name", required = false) String name) {
         return  devicesAttrSetService.findList(name);

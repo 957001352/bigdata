@@ -24,12 +24,12 @@ public interface DevicesClassifyDao {
 
     Integer delete(String id);
 
-    List<DevicesClassify> findList(@Param("classifyName") String classifyName,@Param("factoryId")Integer factoryId,@Param("attachPath") String attachmentPath);
+    List<DevicesClassify> findList(@Param("classifyName") String classifyName, @Param("factoryId") Integer factoryId, @Param("attachPath") String attachmentPath);
 
 
-    List<LinkedHashMap<String,Object>> findAttrSetByClassifyById(Integer devicesClassifyId);
+    List<LinkedHashMap<String,String>> findAttrSetByClassifyById(Integer devicesClassifyId);
 
-    List<String> findAttrByClassifyById(String devicesClassifyId);
+    List<LinkedHashMap<String,String>> findAttrByClassifyById(String devicesClassifyId);
 
     Integer isRepeatName(DevicesClassify devicesClassify);
 

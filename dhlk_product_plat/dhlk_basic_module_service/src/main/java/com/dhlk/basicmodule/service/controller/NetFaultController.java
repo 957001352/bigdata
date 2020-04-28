@@ -40,7 +40,7 @@ public class NetFaultController {
      */
     @GetMapping("/findList")
     @RequiresPermissions("dhlk:view")
-    public Result findList(@RequestParam(value = "tbId") String tbId,
+    public Result findList(@RequestParam(value = "tbId", required = false) String tbId,
                            @RequestParam(value = "status", required = false) Integer status) {
         return  netFaultService.findList(tbId,status);
     }

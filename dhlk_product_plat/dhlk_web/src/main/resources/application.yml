@@ -1,5 +1,5 @@
 spring:
   profiles:
-    active: dev #使用开发环境
+    active: @profileActive@ #使用开发环境
     include:
     # 这里写你的include

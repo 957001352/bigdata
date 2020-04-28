@@ -31,6 +31,6 @@ public interface NetFaultService {
      * @return
      */
     @GetMapping("/findList")
-    Result findList(@RequestParam(value = "tbId") String tbId,
+    Result findList(@RequestParam(value = "tbId", required = false) String tbId,
                     @RequestParam(value = "status", required = false) Integer status);
 }

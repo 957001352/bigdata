@@ -46,7 +46,7 @@ public class ProductDevicesTree<T> {
     private String name;//设备名称
     @ApiModelProperty(hidden = true)
     private String classifyName;//类型管理
-
+    private String classifyId;//类型管理
     @ApiModelProperty(hidden = true)
     private LinkedHashMap<String,String> classifySet;
     @ApiModelProperty(hidden = true)
