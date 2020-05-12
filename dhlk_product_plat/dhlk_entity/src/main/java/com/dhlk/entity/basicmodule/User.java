@@ -25,12 +25,10 @@ public class User implements Serializable {
 
     /** 姓名 */
     @NameCheck
-
-    //
     private String name;
 
     /** 用户名 默认长度4~20 */
-    @LoginNameCheck
+    @LoginNameCheck(maxLength = 20,minLength = 3)
     private String loginName;
 
     private String password;

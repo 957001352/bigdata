@@ -65,10 +65,10 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
     @Override
     public Result save(ProductDevices productDevices) throws Exception {
         if(CheckUtils.isNull(productDevices.getName())){
-            return  ResultUtils.error("生产设备名称不能为空");
+            return  ResultUtils.error("设备名称不能为空");
         }
         if(productDevicesDao.isRepeatName(productDevices)>0){
-            return  ResultUtils.error("生产设备名称重复");
+            return  ResultUtils.error("设备名称重复");
         }
         //默认不是网关设备
         //jsonDescription设备描述信息
@@ -79,10 +79,24 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
          */
         //返回结果
         Result result =null;
+       // String api = tbBaseUrl+Const.GETTENANTDEVICE + "?deviceName=" + productDevices.getName();
+        //HttpClientResult mapResponseEntity = HttpClientUtils.doGet(api, restTemplateUtil.getHeaders(true), null);
         if (CheckUtils.isNull(productDevices.getId())) {
+//            if(mapResponseEntity.getCode()==200 && !CheckUtils.isNull(mapResponseEntity.getContent())){
+//                return  ResultUtils.error("设备名称重复");
+//            }
             //保存生产设备
             result = saveProductDevices(productDevices, jsonDescription);
         } else {
+//            if(mapResponseEntity.getCode()==200 && !CheckUtils.isNull(mapResponseEntity.getContent())){
+//                Map map = HttpClientUtils.resultToMap(mapResponseEntity);
+//                Map<String, Object> mapId = (Map<String, Object>) map.get("id");
+//                String tbId = mapId.get("id").toString();
+//                if(!productDevices.getTbId().equals(tbId)){
+//                    return  ResultUtils.error("设备名称重复");
+//                }
+//            }
+
             //更新生产设备
             result = updateProductDevices(productDevices, jsonDescription);
         }
@@ -261,13 +275,20 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
         }
     }
 
+    private String createCode() {
+        String code="dhlk_tb_product_" + (int) ((Math.random() * 9 + 1) * 100000);
+        if(productDevicesDao.isRepeatCode(code)>0){
+            this.createCode();
+        }
+        return code;
+    }
     //保存生产设备
     public Result saveProductDevices(ProductDevices productDevices,JSONObject jsonDescription )throws Exception {
         //设备additionalInfo属性
         AdditionalInfo additionalInfo =new AdditionalInfo(false, jsonDescription.toJSONString());
-
+        productDevices.setCode(this.createCode());
         //保存设备信息
-        TbProductDevices tbProductDevices = new TbProductDevices(productDevices.getName(), productDevices.getClassifyId().toString(), productDevices.getName(), additionalInfo);
+        TbProductDevices tbProductDevices = new TbProductDevices(productDevices.getCode(), productDevices.getClassifyId().toString(), productDevices.getName(), additionalInfo);
         HttpClientResult httpClientResult = HttpClientUtils.doPostStringParams(tbBaseUrl + Const.TBSAVEDEVICE, restTemplateUtil.getHeaders(true), JSON.toJSONString(tbProductDevices));
         if (httpClientResult.getCode() == 200) {//保存设备数据到tb成功
             //保存设备数据到dhlk数据库
@@ -320,7 +341,7 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
             String api = tbBaseUrl+Const.SELECTTBDEVICEBYID + "/" + pdBack.getTbId();
             HttpClientResult httpClientResult = HttpClientUtils.doGet(api, restTemplateUtil.getHeaders(true), null);
 
-            TbProductDevices tbProductDevices = new TbProductDevices(id, productDevices.getName(), productDevices.getClassifyId().toString(),productDevices.getName(), additionalInfo);
+            TbProductDevices tbProductDevices = new TbProductDevices(id, pdBack.getCode(), productDevices.getClassifyId().toString(),productDevices.getName(), additionalInfo);
 
             HttpClientResult responseEntity = HttpClientUtils.doPostStringParams(tbBaseUrl + Const.TBSAVEDEVICE, restTemplateUtil.getHeaders(true), JSON.toJSONString(tbProductDevices));
             if (responseEntity.getCode()== 200) {//保存设备数据到tb成功

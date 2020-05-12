@@ -56,10 +56,10 @@ public class NetDevicesSerivceImpl implements NetDevicesService {
     @Transactional
     public Result save(NetDevices netDevices) throws Exception {
         if(CheckUtils.isNull(netDevices.getName())){
-            return  ResultUtils.error("网络设备名称不能为空");
+            return  ResultUtils.error("设备名称不能为空");
         }
         if(netDevicesDao.isRepeatName(netDevices)>0){
-            return  ResultUtils.error("网络设备名称重复");
+            return  ResultUtils.error("设备名称重复");
         }
         //jsonDescription设备描述信息
         JSONObject jsonDescription = new JSONObject();
@@ -69,9 +69,22 @@ public class NetDevicesSerivceImpl implements NetDevicesService {
          */
         //返回结果
         Result result =null;
+        String api = tbBaseUrl+Const.GETTENANTDEVICE + "?deviceName=" + netDevices.getName();
+        HttpClientResult mapResponseEntity = HttpClientUtils.doGet(api, restTemplateUtil.getHeaders(true), null);
         if (CheckUtils.isNull(netDevices.getId())) {
+            if(mapResponseEntity.getCode()==200 && !CheckUtils.isNull(mapResponseEntity.getContent())){
+                return  ResultUtils.error("设备名称重复");
+            }
             result = saveNetDevices(netDevices, jsonDescription);
         } else {
+            if(mapResponseEntity.getCode()==200 && !CheckUtils.isNull(mapResponseEntity.getContent())){
+                Map map = HttpClientUtils.resultToMap(mapResponseEntity);
+                Map<String, Object> mapId = (Map<String, Object>) map.get("id");
+                String tbId = mapId.get("id").toString();
+                if(!netDevices.getTbId().equals(tbId)){
+                    return  ResultUtils.error("设备名称重复");
+                }
+            }
             result = updateNetDevices(netDevices, jsonDescription);
         }
         return result;

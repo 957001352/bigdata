@@ -39,5 +39,5 @@ public interface DevicesClassifyDetailDao {
     Integer deleteByDevicesClassifyId(String devicesClassifyId);
 
 
-    Integer findDevicesClassifyDetailByDetail(@Param("devicesAttrDetails") List<DevicesAttrDetail> devicesAttrDetails);
+    Integer findDevicesClassifyDetailByDetail(@Param("devicesAttrDetailIds") List<Integer> devicesAttrDetailIds);
 }

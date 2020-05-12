@@ -5,6 +5,7 @@ import com.dhlk.basicmodule.service.service.LoginService;
 import com.dhlk.domain.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class LoginController {
 
     @ApiOperation(value = "获取tb登录token")
     @GetMapping("/getTbToken")
+    @RequiresAuthentication
     public Result getTbToken() {
         return loginService.getTbToken();
     }

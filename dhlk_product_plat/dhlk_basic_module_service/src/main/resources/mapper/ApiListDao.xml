@@ -33,4 +33,16 @@
             AND id!=#{id}
         </if>
     </select>
+
+
+
+    <insert id="insertBatch" parameterType="java.util.List" >
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            insert into dhlk_api_list (title,version,content) VALUES
+            (#{item.title},#{item.version},#{item.content})
+        </foreach>
+    </insert>
+    <select id="findExportList" resultType="java.util.LinkedHashMap">
+        select title,version,content from dhlk_api_list
+    </select>
 </mapper>

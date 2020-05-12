@@ -54,3 +54,5 @@ attachment:
   path: /home/software/attachment/
 log:
   path: /home/software/log/
+swagger: ##给swagger设置开关
+  ebable: false

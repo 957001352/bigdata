@@ -1,0 +1,63 @@
+debug: true
+server:
+  port: 90
+
+spring:
+  application:
+    name: dhlk-zuul
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        register: true
+        hostname: 127.0.0.1
+        service-name: ${spring.application.name}
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+        tags: urlprefix-/${spring.application.name}
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+#通过网关避免跨域问题
+zuul:
+  ignored-services: "*"
+  sensitive-headers:
+  routes:
+    basicmodule-service:
+      path: /basicmodule-service/**
+      serviceId: basicmodule-service #权限服务
+      sensitiveHeaders: "*"
+    dhlk-hive:
+      path: /dhlk-hive/**
+      serviceId: dhlk-hive # hive服务
+      sensitiveHeaders: "*"
+    dhlk-web:
+      path: /dhlk-web/**
+      serviceId: dhlk-web #web展示服务
+      sensitiveHeaders: "*"
+    dhlk-hadoop:
+      path: /dhlk-hadoop/**
+      serviceId: dhlk-hadoop #hadoop服务
+      sensitiveHeaders: "*"
+
+
+
+    jsonserver:
+      path: /json/**
+      url: http://192.168.2.226:8082/swagger-ui.html
+  host:
+    connect-timeout-millis: 30000000
+    socket-timeout-millis: 30000000
+  servlet-path: /
+
+
+ribbon:
+  ReadTimeout: 30000000
+  ConnectTimeout: 30000000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000000000
+#http://192.168.2.57/webviewserver/user/1/detail

@@ -8,7 +8,7 @@ package com.dhlk.enums;
 public enum  ResultEnum {
     //0-999 正常
     NOERROR(0, "成功！"),
-    UNKNOWN_ERR(-1, "未知错误"),
+    UNKNOWN_ERR(-1, "非法操作，请检查"),
     FAILURE(-2,"数据更新失败"),
     //1000-1999
     UNNORMAL_INPUT_ERROR(1000,"未知的输入错误"),

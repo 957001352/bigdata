@@ -2,6 +2,10 @@ package com.dhlk.basicmodule.service.service;
 
 import com.dhlk.domain.Result;
 import com.dhlk.entity.api.ApiList;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * API接口管理
@@ -31,4 +35,16 @@ public interface ApiListService {
      * @param status 0启用 1禁用
      */
     Result isEnable(Integer id,Integer status);
+
+
+
+    /**
+     * 批量插入
+     */
+    Result insertBatch(MultipartFile file);
+
+    /**
+     * 导出列表查询
+     */
+    Result findExportList();
 }

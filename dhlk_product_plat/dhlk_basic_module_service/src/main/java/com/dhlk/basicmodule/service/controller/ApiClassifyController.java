@@ -3,6 +3,8 @@ package com.dhlk.basicmodule.service.controller;
 import com.dhlk.basicmodule.service.service.ApiClassifyService;
 import com.dhlk.entity.api.ApiClassify;
 import com.dhlk.domain.Result;
+import com.dhlk.utils.ExcelUtil;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.dhlk.utils.FileUpDownUtils;
 import com.dhlk.utils.ResultUtils;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -53,7 +60,7 @@ public class ApiClassifyController {
     * @return
     */
     @GetMapping("/findPageList")
-    @RequiresPermissions("dhlk:view")
+    @RequiresAuthentication
     public Result findPageList(@RequestParam(value = "parentId", required = false) Integer parentId,
                                @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
@@ -64,17 +71,9 @@ public class ApiClassifyController {
      * @return
      */
     @GetMapping("/findTreeList")
-    @RequiresPermissions("dhlk:view")
+    @RequiresAuthentication
     public Result findTreeList() {
         return  apiClassifyService.findTreeList();
     }
 
-
-
-    @PostMapping(value = "/importExcel", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Result importExcel(@RequestParam(value = "file") MultipartFile file) {
-        FileUpDownUtils fileUpload=new FileUpDownUtils(attachmentPath,file);
-        fileUpload.execUploadFile(file,null);
-        return ResultUtils.success();
-    }
 }

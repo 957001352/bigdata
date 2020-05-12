@@ -46,7 +46,7 @@ public class Const {
      *  token的过期时间，24个小时
      *  gchen
      */
-    public static final long TOKEN_LOSE_TIME = 24*60*60;
+    public static final long TOKEN_LOSE_TIME = 12*60*60;
 
     /**
      * 系统允许的文件类型
@@ -79,6 +79,10 @@ public class Const {
     public final static String GETTIMESERIES= "/api/plugins/telemetry";
     //警报 /api/alarm/{entityType}/{entityId}{?searchStatus,status,limit,startTime,endTime,ascOrder,offset,fetchOriginator}
     public final static String GETALARMS= "/api/alarm";
+    //根据设备名字查询设备信息 /api/tenant/devices{?deviceName}
+    public final static String GETTENANTDEVICE= "/api/tenant/devices";
+
+
 
     //flume认证加密私钥
     public final static String FLUMNAUTHPRIVATEKEY = "dhlk_flume";

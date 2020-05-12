@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dhlk.utils.CheckUtils;
 import com.dhlk.utils.ResultUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @Author:         gchen
@@ -53,25 +53,25 @@ public class DevicesAttrSetServiceImpl implements DevicesAttrSetService {
                 //从数据库中取出对应属性集合的属性明细
                 List<DevicesAttrDetail> BaseAttrDetails = devicesAttrDetailDao.findAttrDetailsByAttrSetId(devicesAttrSet.getId());
                 //页面上删除了属性
-                List<DevicesAttrDetail> subtractDelete = ListUtils.subtract(BaseAttrDetails, attrDetails);
+                List<Integer> baseAttrDetailIds = BaseAttrDetails.stream().map(DevicesAttrDetail :: getId).collect(Collectors.toList());
+                List<Integer> attrDetailIds = attrDetails.stream().map(DevicesAttrDetail :: getId).collect(Collectors.toList());
+                List<Integer> subtractDelete = ListUtils.subtract(baseAttrDetailIds, attrDetailIds);
                 //判断属性明细是否与分类绑定
                 if(subtractDelete != null && subtractDelete.size() > 0){
                     if(devicesClassifyDetailDao.findDevicesClassifyDetailByDetail(subtractDelete) > 0){
-                        return ResultUtils.error("修改的变量已被绑定");
+                        return ResultUtils.error("变量已被绑定,无法删除");
                     }
                     flag = devicesAttrDetailDao.delete(subtractDelete);
                 }
                 //页面上添加了属性
-                List<DevicesAttrDetail> subtractSave = ListUtils.subtract(attrDetails, BaseAttrDetails);
-                if(!CheckUtils.isNull(subtractSave) && subtractSave.size() > 0){
-                    devicesAttrDetailDao.insertDevicesAttrDetails(subtractSave,devicesAttrSet.getId());
-                }
-
-                //页面上与数据中的交集
-                List<DevicesAttrDetail> retain = ListUtils.retainAll(attrDetails, BaseAttrDetails);
-                for (DevicesAttrDetail devicesAttrDetail:retain){ //循环修改属性明细
-                    flag = devicesAttrDetailDao.update(devicesAttrDetail);
-                }
+                attrDetails.stream().forEach(attrDetail -> {
+                    if(attrDetail.getId() == null){
+                        attrDetail.setAttrSetId(devicesAttrSet.getId());
+                        devicesAttrDetailDao.insert(attrDetail);
+                    }else{
+                        devicesAttrDetailDao.update(attrDetail);
+                    }
+                });
             }
             flag = devicesAttrSetDao.update(devicesAttrSet);
         }

@@ -2,6 +2,7 @@ package com.dhlk.basicmodule.service.service.impl;
 
 import com.dhlk.basicmodule.service.dao.ApiListDao;
 import com.dhlk.basicmodule.service.service.ApiListService;
+import com.dhlk.utils.ExcelUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.dhlk.domain.Result;
@@ -11,8 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dhlk.utils.CheckUtils;
 import com.dhlk.utils.ResultUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Description
@@ -68,4 +73,29 @@ public class ApiListServiceImpl implements ApiListService {
     }
 
 
+    @Override
+    public Result findExportList() {
+        return ResultUtils.success(apiListDao.findExportList());
+    }
+
+    @Override
+    public Result insertBatch(MultipartFile file) {
+        if (file != null) {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("名称", "title");
+            map.put("版本", "version");
+            map.put("说明", "content");
+            Result result= ExcelUtil.importExcel(file, map);
+            //excel文件符合要求，正常解析,否则返回错误信息
+            if(result.getCode().equals(0)){
+                List<Map<String, Object>> list = (List<Map<String, Object>>) result.getData();
+                //批量导入
+                if(apiListDao.insertBatch(list)>0){
+                    return ResultUtils.success();
+                };
+            }
+            return result;
+        }
+        return ResultUtils.failure();
+    }
 }

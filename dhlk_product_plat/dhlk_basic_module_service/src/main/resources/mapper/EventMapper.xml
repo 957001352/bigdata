@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="Event" id="EventResult">
         <result property="id"    column="id"    />
+        <result property="alarmId"    column="alarmId"    />
         <result property="tenantid"    column="tenantId"    />
         <result property="type"    column="type"    />
         <result property="originator"    column="originator"    />
@@ -23,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectEventVo">
-        select id, tenantId, type, originator, severity, status, startTs, endTs, ackTs, clearTs, details, propagate, tbId, createdTime, name from dhlk_basic_event
+        select id, alarmId,tenantId, type, originator, severity, status, startTs, endTs, ackTs, clearTs, details, propagate, tbId, createdTime, name from dhlk_basic_event
     </sql>
 
     <select id="selectEventList" resultMap="EventResult">
@@ -31,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>
             <if test="severity != null  and severity != ''"> and severity = #{severity}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
-            <if test="startts != null "> and startTs = #{startts}</if>
-            <if test="endts != null "> and endTs = #{endts}</if>
+            <if test="startts != null "> and startTs  &gt;= #{startts}</if>
+            <if test="endts != null "> and endTs &lt;= #{endts}</if>
             <if test="tbId != null  and tbId != ''"> and tbId = #{tbId}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
         </where>

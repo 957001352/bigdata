@@ -14,79 +14,39 @@
         <module>dhlk_commons</module>
         <!--大航联科产品的实体类-->
         <module>dhlk_entity</module>
-
         <!-- Zuul服务  -->
         <module>dhlk_zuul</module>
+        <!--  shiro认证 -->
+        <module>dhlk_shiro</module>
 
         <!--================================采集===========================-->
-
         <!--BI控制器中的项目 start-->
-        <!--BI控制器应用升级-->
-        <module>dhlk_bicontroller_upgrader</module>
-        <!--文件采集-->
-        <module>dhlk_bicontroller_collect_file</module>
-        <!-- node red-->
-        <!--grafna -->
-        <module>dhlk_bicontroller_grafana</module>
-
         <module>dhlk_bicontroller_config</module>
-        <!--规则链-->
-        <module>dhlk_rule_chain</module>
-        <!--BI控制器中的项目end -->
-
-
         <!-- 实现flume从客户方的flume区(Kafka)中获取信息的source  -->
         <module>dhlk_flume_interceptor</module>
-        <!--=============================================================-->
+        <!--================================================================-->
+
+
+
+
+
+        <!--==================================大数据==========================-->
+        <!-- mqtt消息订阅  -->
         <module>dhlk_mqtt_subscribe</module>
-
-
-        <!--==================================大数据=================================-->
         <!-- hadoop的微服务  -->
         <module>dhlk_hadoop</module>
         <!--  hive微服务 -->
         <module>dhlk_hive</module>
         <!--===================================================================-->
 
-        <!-- 授权认证微服务  -->
-        <module>dhlk_authorization_authentication_service</module>
         <!--企业、工厂、车间、人员、权限等具备公共性质的服务-->
         <module>dhlk_basic_module_service</module>
-        <!--短信、邮件服务-->
-        <module>dhlk_sms_service</module>
-
-        <!-- 大航联科应用数据库服务  -->
-        <module>dhlk_sqldatabase_service</module>
-
-        <!-- 大航联科客户方管理后台  -->
-        <module>dhlk_web_admin_service</module>
 
         <!--  大航联科WEB -->
         <module>dhlk_web</module>
 
-        <!--第三方接口微服务-->
-        <module>dhlk_third_party_api_service</module>
-        <!--第三方接口-->
-        <module>dhlk_third_party_api_web</module>
 
 
-        <!--========暂时不涉及 start=====-->
-        <!-- 大航联科公司管理微服务  -->
-        <module>dhlk_company_admin_service</module>
-        <!-- 大航联科公司管理界面  -->
-        <module>dhlk_company_web</module>
-
-
-        <!--  大航联科API微服务 -->
-        <module>dhlk_api_service</module>
-        <!-- 大航联科API后端  -->
-        <module>dhlk_api_web</module>
-        <!-- 大航联科对外服务API说明文档  -->
-        <module>dhlk_api_doc</module>
-        <module>dhlk_shiro</module>
-
-
-        <!--========暂时不涉及 end ======-->
     </modules>
     <properties>
         <jdk.version>1.8</jdk.version>

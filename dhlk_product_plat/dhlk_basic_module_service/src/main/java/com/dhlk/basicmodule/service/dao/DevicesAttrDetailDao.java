@@ -23,7 +23,7 @@ public interface DevicesAttrDetailDao {
 
     Integer update(DevicesAttrDetail devicesAttrDetail);
 
-    Integer delete(List<DevicesAttrDetail> devicesAttrDetails);
+    Integer delete(List<Integer> devicesAttrDetailIds);
 
     List<DevicesAttrDetail> findList(Integer id);
 

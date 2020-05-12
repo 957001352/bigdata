@@ -2,6 +2,8 @@ package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.HiveMetaService;
 import com.dhlk.domain.Result;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,7 @@ public class HiveMetaController {
     * @return
     */
     @GetMapping("/findPageList")
+    @RequiresAuthentication
     public Result findPageList(@RequestParam(value = "table", required = false) String table,
                                @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
@@ -34,6 +37,7 @@ public class HiveMetaController {
     * @return
     */
     @GetMapping("/findColumnList")
+    @RequiresAuthentication
     public Result findColumnList(@RequestParam(value = "table", required = false) String table) {
         return  hiveMetaService.findColumnList(table);
     }

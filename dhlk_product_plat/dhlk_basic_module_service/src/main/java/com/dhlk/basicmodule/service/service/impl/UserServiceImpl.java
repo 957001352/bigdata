@@ -11,14 +11,11 @@ import com.dhlk.domain.Result;
 import com.dhlk.entity.basicmodule.User;
 import com.dhlk.enums.ResultEnum;
 import com.dhlk.service.RedisService;
+import com.dhlk.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.dhlk.systemconst.Const;
-import com.dhlk.utils.CheckUtils;
-import com.dhlk.utils.EncryUtils;
-import com.dhlk.utils.PinyinUtils;
-import com.dhlk.utils.ResultUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -54,6 +51,10 @@ public class UserServiceImpl implements UserService {
             //将用户的角色存入数据库中
             flag = getListByArray(user, roleIds);
         }else{
+            //如果修改了密码就对密码进行加密修改，没有就不加密
+            if(user.getPassword()!=null){
+                user.setPassword(EncryUtils.md5(user.getPassword(),user.getLoginName()));
+            }
             //先将用户的角色全部删除
             flag = userRoleDao.deleteByUserId(user.getId());
             //将用户角色存入数据库中
@@ -62,7 +63,13 @@ public class UserServiceImpl implements UserService {
             //检查缓存中是否有该用户权限信息，如果有就更新
             updatePermissions(user.getLoginName());
         }
-        return flag>0? ResultUtils.success():ResultUtils.failure();
+        if(flag>0){
+            String headChar = PinyinUtils.getHeadChar(PinyinUtils.toHanyuPinyin(user.getName()));
+            user.setGroup(headChar);
+            return ResultUtils.success(user);
+        }else{
+            return ResultUtils.failure();
+        }
     }
 
     @Override

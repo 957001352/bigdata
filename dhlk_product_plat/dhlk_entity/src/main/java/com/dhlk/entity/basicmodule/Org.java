@@ -1,8 +1,10 @@
 package com.dhlk.entity.basicmodule;
 
 import com.dhlk.annotation.NameCheck;
+import com.dhlk.annotation.SetNameCheck;
 import lombok.Data;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -18,7 +20,7 @@ public class Org implements Serializable {
     private String code;
 
     /** 机构名称 */
-    @NameCheck(message = "请填写正确的机构名称，2-50位的汉字、数字和字母",maxLength = 50)
+    @SetNameCheck(message = "请填写正确的机构名称，2-20位的汉字、数字和字母", maxLength = 20)
     private String name;
 
     /** 父机构 */

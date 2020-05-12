@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dhlk.basicmodule.service.dao.ProductDevicesDao">
     <insert id="insert" parameterType="com.dhlk.entity.basicmodule.ProductDevices">
-       insert into dhlk_basic_product_devices (id,name,org_id,create_time,note,factory_id,classify_id,tb_id,credentials)
-        values (#{id},#{name},#{orgId},#{createTime},#{note},#{factoryId},#{classifyId},#{tbId},#{credentials})
+       insert into dhlk_basic_product_devices (id,code,name,org_id,create_time,note,factory_id,classify_id,tb_id,credentials)
+        values (#{id},#{code},#{name},#{orgId},#{createTime},#{note},#{factoryId},#{classifyId},#{tbId},#{credentials})
     </insert>
 
     <update id="update" parameterType="com.dhlk.entity.basicmodule.ProductDevices">
@@ -22,9 +22,11 @@
     <resultMap type="com.dhlk.entity.basicmodule.ProductDevices" id="productDevicesResult">
         <result property="id" jdbcType="INTEGER"    column="id"    />
         <result property="classifyId"     column="classify_id"    />
+        <result property="orgId"     column="org_id"    />
         <collection property="attrSet" column="classify_id" select="com.dhlk.basicmodule.service.dao.DevicesClassifyDao.findAttrSetByClassifyById" />
         <collection property="classifySet" column="{classifyId=classify_id,attachPath=attachPath}" select="findClassifyByPruductId" />
         <collection property="netDevicesList" column="id" select="findBiList" />
+        <collection property="orgName" column="org_id" select="findOrgList" />
     </resultMap>
 
     <select id="findBiList" resultType="com.dhlk.entity.basicmodule.NetDevices">
@@ -32,7 +34,16 @@
                 left join  dhlk_basic_product_net n on t.id=n.net_id
                 where n.type in(2,3,4) and n.product_id=#{netId}
     </select>
-
+    <select id="findOrgList" resultType="java.lang.String">
+        SELECT GROUP_CONCAT(name separator '/') FROM(
+        SELECT T2.id, T2.name,T2.parent_id parentId
+        FROM (SELECT @r AS _id,
+             (SELECT @r := parent_id FROM dhlk_basic_org WHERE id = _id) AS parent_id,
+             @l := @l + 1 AS lvl
+             FROM (SELECT @r := #{orgId}, @l := 0) vars,dhlk_basic_org h
+        WHERE @r != 0) T1 JOIN dhlk_basic_org T2 ON T1._id = T2.id where status=0
+        ORDER BY T1.lvl DESC) o
+    </select>
 
 
     <resultMap type="java.util.LinkedHashMap" id="devicesClassifyResult">
@@ -101,5 +112,8 @@
         <if test="id!= null and id != ''">
             AND id!=#{id}
         </if>
+    </select>
+    <select id="isRepeatCode" resultType="Integer">
+        SELECT count(*) FROM dhlk_basic_product_devices  WHERE code=#{code}
     </select>
 </mapper>

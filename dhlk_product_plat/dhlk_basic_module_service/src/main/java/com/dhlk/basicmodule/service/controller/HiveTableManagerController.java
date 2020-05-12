@@ -2,6 +2,7 @@ package com.dhlk.basicmodule.service.controller;
 
 import com.dhlk.basicmodule.service.service.HiveTableManagerService;
 import com.dhlk.domain.Result;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class HiveTableManagerController {
      * 创建表
      */
     @GetMapping(value = "/createTable")
-    //@RequiresPermissions("hiveTableManager:createTable")
+    @RequiresAuthentication
     public Result createTime(@RequestParam(value = "conver") Boolean conver) {
         return hiveTableManagerService.createTable(conver);
     }
@@ -28,7 +29,7 @@ public class HiveTableManagerController {
      * 删除表
      */
     @GetMapping(value = "/dropTable")
-    @RequiresPermissions("hiveTableManager:dropTable")
+    @RequiresAuthentication
     public Result dropTable() {
         return hiveTableManagerService.dropTable();
     }
@@ -37,7 +38,7 @@ public class HiveTableManagerController {
     * 查询所有表
     */
     @GetMapping("/findTableList")
-    @RequiresPermissions("dhlk:view")
+    @RequiresAuthentication
     public Result findTableList() {
         return  hiveTableManagerService.findTableList();
     }

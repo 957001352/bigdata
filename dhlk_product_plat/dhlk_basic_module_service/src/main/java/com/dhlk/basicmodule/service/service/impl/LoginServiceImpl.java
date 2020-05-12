@@ -92,6 +92,7 @@ public class LoginServiceImpl implements LoginService {
         Map map = new HashMap();
         map.put("permissions",permissions.get("codes"));
         map.put("token",token);
+        map.put("loginUser",userBean);
         return ResultUtils.success(map);
     }
 

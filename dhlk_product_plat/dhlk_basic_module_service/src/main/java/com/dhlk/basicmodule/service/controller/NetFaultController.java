@@ -21,6 +21,7 @@ public class NetFaultController {
 
 
     @PostMapping(value = "/save")
+    @RequiresPermissions("netFault:save")
     public Result save(@RequestBody NetFault netFault) {
         return netFaultService.save(netFault);
     }

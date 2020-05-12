@@ -3,6 +3,7 @@ package com.dhlk.basicmodule.service.controller;
 import com.dhlk.basicmodule.service.service.OrgAuthService;
 import com.dhlk.entity.basicmodule.OrgAuth;
 import com.dhlk.domain.Result;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ public class OrgAuthController {
      * @return
      */
     @PostMapping(value = "/save")
+    @RequiresAuthentication
     public Result save(@RequestBody OrgAuth orgAuth) {
         return orgAuthService.save(orgAuth);
     }
@@ -31,6 +33,7 @@ public class OrgAuthController {
      * @return result
      */
     @GetMapping(value = "/delete")
+    @RequiresAuthentication
     public Result delete(@RequestParam(value = "id") String ids) {
         return orgAuthService.delete(ids);
     }
@@ -42,6 +45,7 @@ public class OrgAuthController {
     * @return
     */
     @GetMapping("/findPageList")
+    @RequiresAuthentication
     public Result findPageList(@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         return  orgAuthService.findPageList(pageNum, pageSize);

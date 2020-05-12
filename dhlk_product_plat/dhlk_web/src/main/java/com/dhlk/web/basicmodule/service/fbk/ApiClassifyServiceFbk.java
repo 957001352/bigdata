@@ -34,9 +34,4 @@ public class ApiClassifyServiceFbk implements ApiClassifyService {
     public Result findTreeList() {
         return ResultUtils.error(ResultEnum.NETWORK_ERR);
     }
-
-    @Override
-    public Result importExcel(MultipartFile file) {
-        return ResultUtils.error(ResultEnum.NETWORK_ERR);
-    }
 }

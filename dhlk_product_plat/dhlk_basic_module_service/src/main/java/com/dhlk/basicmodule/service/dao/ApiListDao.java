@@ -3,7 +3,10 @@ package com.dhlk.basicmodule.service.dao;
 import com.dhlk.entity.api.ApiList;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description 接口管理
@@ -27,4 +30,12 @@ public interface ApiListDao {
      * @return
      */
     Integer isRepeatTitle(ApiList apiList);
+
+
+    Integer insertBatch(List<Map<String, Object>> list);
+
+
+
+    List<LinkedHashMap<String, Object>> findExportList();
+
 }

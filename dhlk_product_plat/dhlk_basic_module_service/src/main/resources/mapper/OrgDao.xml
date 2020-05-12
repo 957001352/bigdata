@@ -69,9 +69,9 @@
 
     <select id="isRepeatName" resultType="java.lang.Integer">
         select count(*) from dhlk_basic_org
-        where name = #{name} and parent_id = #{parentId}
+        where name = #{name} and parent_id = #{parentId} and status = 0
         <if test="id!= null and id != ''">
-            AND id!=#{id}
+            AND id != #{id}
         </if>
     </select>
 

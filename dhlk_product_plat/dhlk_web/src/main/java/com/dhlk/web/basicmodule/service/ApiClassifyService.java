@@ -45,7 +45,4 @@ public interface ApiClassifyService {
      */
     @GetMapping("/findTreeList")
     Result findTreeList();
-
-    @PostMapping(value = "/importExcel",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    Result importExcel(@RequestPart(value = "file") MultipartFile file);
 }

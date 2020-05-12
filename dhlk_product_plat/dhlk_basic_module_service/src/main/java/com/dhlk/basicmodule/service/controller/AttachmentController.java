@@ -5,6 +5,7 @@ import com.dhlk.basicmodule.service.service.AttachmentService;
 import com.dhlk.domain.BaseFile;
 import com.dhlk.domain.Result;
 import com.dhlk.utils.*;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -36,6 +37,7 @@ public class AttachmentController {
      * @return
      */
     @PostMapping(value = "/upload",  consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequiresAuthentication
     public Result upload(@RequestPart(value = "file") MultipartFile file,
                          @RequestParam(value = "isAdd",required = false,defaultValue= "false") boolean isAdd,
                          @RequestParam(value = "dataId",required = false) String dataId) throws Exception {
@@ -71,6 +73,7 @@ public class AttachmentController {
      * @return
      */
     @PostMapping(value = "/saveRecord")
+    @RequiresAuthentication
     public Result saveRecord(@RequestBody BaseFile baseFile){
         return attachmentService.saveRecord(baseFile);
     }
@@ -81,6 +84,7 @@ public class AttachmentController {
      * @return
      */
     @GetMapping(value = "/findByDataId")
+    @RequiresAuthentication
     public List<BaseFile> findByDataId(@RequestParam(value = "dataId") String dataId){
         return attachmentService.findByDataId(dataId);
     }
@@ -91,6 +95,7 @@ public class AttachmentController {
      * @return
      */
     @GetMapping(value = "/findById")
+    @RequiresAuthentication
     public BaseFile findById(@RequestParam(value = "id") Integer id){
         return attachmentService.findById(id);
     }
@@ -101,6 +106,7 @@ public class AttachmentController {
      * @return
      */
     @DeleteMapping(value = "/deleteById")
+    @RequiresAuthentication
     public Result deleteById(@RequestParam(value = "id") Integer id){
         return attachmentService.deleteById(id);
     }
@@ -111,11 +117,13 @@ public class AttachmentController {
      * @return
      */
     @DeleteMapping(value = "/deleteByDataId")
+    @RequiresAuthentication
     public Result  deleteByDataId(@RequestParam(value = "dataId") String dataId){
         return attachmentService.deleteByDataId(dataId);
     }
 
     @PostMapping(value = "/reviceMess")
+    @RequiresAuthentication
     public void reviceMess(@RequestBody JSONObject mess){
 
         System.out.println(mess);

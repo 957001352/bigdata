@@ -60,7 +60,7 @@ public class ProductNetServiceImpl implements ProductNetService {
                 list.add(productNet);
                 ProductDevices productDevices = productDevicesDao.findProductDevicesById(Convert.stringToInteger(productId));
                 if(productDevices!=null){
-                    productNameList.add(productDevices.getName());
+                    productNameList.add(productDevices.getCode());
                 }
 
             }
@@ -77,7 +77,8 @@ public class ProductNetServiceImpl implements ProductNetService {
                 HttpClientResult responseEntityBack = HttpClientUtils.doPostStringParams(tbBaseUrl + Const.SAVEDEVICESHAREDATTRIBUTE + "/DEVICE/" + netDevices.getTbId() + "/SHARED_SCOPE", restTemplateUtil.getHeaders(true), jsonSharedArrribute.toJSONString());
             }
         }else{
-            flag=productNetDao.deleteByNetId(Convert.stringToInteger(netId));
+            productNetDao.deleteByNetId(Convert.stringToInteger(netId));
+            return  ResultUtils.success();
         }
         return flag > 0 ? ResultUtils.success() : ResultUtils.failure();
     }

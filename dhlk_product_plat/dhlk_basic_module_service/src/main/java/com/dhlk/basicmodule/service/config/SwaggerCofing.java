@@ -30,6 +30,12 @@ public class SwaggerCofing {
     /*@Value("${eureka.instance.instanceId}")*/
     @Value("${spring.cloud.consul.discovery.instance-id}")
     private String swaggerURL;
+    /**
+     * 设置开关，生产版本为false，关闭swagger
+     */
+    @Value("${swagger.ebable}")
+    private boolean ebable;
+
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
@@ -43,7 +49,7 @@ public class SwaggerCofing {
     @Bean
     public Docket platformApi() {
 
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).forCodeGeneration(true)
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).enable(ebable).forCodeGeneration(true)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.dhlk.basicmodule.service.controller"))
                 .paths(PathSelectors.any())

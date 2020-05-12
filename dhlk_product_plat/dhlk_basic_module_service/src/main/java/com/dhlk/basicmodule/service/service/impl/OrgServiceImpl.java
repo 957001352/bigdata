@@ -17,6 +17,7 @@ import com.dhlk.utils.CheckUtils;
 import com.dhlk.utils.ResultUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -73,8 +74,21 @@ public class OrgServiceImpl implements OrgService {
     public Result findTreeList() {
         List<Org> orgs = orgDao.treeList(0);
         for (Org org:orgs) {
-            List<User> userByOrgIds = userDao.findUserByOrgId(org.getId());
-            org.setStaffNum(userByOrgIds.size());
+            List<Org> underOrgById = orgDao.findUnderOrgById(org.getId());
+            List<User> userList = userDao.findList(null);
+            Integer count = 0;
+            for (Org underOrg:underOrgById) {
+                for (User user:userList) {
+                    String orgId = user.getOrgId();
+                    if(!CheckUtils.isNull(orgId)){
+                        List<String> underOrgs = Arrays.asList(orgId.split(","));
+                        if(underOrgs.contains(underOrg.getId().toString())){
+                            count++;
+                        }
+                    }
+                }
+            }
+            org.setStaffNum(count);
         }
         List<Tree<Org>> trees = new ArrayList<>();
         buildTrees(trees, orgs);

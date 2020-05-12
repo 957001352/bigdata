@@ -220,7 +220,7 @@ public class CheckUtils {
         if (isNull(str)) {
             return false;
         }
-        String regEx1 = "^[A-Za-z_@.0-9]{3,20}$";
+        String regEx1 = "^[A-Za-z_@.0-9]+$";
         Pattern p;
         Matcher m;
         p = Pattern.compile(regEx1);
@@ -235,7 +235,7 @@ public class CheckUtils {
         if (isNull(objStr)) {
             return false;
         }
-        String regEx1 = "^[\\u4E00-\\u9FA5A-Za-z0-9]+$";
+        String regEx1 = "^[\\u4E00-\\u9FA5A-Za-z][\\u4E00-\\u9FA5A-Za-z0-9]+$";
         Pattern p;
         Matcher m;
         p = Pattern.compile(regEx1);
@@ -244,6 +244,22 @@ public class CheckUtils {
             return true;
         else
             return false;
+    }
+
+    public static boolean isSetName(String objStr) {
+        if (isNull(objStr)) {
+            return false;
+        }
+        String regEx1 = "^[\\u4E00-\\u9FA5A-Za-z0-9_@.]+$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx1);
+        m = p.matcher(objStr);
+        if (m.matches())
+            return true;
+        else
+            return false;
+
     }
 
     /**

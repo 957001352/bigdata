@@ -13,8 +13,10 @@ import java.util.List;
 @Data
 public class ProductDevices implements Serializable {
     private Integer id;
+    private String code;//设备编码
     private String name;//设备名称
     private Integer orgId;//车间id
+    private String orgName;//车间名称
     private Integer factoryId;//集团id
     private String classifyId;//类型管理
     @ApiModelProperty(hidden = true)

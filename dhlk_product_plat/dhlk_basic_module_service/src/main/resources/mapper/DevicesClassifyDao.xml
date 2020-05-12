@@ -17,11 +17,11 @@
         ></collection>
     </resultMap>
     <select id="findAttrSetByClassifyById"  resultType="java.util.LinkedHashMap">
-        select s.name,GROUP_CONCAT(d.attr) attr from dhlk_basic_devices_classify_detail c
-          left join dhlk_basic_devices_attr_set s on s.id=c.attr_set_id
-          left join dhlk_basic_devices_attr_detail  d on d.id=c.attr_detail_id
-         where c.devices_classify_id=#{devicesClassifyId}
-         group by s.name
+        SELECT s.id setId,s.name,GROUP_CONCAT(d.attr order by d.attr) attr,GROUP_CONCAT(d.id) detailIds FROM dhlk_basic_devices_classify_detail c
+          LEFT JOIN dhlk_basic_devices_attr_set s ON s.id=c.attr_set_id
+          LEFT JOIN dhlk_basic_devices_attr_detail  d ON d.id=c.attr_detail_id
+         WHERE c.devices_classify_id=#{devicesClassifyId}
+         GROUP BY s.`id`,s.name
     </select>
 
     <select id="findClassifyType"  resultType="com.dhlk.entity.dm.DmClassifyType">

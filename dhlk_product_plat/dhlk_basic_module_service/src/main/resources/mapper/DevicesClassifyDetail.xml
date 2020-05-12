@@ -22,8 +22,8 @@
     <select id="findDevicesClassifyDetailByDetail" parameterType="list" resultType="Integer">
         select count(*) from dhlk_basic_devices_classify_detail
         where attr_detail_id in
-        <foreach collection="devicesAttrDetails" item="devicesAttrDetail" separator="," open="(" close=")">
-            #{devicesAttrDetail.id}
+        <foreach collection="devicesAttrDetailIds" item="devicesAttrDetailId" separator="," open="(" close=")">
+            #{devicesAttrDetail}
         </foreach>
     </select>
 

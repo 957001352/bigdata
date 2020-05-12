@@ -72,7 +72,8 @@ drop table if exists dhlk_basic_product_devices;
 create table dhlk_basic_product_devices 
 (
    id                   integer                        NOT NULL AUTO_INCREMENT,
-   name                 varchar(20)                    DEFAULT NULL COMMENT '设备名称',
+   code                 varchar(100)                    DEFAULT NULL COMMENT '设备编码',
+   name                 varchar(100)                    DEFAULT NULL COMMENT '设备名称',
    org_id               integer                        DEFAULT NULL COMMENT '所属车间',
    note                 varchar(200)                   DEFAULT NULL COMMENT '描述',
    factory_id           integer                        DEFAULT NULL COMMENT '所属集团',
@@ -134,7 +135,7 @@ create table dhlk_basic_user
 -- ----------------------------
 -- Records of dhlk_basic_user
 -- ----------------------------
-INSERT INTO `dhlk_basic_user` VALUES (1, 'admin', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '18293080304', '123@qq.com', 0, '1', '2020-04-09 18:05:10', 0);
+INSERT INTO `dhlk_basic_user` VALUES (1, 'admin', 'admin', '1f6f4f71c8802b45d5c8ffac64374c02', '18293080304', '123@qq.com', 0, '1', '2020-04-09 18:05:10', 0);
 /*==============================================================*/
 /* Table: mosquito                                */
 /*==============================================================*/
@@ -239,6 +240,7 @@ INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (586, 72
 INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (587, 73, 1);
 INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (588, 74, 1);
 INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (589, 75, 1);
+INSERT INTO `dhlk_basic_permissions`(`id`, `menu_id`, `role_id`) VALUES (590, 76, 1);
 /*==============================================================*/
 /* Table: API分类表                                   */
 /*==============================================================*/
@@ -350,6 +352,7 @@ INSERT INTO `dhlk_basic_menu` VALUES (72, 'netFault/dealFault', '故障处理', 
 INSERT INTO `dhlk_basic_menu` VALUES (73, 'dataControl', '数据中台', NULL, 0, 0, 'dhlk:view', 0);
 INSERT INTO `dhlk_basic_menu` VALUES (74, 'analysisControl', '商业智能', NULL, 0, 0, 'dhlk:view', 0);
 INSERT INTO `dhlk_basic_menu` VALUES (75, 'monitorCenter', '监测中心', NULL, 0, 0, 'dhlk:view', 0);
+INSERT INTO `dhlk_basic_menu` VALUES (76, 'event/delete', '删除事件', 'event/delete', 0, 75, 'event:delete', 0);
 
 /*==============================================================*/
 /* Table: API接口                                         */
@@ -494,6 +497,30 @@ CREATE TABLE `dhlk_basic_devices_classify`
    `type_id`              INTEGER                       DEFAULT NULL COMMENT '设备类型分类id',
    PRIMARY KEY  (id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='设备类型管理';
+/*==============================================================*/
+/* Table: 事件管理                          */
+/*==============================================================*/
+DROP TABLE IF EXISTS `dhlk_basic_event`;
+CREATE TABLE `dhlk_basic_event` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `alarmId` varchar(64) DEFAULT NULL COMMENT '事件id',
+  `tenantId` varchar(100) DEFAULT NULL COMMENT '租户id',
+  `type` varchar(50) DEFAULT NULL COMMENT '类型',
+  `originator` varchar(100) DEFAULT NULL COMMENT '来源',
+  `severity` varchar(100) DEFAULT NULL COMMENT '安全级别',
+  `status` varchar(100) DEFAULT NULL COMMENT '状态',
+  `startTs` bigint(20) DEFAULT NULL COMMENT '开始时间',
+  `endTs` bigint(20) DEFAULT NULL COMMENT '结束时间',
+  `ackTs` bigint(20) DEFAULT NULL COMMENT '确认时间',
+  `clearTs` bigint(20) DEFAULT NULL COMMENT '清除时间',
+  `details` text COMMENT '详情',
+  `propagate` tinyint(4) DEFAULT NULL COMMENT '传播',
+  `tbId` varchar(255) DEFAULT NULL COMMENT 'tb id',
+  `createdTime` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8
+
 
 /*==============================================================*/
 /* Function: 创建函数查出以逗号分开的字符串的第一个数                */

@@ -78,7 +78,7 @@
     <delete id="delete" parameterType="java.util.List">
         delete from dhlk_basic_devices_attr_detail where id in
         <foreach collection="list" open="(" separator="," close=")" item="item">
-            #{item.id}
+            #{item}
         </foreach>
 
     </delete>

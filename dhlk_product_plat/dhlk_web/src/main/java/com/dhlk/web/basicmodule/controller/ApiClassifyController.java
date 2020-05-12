@@ -78,34 +78,4 @@ public class ApiClassifyController {
     public Result findTreeList() {
         return  apiClassifyService.findTreeList();
     }
-
-
-
-    @ApiOperation("csv文件导出")
-    @GetMapping("/exportCsv")
-    public void exportCsv(HttpServletResponse response){
-        try{
-            List<LinkedHashMap<String,Object>> list= new ArrayList<LinkedHashMap<String,Object>>();
-            LinkedHashMap<String,Object> a0=new LinkedHashMap<String,Object>();
-            a0.put("code","01");
-            a0.put("name","宝马");
-            list.add(a0);
-            LinkedHashMap<String,Object> a1=new LinkedHashMap<String,Object>();
-            a1.put("code","02");
-            a1.put("name","奔驰");
-            list.add(a1);
-            //CsvUtil.export("测试csv导出", list, new String[]{"编码","名称"}, response);
-            ExcelUtil.exportExcel(response, Arrays.asList(new String[]{"编码","名称"}), list, "测试excel导出");
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @PostMapping(value = "/importExcel", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Result importExcel(@RequestPart(value = "file") MultipartFile file) throws Exception{
-        Result res=apiClassifyService.importExcel(file);
-        System.out.println(res);
-        return res;
-    }
 }

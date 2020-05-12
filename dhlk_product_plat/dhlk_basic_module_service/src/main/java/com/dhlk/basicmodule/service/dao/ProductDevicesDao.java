@@ -46,5 +46,9 @@ public interface ProductDevicesDao {
      */
     Integer isRepeatName(ProductDevices productDevices);
 
+
+    Integer isRepeatCode(String  code);
+
+
     Integer findProductDevicesCountByOrgId(Integer orgId);
 }
