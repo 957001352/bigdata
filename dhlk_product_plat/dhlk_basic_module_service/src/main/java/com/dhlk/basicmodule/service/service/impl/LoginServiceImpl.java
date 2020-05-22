@@ -139,4 +139,11 @@ public class LoginServiceImpl implements LoginService {
         String res = tbJwtToken.replace("Bearer ", "");
         return ResultUtils.success(res);
     }
+
+    @Override
+    public Result getToken() {
+        String header = HttpContextUtil.getRequest().getHeader(Const.TOKEN_HEADER);
+        System.out.println(header);
+        return ResultUtils.success(header);
+    }
 }

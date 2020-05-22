@@ -246,6 +246,7 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
                 ProductDevicesTree tree = new ProductDevicesTree();
                 tree.setComponent("isShow");
                 tree.setId(pd.getTbId());
+                tree.setTbId(pd.getTbId());
                 tree.setParentId(orgId);
                 tree.setTitle(pd.getName());
                 tree.setName(pd.getName());
@@ -371,9 +372,11 @@ public class ProductDevicesSerivceImpl implements ProductDevicesService {
                     return ResultUtils.failure();
                 }
             }
-
+        }else{
+            Integer flag = productDevicesDao.update(productDevices);
+            return flag > 0 ? ResultUtils.success() : ResultUtils.failure();
         }
-        return null;
+        return ResultUtils.failure();
     }
 
     //更新生产设备失败 还原tb中的数据

@@ -77,7 +77,7 @@ public enum  ResultEnum {
     * @date        2020/3/20 14:47
     */
     BAN_USR(1000,"用户被禁用"),
-    NO_LOGIN(7001,"token过期"),
+    NO_LOGIN(7001,"登录超时,请重新登录"),
     NO_PERMISS(7002,"无访问权限"),
     URL_ERROR(7003,"请求异常");
 

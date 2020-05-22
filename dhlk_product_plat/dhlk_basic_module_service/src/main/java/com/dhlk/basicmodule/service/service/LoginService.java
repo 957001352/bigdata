@@ -42,4 +42,11 @@ public interface LoginService {
 
     public Result getTbToken();
 
+    /**
+     * 获取E2C登录token
+     * @author  gchen
+     * @return  Result
+     */
+    Result getToken();
+
 }

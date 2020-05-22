@@ -42,7 +42,7 @@ public class ProductDevicesTree<T> {
     }
 
 
-
+    private String tbId;//tdid
     private String name;//设备名称
     @ApiModelProperty(hidden = true)
     private String classifyName;//类型管理

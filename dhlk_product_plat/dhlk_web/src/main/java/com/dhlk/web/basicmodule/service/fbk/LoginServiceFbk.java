@@ -28,4 +28,9 @@ public class LoginServiceFbk implements LoginService {
     public Result getTbToken() {
         return ResultUtils.error(ResultEnum.NETWORK_ERR);
     }
+
+    @Override
+    public Result getToken() {
+        return ResultUtils.error(ResultEnum.NETWORK_ERR);
+    }
 }

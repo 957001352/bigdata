@@ -38,14 +38,14 @@ public class CustomInterceptor implements Interceptor {
      * 拦截器构造方法，在自定义拦截器静态内部类的build方法中调用，用来创建自定义拦截器对象。
      */
     public CustomInterceptor() {
-        System.out.printf("----------自定义拦截器构造方法执行 \n");
+        logger.info("----------自定义拦截器构造方法执行 \n");
     }
     /**
      * 该方法用来初始化拦截器，在拦截器的构造方法执行之后执行，也就是创建完拦截器对象之后执行
      */
     @Override
     public void initialize() {
-        System.out.printf("----------自定义拦截器的initialize方法执行 \n");
+        logger.info("----------自定义拦截器的initialize方法执行 \n");
     }
     /**
      * 用来处理每一个event对象，该方法不会被系统自动调用，一般在 List<Event> intercept(List<Event> events) 方法内部调用。
@@ -57,10 +57,10 @@ public class CustomInterceptor implements Interceptor {
     public Event intercept(Event event) {
         String eventBody = new String(event.getBody(), Charsets.UTF_8);
         if(authorization("fanwo")){
-            System.out.println("===========>认证通过");
+            logger.info("----------自定义拦截器认证通过 \n");
             event.setBody(eventBody.getBytes());
         }else{
-            System.out.println("===========>认证失败");
+            logger.info("----------自定义拦截器认证失败 \n");
         }
         return event;
     }
@@ -86,7 +86,6 @@ public class CustomInterceptor implements Interceptor {
                 if (response.getStatusLine().getStatusCode() == 200) {
                     HttpEntity entity = response.getEntity();
                     String returnMsg=EntityUtils.toString(entity, "utf-8");
-                    System.out.println("===========>认证结果"+returnMsg);
                     Result result = JSONObject.parseObject(returnMsg, Result.class);
                     //code==0 说明认证通过
                     if (result.getCode() == 0) {
@@ -140,7 +139,7 @@ public class CustomInterceptor implements Interceptor {
      */
     @Override
     public void close() {
-        System.out.printf("----------自定义拦截器close方法执行  \n");
+        logger.info("----------自定义拦截器close方法执行 \n");
     }
     /**
      * 通过该静态内部类来创建自定义对象供flume使用，实现Interceptor.Builder接口，并实现其抽象方法
@@ -154,7 +153,7 @@ public class CustomInterceptor implements Interceptor {
          */
         @Override
         public Interceptor build() {
-            System.out.printf("----------build方法执行  \n");
+            logger.info("----------build方法执行 \n");
             return new CustomInterceptor();
         }
         /**
@@ -164,7 +163,7 @@ public class CustomInterceptor implements Interceptor {
          */
         @Override
         public void configure(Context context) {
-            System.out.printf("----------configure方法执行  \n");
+            logger.info("----------configure方法执行 \n");
             /*
             通过调用context对象的getString方法来获取flume配置自定义拦截器的参数，方法参数要和自定义拦截器配置中的参数保持一致+
              */

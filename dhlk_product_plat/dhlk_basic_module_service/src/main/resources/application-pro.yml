@@ -77,6 +77,8 @@ tb:
   login:
     username: dhlk@leansite.cn
     password: dhlk@leansite.cn13814000-1dd2-11b2-8080-808080808080
+    # username: dcx@leansite.cn
+    # password: dhlktech
 #文件路径
 attachment:
   path: /home/software/attachment/

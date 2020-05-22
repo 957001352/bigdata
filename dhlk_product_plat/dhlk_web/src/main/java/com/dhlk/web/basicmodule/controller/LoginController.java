@@ -46,4 +46,10 @@ public class LoginController {
         return loginService.getTbToken();
     }
 
+    @ApiOperation(value = "获取E2C登录token")
+    @GetMapping("/getToken")
+    public Result getToken() {
+        return loginService.getToken();
+    }
+
 }

@@ -26,4 +26,7 @@ public interface LoginService {
 
     @GetMapping("/getTbToken")
     public Result getTbToken() ;
+
+    @GetMapping("/getToken")
+    Result getToken();
 }
