@@ -53,7 +53,7 @@
         <lombok.version>1.18.12</lombok.version>
         <utf8.version>UTF-8</utf8.version>
         <junit.version>4.12</junit.version>
-        <fastjson.version>1.2.62</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <pinyin4jversion>2.5.0</pinyin4jversion>
         <jsoup.version>1.11.3</jsoup.version>
         <dom4j.version>1.6.1</dom4j.version>
